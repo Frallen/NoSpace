@@ -3,15 +3,15 @@
     justify-content: center;
     margin: 50px 0;
     .form{
-        background: #333;
+        border:2px solid #cecece;
         padding: 20px 15px;
         .formtitle{
-            color: #fff;
+            color: #5a5252;
             font-size: 1.5em;
         }
         label{
             display: block;
-            color: #fff;
+            color: #5a5252;
             padding: 8px 0px;
         }
         .input{
@@ -25,6 +25,12 @@
             outline: none;
             margin-top: 1.1em;
             padding: 0.8em 5em;
+            color: #fff;
+            background: #4b4950;
+            transition: 0.2s ease-in-out;
+        }
+        .submited:hover{
+            transition: 0.2s ease-in-out;
         }
     }
 }

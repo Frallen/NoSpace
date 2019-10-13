@@ -1,38 +1,41 @@
-import React from "react"
-import { connect } from "react-redux"
-import classes from "./auth.module.scss"
-class  login extends React.Component{
-    state={ 
+import React from "react";
+import classes from "./auth.module.scss";
+import { Field, reduxForm } from "redux-form";
 
-    }
-    render(){
-        return(
-            <div className={classes.formbox}>
-            <div className={classes.form}>
-                <h5 className={classes.formtitle}>Вход</h5>
-              <form onSubmit="">
-                <div>
-                  <label htmlFor="email">Емейл</label>
-                  <input className={classes.input} type="email" id="email" />
-                </div>
-                <div>
-                  <label htmlFor="password">Пароль</label>
-                  <input className={classes.input} type="password" id="password" />
-                </div>
-                <div>
-                  <button className={classes.submited}>Войти</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )
-    }
+const FormBox = props => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <div>
+        <label htmlFor="email">Емейл</label>
+        <Field component="input" type="email" name={"email"} className={classes.input}></Field>
+      </div>
+      <div>
+        <label htmlFor="password">Пароль</label>
+        <Field component="input" type="password" name={"password"} className={classes.input}></Field>
+      </div>
+      <div>
+        <button className={classes.submited}>Войти</button>
+      </div>
+    </form>
+  );
+};
+
+const LoginForm = reduxForm({
+  form: "login"
+})(FormBox);
+
+const Login = (formData) => {
+  let onSubmit=(formData)=>{
+console.log(formData)
 }
+  return (
+    <div className={classes.formbox}>
+      <div className={classes.form}>
+        <h5 className={classes.formtitle}>Вход</h5>
+        <LoginForm onSubmit={onSubmit}></LoginForm>
+      </div>
+    </div>
+  );
+};
 
-let mapStateToProps=(state)=>{
-
-}
-
-const LoginContainer=connect(mapStateToProps)(login)
-
-export default LoginContainer
+export default Login;

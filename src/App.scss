@@ -22,26 +22,10 @@ p{
   padding: 0;
   margin: 0;
 }
-/*
-.main{
-  display: grid;
-  grid-template-areas: "a a a a""b b b b" ;
-  grid-template-columns: minmax(min-content,max-content) 10fr;
-  grid-auto-rows: 50px max-content;
- 
+
+.container{
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
-.main-content{
-  grid-area: b;
-  
-}
-.footer{
-  grid-area: c;
-}
-
-button{
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
-*/

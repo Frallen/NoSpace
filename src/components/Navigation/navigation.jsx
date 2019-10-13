@@ -14,13 +14,34 @@ class Navigation extends React.Component {
   };
  
 
+/* 
+          <ul className={classes.mainMenu}>
+           <li>
+             <NavLink>Создать проект</NavLink>
+           </li>
+           <li>
+             <NavLink>Проекты</NavLink>
+           </li>
+           <li>
+             <NavLink></NavLink>
+           </li>
+           <li>
+             <NavLink to="/">Выйти</NavLink>
+           </li>
+         </ul> */
+
+/*   <div className={classes.mobile} onClick={this.Setactive}>
+            <span
+              className={this.state.isActive ? style : classes.stick}
+            ></span>
+          </div> */
   render() {
     const style = classes.stick + "" + classes.stickActive;
     return (
       <div className={classes.Navigatigon}>
         <div className={classes.container}>
           <h1 className={classes.logo}>NoSpace</h1>
-          <ul className={classes.menu}>
+          <ul className={classes.menuLanding}>
             <li className={classes.item}>
               <Link
                 activeClass="active"
@@ -68,11 +89,8 @@ class Navigation extends React.Component {
               </NavLink>
             </li>
           </ul>
-          <div className={classes.mobile} onClick={this.Setactive}>
-            <span
-              className={this.state.isActive ? style : classes.stick}
-            ></span>
-          </div>
+         
+      
         </div>
       </div>
       

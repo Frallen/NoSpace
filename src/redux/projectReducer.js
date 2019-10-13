@@ -2,7 +2,7 @@ const projectname ="projectname"
 const newProject="newProject"
 let initialState={
     createprojectname:"",
-    projectList:[{id:1,title:"haha",text:"lorem"}]
+    projectList:[{id:2,title:"createprojectname",text:""}]
 }
 
 const dashboardReducer=(state=initialState,action)=>{
@@ -13,7 +13,7 @@ const dashboardReducer=(state=initialState,action)=>{
             createprojectname:action.text
         }
         case newProject:{
-            debugger
+         
             return{
                 ...state,
                 projectList:[...state.projectList,{id:2,title:state.createprojectname,text:""}]

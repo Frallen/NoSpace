@@ -1,0 +1,17 @@
+.dashcontaier {
+
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    grid-auto-columns: max-content;
+    justify-content: center;
+    grid-gap: 30px;
+    .projectsBox{
+        background: #e8e8e8;
+        padding: 20px;
+        text-align: center;
+    }
+  }
+ 
+}
