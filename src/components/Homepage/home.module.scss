@@ -1,0 +1,59 @@
+.home {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  background: url("../../media/main.jpg") no-repeat center/cover;
+
+  overflow: hidden;
+  .bgvideo {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    z-index: 0;
+    video {
+      width: 100%;
+    }
+  }
+  .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    margin-top: -12px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    z-index: 1;
+    color: #fff;
+  }
+}
+
+.advantages {
+  background: rgb(226, 54, 54);
+  padding: 250px 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+  grid-auto-rows: max-content;
+  grid-gap: 30px;
+  justify-content: center;
+  text-align: center;
+}
+
+.tehnologes{
+  background: rgb(131, 226, 54);
+  padding: 250px 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+  grid-auto-rows: max-content;
+  grid-gap: 30px;
+  justify-content: center;
+  text-align: center;
+}
