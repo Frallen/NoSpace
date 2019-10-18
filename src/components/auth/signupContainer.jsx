@@ -1,21 +1,28 @@
 import React from "react";
 import classes from "./auth.module.scss";
 import { Field, reduxForm } from "redux-form";
-
+import { authInput } from "../commons/formsControls/formsControls";
+import { required, PasswordCheck } from "../../untils/validators/validators";
+  const MinValue=PasswordCheck(5)
 const SignUpBox = props => {
+
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
         <label htmlFor="FIO">ФИО</label>
-        <Field className={classes.input} component="input" type="text" name={"FIO"}/>
+        <Field component={authInput} type="text" name="FIO" validate={[required,]}/>
+      </div>
+      <div>
+        <label htmlFor="username">Никнейм</label>
+        <Field component={authInput} type="text" name="username" validate={[required,]}/>
       </div>
       <div>
         <label htmlFor="email">Емейл</label>
-        <Field className={classes.input} component="input" type="email" name={"Email"}/>
+        <Field component={authInput} type="email" name="email" validate={[required,]}/>
       </div>
       <div>
         <label htmlFor="password">Пароль</label>
-        <Field className={classes.input} component="input" type="password" name={"password"}/>
+        <Field component={authInput} type="password" name="password" validate={[required,MinValue]}/>
       </div>
       <div>
         <button className={classes.submited}>Завершить</button>
@@ -28,7 +35,7 @@ const SignUpForm = reduxForm({
   form: "signUp"
 })(SignUpBox);
 
-const SignUp = (formData) => {
+const SignUp = () => {
   let onSubmit=(formData)=>{
     console.log(formData)
   }

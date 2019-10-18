@@ -1,61 +1,65 @@
 .Navigatigon {
-  
   width: 100%;
   z-index: 99;
-  background: #131313;
+  background: #ffffff;
+  box-shadow: 12px 1px 12px -1px #d3d3d3;
   .container {
     max-width: 1140px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     .logo {
-      font-size: 5vmin;
-      color: #fff;
+      font-size: 1rem;
+      color: #4b4453;
       letter-spacing: 1.5px;
     }
-    .menuLanding,.mainMenu {
+    .menuLanding,
+    .mainMenu {
       display: flex;
       justify-content: center;
       align-items: center;
       .item {
         margin-left: 10px;
-        color: #fff;
+
+        color: #ede10f;
         cursor: pointer;
-        .login{
+        .login {
           text-decoration: none;
-          color: #fff;
+          color: #4b4453;
         }
       }
     }
   }
 }
 
-.mobile{
+.mobile {
   height: 40px;
   width: 40px;
   position: relative;
   cursor: pointer;
-  .stick,.stick::after,.stick::before{
+  .stick,
+  .stick::after,
+  .stick::before {
     width: 28px;
     height: 2px;
     background: #fff;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   margin-top: -1px;
-   margin-left: -14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -1px;
+    margin-left: -14px;
   }
-  .stick::after,.stick::before{
+  .stick::after,
+  .stick::before {
     display: block;
     content: "";
   }
-  .stick::after{
+  .stick::after {
     transform: translateY(8px);
-
   }
-  .stick::before{
+  .stick::before {
     transform: translateY(-7px);
   }
 }

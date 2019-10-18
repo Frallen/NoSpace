@@ -1,13 +1,30 @@
-let initialState={
+const AuthUser = "AuthUser";
 
-}
+let initialState = {
 
-const authReducer=(state=initialState,action)=>{
-    switch (action.type) {
-       
-    
-        default:return state
-    }
-}
+    email:null,
+    password:null,
 
-export default authReducer
+ 
+
+};
+
+const authReducer = (state = initialState, action) => {
+  
+  switch (action.type) {
+    case AuthUser:
+      return {
+        ...state,
+       ...action.data
+        
+      };
+
+    default:
+      return state;
+  }
+};
+
+
+export const UserisAuth=(email,password)=>({type:AuthUser,data:{email,password}})
+
+export default authReducer;
