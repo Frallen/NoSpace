@@ -1,8 +1,7 @@
 .Navigatigon {
   width: 100%;
   z-index: 99;
-  background: #ffffff;
-  box-shadow: 12px 1px 12px -1px #d3d3d3;
+  background: #ffe66d;
   .container {
     max-width: 1140px;
     margin: 0 auto;
@@ -10,19 +9,70 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    @media (max-width:800px) {
+   
+    }
     .logo {
       font-size: 1rem;
       color: #4b4453;
       letter-spacing: 1.5px;
+      cursor: pointer;
     }
-    .menuLanding,
-    .mainMenu {
+    .hamburgerbox {
+      align-self: flex-end;
+      display: none;
+      height: 50px;
+      width: 50px;
+      cursor: pointer;
+      position: relative;
+      @media (max-width: 800px) {
+        display: block;
+        
+      }
+     
+      .hamburger,
+      .hamburger::after,
+      .hamburger::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -15px;
+        width: 30px;
+        height: 2px;
+        background: #000;
+      }
+      .hamburger::after,
+      .hamburger::before {
+        content: "";
+        display: block;
+        transition: 0.2s;
+      }
+      .hamburger::after {
+        transform: translateY(-8px);
+      }
+      .hamburger::before {
+        transform: translateY(6px);
+      }
+      .activehamburger {
+        height: 0;
+      }
+      .activehamburger::after {
+        transform: rotate(45deg);
+      }
+      .activehamburger::before {
+        transform: rotate(-45deg);
+      }
+    }
+
+    .menuLanding {
       display: flex;
       justify-content: center;
       align-items: center;
+      @media (max-width: 800px) {
+        display: none;
+      }
       .item {
         margin-left: 10px;
-
         color: #ede10f;
         cursor: pointer;
         .login {
@@ -33,47 +83,18 @@
     }
   }
 }
+.menuLandingAcitve {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .item {
+    margin-left: 10px;
 
-.mobile {
-  height: 40px;
-  width: 40px;
-  position: relative;
-  cursor: pointer;
-  .stick,
-  .stick::after,
-  .stick::before {
-    width: 28px;
-    height: 2px;
-    background: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -1px;
-    margin-left: -14px;
-  }
-  .stick::after,
-  .stick::before {
-    display: block;
-    content: "";
-  }
-  .stick::after {
-    transform: translateY(8px);
-  }
-  .stick::before {
-    transform: translateY(-7px);
+    color: #ede10f;
+    cursor: pointer;
+    .login {
+      text-decoration: none;
+      color: #4b4453;
+    }
   }
 }
-/*
-.stickActive{
-  height: 0;
-  background: #000;
-  
-}
-.stickActive::after{
-  transform: rotate(45deg);
-
-}
-.stickActive::before{
-  transform: rotate(-45deg);
-}
-*/

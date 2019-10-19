@@ -17,7 +17,7 @@ const SignUpBox = props => {
         <Field component={authInput} type="text" name="username" validate={[required,]}/>
       </div>
       <div>
-        <label htmlFor="email">Емейл</label>
+        <label htmlFor="email">Почта</label>
         <Field component={authInput} type="email" name="email" validate={[required,]}/>
       </div>
       <div>

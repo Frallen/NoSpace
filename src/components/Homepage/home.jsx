@@ -1,6 +1,9 @@
 import React from "react";
 import classes from "./home.module.scss";
 import { Link } from "react-scroll";
+import redux from "./../../media/redux.svg";
+import react from "./../../media/react.svg";
+import firebase from "./../../media/firebase.svg";
 const WelcomePage = () => {
   return (
     <div className={classes.landing}>
@@ -55,9 +58,21 @@ const WelcomePage = () => {
         </div>
       </div>
       <div className={classes.tehnologes} id="tehnologes">
-        <div className={classes.item}></div>
-        <div className={classes.item}></div>
-        <div className={classes.item}></div>
+        <div className={classes.item}>
+          <div className={classes.box}>
+            <img src={react} alt="react" />
+          </div>
+        </div>
+        <div className={classes.item}>
+          <div className={classes.box}>
+            <img src={firebase} alt="firebase"  />
+          </div>
+        </div>
+        <div className={classes.item}>
+          <div className={classes.box}>
+            <img src={redux} alt="redux" />
+          </div>
+        </div>
       </div>
     </div>
   );

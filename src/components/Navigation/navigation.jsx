@@ -8,21 +8,32 @@ class Navigation extends React.Component {
 
   Setactive = () => {
     this.setState({
-      isActive: true
+      //возвращет тру,получается toggleclass
+      isActive: !this.state.isActive
     });
   };
- 
+
   render() {
-    const style = classes.stick + "" + classes.stickActive;
+  
     return (
       <div className={classes.Navigatigon}>
         <div className={classes.container}>
           <h1 className={classes.logo}>NoSpace</h1>
-          <ul className={classes.menuLanding}>
+          <label htmlFor="toggle" className={classes.hamburgerbox}>
+            <span
+              className={
+                classes.hamburger +
+                " " +
+                (this.state.isActive ? classes.activehamburger : "")
+              }
+            ></span>
+          </label>
+          <input type="checkbox" hidden id="toggle" onClick={this.Setactive} />
+          <ul className={this.state.isActive ?classes.menuLandingAcitve:classes.menuLanding}>
             <li className={classes.item}>
-           <NavLink to="/" className={classes.login}>
-                Главная</NavLink>
-          
+              <NavLink to="/" className={classes.login}>
+                Главная
+              </NavLink>
             </li>
             <li className={classes.item}>
               <NavLink to="/signup" className={classes.login}>
@@ -35,11 +46,8 @@ class Navigation extends React.Component {
               </NavLink>
             </li>
           </ul>
-         
-      
         </div>
       </div>
-      
     );
   }
 }

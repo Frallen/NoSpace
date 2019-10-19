@@ -11,7 +11,7 @@ const FormBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <label htmlFor="email">Емейл</label>
+        <label htmlFor="email">Почта</label>
         <Field component={authInput} type="email" name="email" validate={[required,]}/>
       </div>
       <div>
