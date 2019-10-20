@@ -1,27 +1,48 @@
-const projectname ="projectname"
-const newProject="newProject"
-let initialState={
-    createprojectname:"",
-    projectList:[{id:2,title:"createprojectname",text:""}]
-}
+import { firebaseApp } from "../config/firebase";
 
-const dashboardReducer=(state=initialState,action)=>{
-    switch(action.type){
-        case projectname:
-            return{
-            ...state,
-            createprojectname:action.text
-        }
-        case newProject:{
-         
-            return{
-                ...state,
-                projectList:[...state.projectList,{id:2,title:state.createprojectname,text:""}]
-            }
-        }
-        default:return state
+const Newproject = "Newproject";
+const NewProjectErr = "NewProjectErr";
+let initialState = {
+  Newproject: [],
+  Propjects: []
+};
+
+const dashboardReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case Newproject: {
+      return {
+        ...state,
+        Newproject: action.project
+      };
     }
-}
-export const projName=(text)=>({type:projectname,text})
-export const NewProject=(text)=>({type:newProject,text})
-export default dashboardReducer
+    case NewProjectErr: {
+      return {};
+    }
+    default:
+      return state;
+  }
+};
+
+//export const NewProject = data => ({ type: Newproject, data });
+
+export const CreateNewproject = project => {
+  return (dispatch, { getFirestore, getFirebase }) => {
+   //вызван экпортом
+    firebaseApp
+      .collection("Projects")
+      .add({
+        ...project,
+        Title: "Stratigic",
+        Text: "ha ha ha no plan",
+        Target: "Make Money"
+      })
+      .then(() => {
+        dispatch({ type: Newproject, project });
+      })
+      .catch(err => {
+        dispatch({ type: NewProjectErr, err });
+      });
+  };
+};
+
+export default dashboardReducer;

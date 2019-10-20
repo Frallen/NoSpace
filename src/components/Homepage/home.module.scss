@@ -16,8 +16,8 @@
       border-radius: 100%;
       background: #f7fff7;
       margin-top: 15px;
-      @media (max-width:380px) {
-        display: none
+      @media (max-width: 380px) {
+        display: none;
       }
     }
     .active {
@@ -26,8 +26,8 @@
       width: 12px;
       border-radius: 100%;
       background: #ffe66d;
-      @media (max-width:380px) {
-        display: none
+      @media (max-width: 380px) {
+        display: none;
       }
     }
   }

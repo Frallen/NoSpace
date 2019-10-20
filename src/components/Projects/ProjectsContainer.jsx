@@ -1,7 +1,7 @@
 import { connect } from "react-redux"
 import React from "react"
 import Projects from "./Projects"
-import {projName,NewProject} from "../../redux/projectReducer"
+
 class dashBox extends React.Component{
 
     componentDidMount(){
@@ -16,10 +16,10 @@ class dashBox extends React.Component{
 let mapStateToProps=(state)=>{
     return{
       
-        projectList:state.project.projectList,
+       Projects:state.propject.Propjects
     }
 }
 
- const ProjectsContainer=connect(mapStateToProps,{projName,NewProject})(dashBox)
+ const ProjectsContainer=connect(mapStateToProps,{})(dashBox)
 
  export default ProjectsContainer

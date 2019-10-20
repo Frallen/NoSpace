@@ -8,7 +8,6 @@ import SignupContainer from "./components/auth/signupContainer";
 import ProjectsContainer from "./components/Projects/ProjectsContainer";
 import CreateContainer from "./components/Projects/create/createContainer";
 const App = () => {
- //<HomePage></HomePage> 
   return (
     <div className="main">
       <NavigationContainer></NavigationContainer>
@@ -20,8 +19,8 @@ const App = () => {
       <Route path={"/projects"} render={()=><ProjectsContainer></ProjectsContainer>}></Route>
       <Route path={"/create"} render={()=><CreateContainer></CreateContainer>}></Route>
     </Switch>
-      </div>
-    </div>
+</div>
+   </div>
   );
 };
 

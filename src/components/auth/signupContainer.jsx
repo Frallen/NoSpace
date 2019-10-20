@@ -3,6 +3,8 @@ import classes from "./auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { authInput } from "../commons/formsControls/formsControls";
 import { required, PasswordCheck } from "../../untils/validators/validators";
+import { connect } from "react-redux";
+import {NewUser} from "./../../redux/registrationReducer"
   const MinValue=PasswordCheck(5)
 const SignUpBox = props => {
 
@@ -35,9 +37,9 @@ const SignUpForm = reduxForm({
   form: "signUp"
 })(SignUpBox);
 
-const SignUp = () => {
+const SignUp = (props) => {
   let onSubmit=(formData)=>{
-    console.log(formData)
+   // props.NewUser(formData)
   }
   return (
     <div className={classes.formbox}>
@@ -49,4 +51,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default connect(null,{NewUser})(SignUp);

@@ -1,22 +1,16 @@
 const AuthUser = "AuthUser";
 
 let initialState = {
-
-    email:null,
-    password:null,
-
- 
-
+  email: null,
+  password: null
 };
 
 const authReducer = (state = initialState, action) => {
-  
   switch (action.type) {
     case AuthUser:
       return {
         ...state,
-       ...action.data
-        
+        ...action.data
       };
 
     default:
@@ -24,7 +18,9 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-
-export const UserisAuth=(email,password)=>({type:AuthUser,data:{email,password}})
+export const UserisAuth = (email, password) => ({
+  type: AuthUser,
+  data: { email, password }
+});
 
 export default authReducer;

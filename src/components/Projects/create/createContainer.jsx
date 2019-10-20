@@ -1,26 +1,24 @@
-import { connect } from "react-redux"
-import React from "react"
-import Create from "./create"
-import {projName,NewProject} from "../../../redux/projectReducer"
+import { connect } from "react-redux";
+import React from "react";
+import Create from "./create";
+import { CreateNewproject } from "../../../redux/projectReducer";
 
-class dashBox extends React.Component{
+class dashBox extends React.Component {
+  componentDidMount() {}
+  NewProject = formData => {
+    debugger;
+    this.props.CreateNewproject(formData);
+  };
 
-    componentDidMount(){
-      
-    }
-
-    render(){
-        return <Create {...this.props}></Create>
-    }
+  render() {
+    return <Create {...this.props} NewProject={this.NewProject}></Create>;
+  }
 }
 
-let mapStateToProps=(state)=>{
-    return{
-        createprojectname:state.project.createprojectname,
-       
-    }
-}
+let mapStateToProps = state => {
+  return {};
+};
 
- const CreateContainer=connect(mapStateToProps,{projName,NewProject})(dashBox)
+const CreateContainer = connect(mapStateToProps,{ CreateNewproject })(dashBox);
 
- export default CreateContainer
+export default CreateContainer;
