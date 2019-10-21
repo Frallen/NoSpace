@@ -5,8 +5,9 @@ import NavigationContainer from "./components/Navigation/navigationContainer";
 import HomePage from "./components/Homepage/home";
 import LoginContainer from "./components/auth/loginContainer"
 import SignupContainer from "./components/auth/signupContainer";
-import ProjectsContainer from "./components/Projects/ProjectsContainer";
-import CreateContainer from "./components/Projects/create/createContainer";
+import ProjectsContainer from "./components/Project/projects/ProjectsContainer";
+import CreateContainer from "./components/Project/create/createContainer";
+
 const App = () => {
   return (
     <div className="main">

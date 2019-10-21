@@ -6,7 +6,7 @@ import { CreateNewproject } from "../../../redux/projectReducer";
 class dashBox extends React.Component {
   componentDidMount() {}
   NewProject = formData => {
-    debugger;
+    
     this.props.CreateNewproject(formData);
   };
 

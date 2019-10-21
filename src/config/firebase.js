@@ -1,7 +1,6 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
 import "firebase/auth"
-
 const Config =firebase.initializeApp ({
   apiKey: "AIzaSyDmtvr_14sNyH7_2U3iStE_60lDTmRfSfU",
   authDomain: "nospace-92826.firebaseapp.com",
@@ -13,5 +12,6 @@ const Config =firebase.initializeApp ({
   measurementId: "G-7PCV4SN3TE"
 })
 export const firebaseApp=Config.firestore()
-firebase.firestore().settings({timestampsInSnapshots:true})
+
+
 export default Config

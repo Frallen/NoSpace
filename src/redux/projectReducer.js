@@ -4,7 +4,14 @@ const Newproject = "Newproject";
 const NewProjectErr = "NewProjectErr";
 let initialState = {
   Newproject: [],
-  Propjects: []
+  Propjects: [
+    { id: 1, text: "bla bla", Title: "pamagite" },
+    { id: 2, text: "hehe", Title: "pamagite" },
+    { id: 3, text: "tutu", Title: "pamagite" },
+    { id: 4, text: "tutu", Title: "pamagite" },
+    { id: 5, text: "tutu", Title: "pamagite" },
+    { id: 6, text: "tutu", Title: "pamagite" },
+  ]
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -27,14 +34,14 @@ const dashboardReducer = (state = initialState, action) => {
 
 export const CreateNewproject = project => {
   return (dispatch, { getFirestore, getFirebase }) => {
-   //вызван экпортом
+    //вызван экпортом
     firebaseApp
       .collection("Projects")
       .add({
-        ...project,
-        Title: "Stratigic",
+        ...project
+        /*   Title: "Stratigic",
         Text: "ha ha ha no plan",
-        Target: "Make Money"
+        Target: "Make Money"*/
       })
       .then(() => {
         dispatch({ type: Newproject, project });
