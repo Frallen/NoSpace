@@ -1,20 +1,14 @@
 .formbox {
   display: flex;
   justify-content: center;
-  margin: 50px 0;
+  margin: 10rem 0;
   .form {
-    border: 2px solid #cecece;
-    padding: 20px 15px;
+    padding: 4vmin;
+    background: #ffe66d;
     .formtitle {
       color: #5a5252;
       font-size: 1.5em;
     }
-    label {
-      display: block;
-      color: #5a5252;
-      padding: 8px 0px;
-    }
-
     .submited {
       border: none;
       outline: none;
@@ -23,11 +17,10 @@
       color: #fff;
       background: #4b4950;
       transition: 0.2s ease-in-out;
-      
     }
     .submited:hover {
       transition: 0.2s ease-in-out;
-      background: #00D2FC;
+      background: #00d2fc;
     }
   }
 }

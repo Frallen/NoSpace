@@ -14,11 +14,12 @@ class dashBox extends React.Component {
 let mapStateToProps = state => {
     return {
     Projects: state.project.Propjects,
-   // firestore:state.firestore.ordered.projects
+  // firestore:state.firestore.ordered.projects
   };
 };
 
 export default compose(
+ // firestoreConnect(["Projects"]),
   connect(mapStateToProps),
- // firestoreConnect([{ collection: "Projects" }])
+ 
 )(dashBox);

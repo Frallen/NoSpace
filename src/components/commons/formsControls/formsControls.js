@@ -1,23 +1,23 @@
 import React from "react"
+import TextField from "@material-ui/core/TextField"
 import classes from "./formsControls.module.scss"
-export const authInput=({input,meta,...props})=>{
+import InputLabel from '@material-ui/core/InputLabel';
 
+export const authInput=({input,meta,...props})=>{
     const HasError=meta.touched && meta.error
-    return(
-        <div>
-        <input {...input} {...props} className={classes.Input+" "+(HasError ? classes.errorInput:"")}></input>
-    {HasError && <div className={classes.reqError}><p>{meta.error}</p></div>}
-    </div>
-    )
+    return<div>
+       <TextField {...input} {...props} className={classes.Input}></TextField>
+    <InputLabel htmlFor="component-error" className={HasError && classes.reqError}>{HasError &&meta.error}</InputLabel>
+    </div> 
 }
 
 export const ProjectInput=({input,meta,...props})=>{
     const HasError=meta.touched && meta.error
-    return(
-        <div>
-            <input {...input} {...props} className={classes.projinput+" "+(HasError?classes.errorInput:"")}></input>
+    return<div>
+            <TextField {...input} {...props} className={classes.projinput}></TextField>
+            <InputLabel htmlFor="component-error" className={HasError && classes.reqError}>{HasError &&meta.error}</InputLabel>
         </div>
-    )
+    
 }
 
 export const ProjectTextArea=({input,meta,...props})=>{

@@ -3,14 +3,19 @@ export const required = value => {
   return "Это обязательное поле";
 };
 
+export const OnlyLetters = value => {
+  if (!/^[a-zA-Z\s]*$/.test(value)) return `ФИО должен состоять только из букв`;
+  return undefined;
+};
+
 export const PasswordCheck = MinValue => value => {
-  
-  if (value.length < MinValue) return `Пароль не может быть меньше ${MinValue} символов`;
+  if (value.length < MinValue)
+    return `Пароль не может быть меньше ${MinValue} символов`;
   return undefined;
 };
 export const ProjectNameCheck = MinValue => value => {
-  
-  if (value.length < MinValue) return `Проект не может имень название меньше ${MinValue} символов`;
+  if (value.length < MinValue)
+    return `Проект не может имень название меньше ${MinValue} символов`;
   return undefined;
 };
 /*

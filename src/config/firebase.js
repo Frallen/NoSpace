@@ -1,7 +1,7 @@
-import * as firebase from "firebase/app"
+import firebase from "firebase/app"
 import "firebase/firestore"
 import "firebase/auth"
-const Config =firebase.initializeApp ({
+const Config ={
   apiKey: "AIzaSyDmtvr_14sNyH7_2U3iStE_60lDTmRfSfU",
   authDomain: "nospace-92826.firebaseapp.com",
   databaseURL: "https://nospace-92826.firebaseio.com",
@@ -10,8 +10,9 @@ const Config =firebase.initializeApp ({
   messagingSenderId: "72903438209",
   appId: "1:72903438209:web:54d0fe5e69cacb1b578280",
   measurementId: "G-7PCV4SN3TE"
-})
-export const firebaseApp=Config.firestore()
+}
+//export const firebaseApp=Config.firestore()
+firebase.initializeApp(Config)
+firebase.firestore()
 
-
-export default Config
+export default firebase

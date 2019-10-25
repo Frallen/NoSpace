@@ -1,8 +1,10 @@
 .Input {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 8px;
+  /* padding: 0.5rem 0.9rem;
   outline: none;
+  border: none;
+  border-radius: 20px;*/
 }
 
 .errorInput {
@@ -14,12 +16,11 @@
   border: none;
   outline: none;
   width: 100%;
-  border-radius: 24px;
   padding: 10px 10px;
   box-sizing: border-box;
 }
 
-.textarea{
+.textarea {
   width: 100%;
   outline: none;
   box-sizing: border-box;
@@ -31,10 +32,13 @@
 }
 
 .reqError {
-  padding: 10px;
-  background: #f52f2f;
-  color: #fff;
-  animation: showError 0.4s ease-in-out;
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 20px;
+  text-align: center;
+  background: #fff;
+  color: #292f36;
+  animation: showError 0.5s ease-in-out;
 }
 
 //animation

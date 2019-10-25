@@ -1,34 +1,34 @@
 @import "normalize.css";
-h1,h2,h3,h4,h5{
+h1,
+h2,
+h3,
+h4,
+h5 {
   padding: 0;
   margin: 0;
 }
 
-body{
-  font-family: 'PT Sans', sans-serif;
-
+body {
+  font-family: "PT Sans", sans-serif;
+  background: #333;
 }
 
-ul{
+ul {
   padding: 0;
   margin: 0;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-p{
+p {
   padding: 0;
   margin: 0;
 }
-body{
-  background: #161A21;
-}
-.container{
+
+.container {
   max-width: 1140px;
   margin: 0 auto;
   padding: 0 10px;
 }
-
-

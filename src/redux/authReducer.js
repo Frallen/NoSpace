@@ -17,10 +17,12 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
-
+/*
 export const UserisAuth = (email, password) => ({
   type: AuthUser,
   data: { email, password }
 });
+*/
+
 
 export default authReducer;

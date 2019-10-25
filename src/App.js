@@ -3,8 +3,8 @@ import "./App.scss";
 import { Route,Switch } from "react-router-dom";
 import NavigationContainer from "./components/Navigation/navigationContainer";
 import HomePage from "./components/Homepage/home";
-import LoginContainer from "./components/auth/loginContainer"
-import SignupContainer from "./components/auth/signupContainer";
+import LoginContainer from "./components/auth/login/loginContainer"
+import SignupContainer from "./components/auth/signup/signupContainer";
 import ProjectsContainer from "./components/Project/projects/ProjectsContainer";
 import CreateContainer from "./components/Project/create/createContainer";
 
