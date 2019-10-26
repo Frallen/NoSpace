@@ -5,13 +5,15 @@ import Navigation from "./navigation"
 class navigationBox extends React.Component{
 
     render(){
-        return <Navigation></Navigation>
+        return <Navigation {...this.props}></Navigation>
         
     }
 }
 
-let mapStateToProps=(state)=>{
-
+let mapStateToProps=({firebase})=>{
+    return{
+        loggedIn:firebase.auth.uid
+    }
 }
 
 const NavigationContainer=connect(mapStateToProps)(navigationBox)

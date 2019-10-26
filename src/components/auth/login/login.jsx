@@ -3,27 +3,46 @@ import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { required, PasswordCheck } from "../../../untils/validators/validators";
 import { authInput } from "../../../components/commons/formsControls/formsControls";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LockIcon from "@material-ui/icons/Lock";
+import EmailIcon from "@material-ui/icons/Email";
 
 const MinValue = PasswordCheck(5);
 const FormBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <div>
-       <Field
+      <div className={classes.flexspace}>
+        <Field
           component={authInput}
           type="email"
           name="email"
           label="Почта"
           validate={[required]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
-      <div>
-      <Field
+      <div className={classes.flexspace}>
+        <Field
           component={authInput}
           type="password"
           name="password"
           label="Пароль"
           validate={[required, MinValue]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <div>

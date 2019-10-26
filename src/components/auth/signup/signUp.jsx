@@ -7,18 +7,16 @@ import {
   PasswordCheck,
   OnlyLetters
 } from "../../../untils/validators/validators";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import clsx from "clsx"
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import PersonIcon from "@material-ui/icons/Person";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-
-const MinValue = PasswordCheck(5);
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LockIcon from "@material-ui/icons/Lock";
+import EmailIcon from "@material-ui/icons/Email";
+import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { useSnackbar } from "notistack";
+//firestore вроде как принимает пароли от 8 символов
+const MinValue = PasswordCheck(8);
 
 const SignUpBox = props => {
-  console.log(props.error);
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={classes.flexspace}>
@@ -28,6 +26,14 @@ const SignUpBox = props => {
           label="ФИО"
           name="FIO"
           validate={[required, OnlyLetters]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountBoxOutlinedIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <div className={classes.flexspace}>
@@ -37,6 +43,14 @@ const SignUpBox = props => {
           label="Никнейм"
           name="username"
           validate={[required]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <div className={classes.flexspace}>
@@ -46,6 +60,14 @@ const SignUpBox = props => {
           label="Почта"
           name="email"
           validate={[required]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <div className={classes.flexspace}>
@@ -55,6 +77,14 @@ const SignUpBox = props => {
           label="Пароль"
           name="password"
           validate={[required, MinValue]}
+          //иконки
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            )
+          }}
         />
       </div>
       <div>
@@ -74,12 +104,18 @@ const SignUp = props => {
   let onSubmit = formData => {
     props.NewUser(formData);
   };
+  const { enqueueSnackbar } = useSnackbar();
+  let message = "Такая почта или никейм уже имеется";
   return (
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Регистрация</h5>
         <SignUpForm onSubmit={onSubmit} {...props.loading}></SignUpForm>
-        {props.error&&<div>{props.error}</div>}
+        {props.error &&
+          enqueueSnackbar(message, {
+            variant: "error",
+            preventDuplicate: true
+          })}
       </div>
     </div>
   );

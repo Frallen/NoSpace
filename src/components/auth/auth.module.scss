@@ -1,15 +1,19 @@
 .formbox {
   display: flex;
   justify-content: center;
-  margin: 10rem 0;
+  margin: 4rem 0;
   .form {
     padding: 4vmin;
     background: #ffe66d;
+    .flexspace{
+      padding-top:2rem;
+    }
     .formtitle {
       color: #5a5252;
       font-size: 1.5em;
     }
     .submited {
+      width: 100%;
       border: none;
       outline: none;
       margin-top: 1.1em;
@@ -20,7 +24,15 @@
     }
     .submited:hover {
       transition: 0.2s ease-in-out;
-      background: #00d2fc;
+      background: #fff;
+      color:#4b4950;
     }
   }
+}
+
+
+.error{
+  position: absolute;
+  padding: 20px;
+  background: #f51a1a;
 }

@@ -1,21 +1,20 @@
 import React from "react"
 import TextField from "@material-ui/core/TextField"
 import classes from "./formsControls.module.scss"
-import InputLabel from '@material-ui/core/InputLabel';
 
 export const authInput=({input,meta,...props})=>{
     const HasError=meta.touched && meta.error
     return<div>
        <TextField {...input} {...props} className={classes.Input}></TextField>
-    <InputLabel htmlFor="component-error" className={HasError && classes.reqError}>{HasError &&meta.error}</InputLabel>
-    </div> 
+    {HasError &&<div className={classes.reqError}>{HasError &&meta.error}</div>}
+ </div> 
 }
 
 export const ProjectInput=({input,meta,...props})=>{
     const HasError=meta.touched && meta.error
     return<div>
             <TextField {...input} {...props} className={classes.projinput}></TextField>
-            <InputLabel htmlFor="component-error" className={HasError && classes.reqError}>{HasError &&meta.error}</InputLabel>
+            {HasError &&<div className={classes.reqError}>{HasError &&meta.error}</div>}
         </div>
     
 }

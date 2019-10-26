@@ -1,6 +1,7 @@
 import { firestoreReducer, getFirebase, reactReduxFirebase } from "react-redux-firebase";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { getFirestore, reduxFirestore,createFirestoreInstance } from "redux-firestore";
+import { getFirestore, reduxFirestore} from "redux-firestore";
+import { firebaseReducer } from 'react-redux-firebase';
 import { reducer as formReducer } from "redux-form";
 import firebase from "./../config/firebase"
 
@@ -9,32 +10,33 @@ import authReducer from "./authReducer";
 import NavigationReducer from "./navigationReducer";
 import projectReducer from "./projectReducer";
 import registrationReducer from "./registrationReducer";
-import usersReducer from "./usersReducer";
 
 let reducers = combineReducers({
   Navigation: NavigationReducer,
-  Users: usersReducer,
   Auth: authReducer,
   Regis: registrationReducer,
   form: formReducer,
   project: projectReducer,
-  firestore:firestoreReducer,
+  firebase:firebaseReducer,
+   firestore:firestoreReducer,
+ 
 });
 
 const rrfConfig = {
-  userProfile: 'users',
-  useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+  userProfile: "users",
+  useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
+  attachAuthIsReady: true, 
 }
-/*
-const rrfProps = {
-    firebase,
-    config: rrfConfig,
-    dispatch: store.dispatch,
-    createFirestoreInstance // <- needed if using firestore
-  }*/
+// ДЛЯ РАСШИРЕНИЯ В ХРОМЕ
+const composeEnhancers =
+  process.env.NODE_ENV === 'development'
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    : compose;
+////////// 
+
 let store = createStore(
   reducers,
-  compose(
+  composeEnhancers(
     reactReduxFirebase(firebase,rrfConfig),
     reduxFirestore(firebase),
     applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),

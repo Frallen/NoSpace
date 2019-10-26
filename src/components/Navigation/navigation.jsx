@@ -12,8 +12,55 @@ class Navigation extends React.Component {
       isActive: !this.state.isActive
     });
   };
-
+  
   render() {
+    let routes;
+    if(this.props.loggedIn){
+      routes=(
+        <ul className={this.state.isActive ?classes.menuLandingAcitve:classes.menuLanding}>
+        <li className={classes.item}>
+          <NavLink to="/" className={classes.login}>
+            Главная
+          </NavLink>
+        </li>
+        
+        <li className={classes.item}>
+          <NavLink to="/create" className={classes.login}>
+            Создать
+          </NavLink>
+        </li>
+        <li className={classes.item}>
+          <NavLink to="/projects" className={classes.login}>
+            Проекты
+          </NavLink>
+        </li>
+        </ul>
+      )
+      }else{
+        routes=(
+          <ul className={this.state.isActive ?classes.menuLandingAcitve:classes.menuLanding}>
+          <li className={classes.item}>
+            <NavLink to="/" className={classes.login}>
+              Главная
+            </NavLink>
+          </li>
+  
+          <li className={classes.item}>
+            <NavLink to="/signup" className={classes.login}>
+              Регистрация
+            </NavLink>
+          </li>
+          <li className={classes.item}>
+            <NavLink to="/login" className={classes.login}>
+              Вход
+            </NavLink>
+          </li>
+  
+        </ul>
+        )
+  
+        
+      }
   
     return (
       <div className={classes.Navigatigon}>
@@ -29,23 +76,7 @@ class Navigation extends React.Component {
             ></span>
           </label>
           <input type="checkbox" hidden id="toggle" onClick={this.Setactive} />
-          <ul className={this.state.isActive ?classes.menuLandingAcitve:classes.menuLanding}>
-            <li className={classes.item}>
-              <NavLink to="/" className={classes.login}>
-                Главная
-              </NavLink>
-            </li>
-            <li className={classes.item}>
-              <NavLink to="/signup" className={classes.login}>
-                Регистрация
-              </NavLink>
-            </li>
-            <li className={classes.item}>
-              <NavLink to="/login" className={classes.login}>
-                Вход
-              </NavLink>
-            </li>
-          </ul>
+        {routes}
         </div>
       </div>
     );

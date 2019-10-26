@@ -1,10 +1,6 @@
 .Input {
   width: 100%;
   box-sizing: border-box;
-  /* padding: 0.5rem 0.9rem;
-  outline: none;
-  border: none;
-  border-radius: 20px;*/
 }
 
 .errorInput {
@@ -32,6 +28,7 @@
 }
 
 .reqError {
+  font-size: 0.8rem;
   margin-top: 0.5rem;
   padding: 0.6rem 0.8rem;
   border-radius: 20px;
