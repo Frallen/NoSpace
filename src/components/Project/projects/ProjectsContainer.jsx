@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import React from "react";
 import Projects from "./Projects";
 import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
 class dashBox extends React.Component {
   componentDidMount() {}
 
