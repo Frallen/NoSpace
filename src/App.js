@@ -17,7 +17,7 @@ let routes;
 if(loggedIn){
   routes=(
     <Switch>
-    <Route exact path={"/"} render={()=><HomePage></HomePage>}></Route>
+   
     <Route path={"/projects"} render={()=><ProjectsContainer></ProjectsContainer>}></Route>
     <Route path={"/create"} render={()=><CreateContainer></CreateContainer>}></Route>
     <Route path={"/logout"} render={()=><LogOut></LogOut>}></Route>
@@ -27,7 +27,7 @@ if(loggedIn){
 }else{
   routes=(
     <Switch>  
-        <Route exact path={"/"} render={()=><HomePage></HomePage>}></Route>
+     
      <Route path={"/login"} render={ ()=><LoginContainer></LoginContainer>}></Route>
       <Route path={"/signup"} render={ ()=><SignupContainer></SignupContainer>}></Route>
       <Redirect to={"/"}></Redirect>

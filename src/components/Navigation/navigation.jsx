@@ -76,12 +76,7 @@ class Navigation extends React.Component {
         <div className={classes.container}>
           <h1 className={classes.logo}>NoSpace</h1>
           <label htmlFor="toggle" className={classes.hamburgerbox}>
-            <span
-              className={
-                classes.hamburger +
-                " " +
-                (this.state.isActive ? classes.activehamburger : "")
-              }
+            <span className={classes.hamburger +" " +(this.state.isActive ? classes.activehamburger : "")}
             ></span>
           </label>
           <input type="checkbox" hidden id="toggle" onClick={this.Setactive} />
