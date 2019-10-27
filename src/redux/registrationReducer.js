@@ -66,3 +66,28 @@ export const SignUpUsers = data => async (
   }
   dispatch({ type: RegEnd });
 };
+
+export const signOut = () => async (dispatch, getState, { getFirebase }) => {
+  const firebase = getFirebase();
+  try {
+    await firebase.auth().signOut();
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const LogInUser = data => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
+  const firebase = getFirebase();
+  dispatch({ type: RegStart });
+  try {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    dispatch({ type: RegSucces });
+  } catch (err) {
+    dispatch({ type: NewUserEror, payload: err.message });
+  }
+  dispatch({ type: RegEnd });
+};

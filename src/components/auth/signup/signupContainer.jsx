@@ -4,9 +4,6 @@ import {SignUpUsers} from "../../../redux/registrationReducer"
 import SignUp from "./signUp";
 
 
-
-
-
 class SignUpBox extends React.Component{
   componentDidMount(){
   }
@@ -26,5 +23,6 @@ let mapStateToProps=(state)=>{
     
   }
 }
+
 
 export default connect(mapStateToProps,{SignUpUsers})(SignUpBox);

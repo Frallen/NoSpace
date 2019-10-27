@@ -4,7 +4,7 @@ export const required = value => {
 };
 
 export const OnlyLetters = value => {
-  if (!/^[a-zA-Z\s]*$/.test(value)) return `ФИО должен состоять только из букв`;
+  if (!/^[a-zA-Zа-яА-Я\s]*$/.test(value)) return `ФИО должен состоять только из букв`;
   return undefined;
 };
 

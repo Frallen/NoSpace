@@ -7,7 +7,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 
-const MinValue = PasswordCheck(5);
+const MinValue = PasswordCheck(8);
 const FormBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -60,7 +60,7 @@ const LoginForm = reduxForm({
 
 const Login = props => {
   let onSubmit = formData => {
-    props.UserisAuth(formData.email, formData.password);
+  props.Userlogin(formData);
   };
   return (
     <div className={classes.formbox}>

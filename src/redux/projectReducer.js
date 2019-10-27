@@ -1,7 +1,6 @@
-import firebase from "../config/firebase";
-
 const Newproject = "Newproject";
 const NewProjectErr = "NewProjectErr";
+
 let initialState = {
   Newproject: [],
   Propjects: [
@@ -44,9 +43,7 @@ export const CreateNewproject = project => async (
       .collection("Projects")
       .add({
         ...project
-        /*   Title: "Stratigic",
-        Text: "ha ha ha no plan",
-        Target: "Make Money"*/
+     
       })
       .then(() => {
         dispatch({ project});

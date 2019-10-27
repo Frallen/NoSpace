@@ -5,11 +5,16 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/redux-store";
-//import {rrfProps} from "./redux/redux-store"
-import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { SnackbarProvider } from "notistack";
+import { Preloader } from "./untils/preloader/preloader";
 
-ReactDOM.render(
+const root=document.getElementById("root")
+//если прлохо грузит или дом не готов то прелоадер
+ReactDOM.render(<Preloader></Preloader>,root)
+
+//если firebase готов то рендерим дом
+store.firebaseAuthIsReady.then(()=>{
+  ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <SnackbarProvider maxSnack={3}>
@@ -17,5 +22,7 @@ ReactDOM.render(
       </SnackbarProvider>
     </Provider>
   </BrowserRouter>,
-  document.getElementById("root")
+  root
 );
+})
+
