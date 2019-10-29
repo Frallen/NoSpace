@@ -6,7 +6,7 @@ import { authInput } from "../../../components/commons/formsControls/formsContro
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
-
+import { useSnackbar } from "notistack";
 const MinValue = PasswordCheck(8);
 const FormBox = props => {
   return (
@@ -15,8 +15,8 @@ const FormBox = props => {
         <Field
           component={authInput}
           type="email"
-          name="email"
           label="Почта"
+          name="email"
           validate={[required]}
           //иконки
           InputProps={{
@@ -32,8 +32,8 @@ const FormBox = props => {
         <Field
           component={authInput}
           type="password"
-          name="password"
           label="Пароль"
+          name="password"
           validate={[required, MinValue]}
           //иконки
           InputProps={{
@@ -46,7 +46,7 @@ const FormBox = props => {
         />
       </div>
       <div>
-        <button type="submit" className={classes.submited}>
+        <button className={classes.submited} disabled={props.loading}>
           Войти
         </button>
       </div>
@@ -55,18 +55,25 @@ const FormBox = props => {
 };
 
 const LoginForm = reduxForm({
-  form: "login"
+  form: "Auth"
 })(FormBox);
 
 const Login = props => {
+  const { enqueueSnackbar } = useSnackbar();
+  //let message = "Такая почта или никейм уже имеется";
   let onSubmit = formData => {
-  props.Userlogin(formData);
+    props.Userlogin(formData);
   };
   return (
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Вход</h5>
-        <LoginForm onSubmit={onSubmit}></LoginForm>
+        <LoginForm onSubmit={onSubmit} {...props.loading}></LoginForm>
+        {props.error &&
+          enqueueSnackbar(props.error, {
+            variant: "error",
+            preventDuplicate: true
+          })}
       </div>
     </div>
   );

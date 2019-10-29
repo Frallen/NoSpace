@@ -15,10 +15,10 @@ let reducers = combineReducers({
   Navigation: NavigationReducer,
   Auth: authReducer,
   Regis: registrationReducer,
-  form: formReducer,
   project: projectReducer,
+  form: formReducer,
   firebase:firebaseReducer,
-   firestore:firestoreReducer,
+  firestore:firestoreReducer,
  
 });
 

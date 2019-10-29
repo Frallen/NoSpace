@@ -1,28 +1,52 @@
-const AuthUser = "AuthUser";
-
+const NewUserEror = "NewUserEror";
+const RegSucces = "RegSucces";
+const RegStart = "RegStart";
+const RegEnd = "RegEnd";
 let initialState = {
-  email: null,
-  password: null
+  error: null,
+  loading: false
 };
 
 const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case AuthUser:
+   switch (action.type) {
+    case RegSucces:
       return {
         ...state,
-        ...action.data
+        error: false
+      };
+    case NewUserEror:
+      return {
+        ...state,
+        error: action.payload
+      };
+   
+    case RegStart:
+      return {
+        ...state,
+        loading: true
+      };
+    case RegEnd:
+      return {
+        ...state,
+        loading: false
       };
 
     default:
       return state;
   }
 };
-/*
-export const UserisAuth = (email, password) => ({
-  type: AuthUser,
-  data: { email, password }
-});
-*/
-
 
 export default authReducer;
+
+
+export const LogInUser = data => async (dispatch,getState,{ getFirebase }) => {
+  const firebase = getFirebase();
+  dispatch({ type: RegStart });
+  try {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    dispatch({ type: RegSucces });
+  } catch (err) {
+    dispatch({ type: NewUserEror, payload: err.message });
+  }
+  dispatch({ type: RegEnd });
+};

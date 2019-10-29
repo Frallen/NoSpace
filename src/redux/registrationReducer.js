@@ -2,14 +2,13 @@ const NewUserEror = "NewUserEror";
 const RegSucces = "RegSucces";
 const RegStart = "RegStart";
 const RegEnd = "RegEnd";
-
 let initialState = {
   error: null,
   loading: false
 };
 
 const registrationReducer = (state = initialState, action) => {
-  switch (action.type) {
+   switch (action.type) {
     case RegSucces:
       return {
         ...state,
@@ -20,6 +19,7 @@ const registrationReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
+   
     case RegStart:
       return {
         ...state,
@@ -70,24 +70,9 @@ export const SignUpUsers = data => async (
 export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   try {
-    await firebase.auth().signOut();
+  await firebase.auth().signOut();
   } catch (err) {
     console.log(err.message);
   }
 };
 
-export const LogInUser = data => async (
-  dispatch,
-  getState,
-  { getFirebase }
-) => {
-  const firebase = getFirebase();
-  dispatch({ type: RegStart });
-  try {
-    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
-    dispatch({ type: RegSucces });
-  } catch (err) {
-    dispatch({ type: NewUserEror, payload: err.message });
-  }
-  dispatch({ type: RegEnd });
-};
