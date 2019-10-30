@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { authInput } from "../../../components/commons/formsControls/formsControls";
@@ -100,10 +100,19 @@ const SignUpForm = reduxForm({
   form: "signUp"
 })(SignUpBox);
 
-const SignUp = props => {
+const SignUp = (props) => {
+
+  
   let onSubmit = formData => {
     props.NewUser(formData);
   };
+
+    useEffect(()=>{
+    return()=>{
+      props.CleanUP()
+    }
+  },[props.CleanUP])
+  
   const { enqueueSnackbar } = useSnackbar();
   let message = "Такая почта или никейм уже имеется";
   return (
@@ -114,7 +123,8 @@ const SignUp = props => {
         {props.error &&
           enqueueSnackbar(message, {
             variant: "error",
-            preventDuplicate: true
+            preventDuplicate: true,
+            autoHideDuration: 3000,
           })}
       </div>
     </div>

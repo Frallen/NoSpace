@@ -2,13 +2,22 @@ const NewUserEror = "NewUserEror";
 const RegSucces = "RegSucces";
 const RegStart = "RegStart";
 const RegEnd = "RegEnd";
+const CleanUp = "CleanUp";
+const VeryfiStart = "VeryfiStart";
+const VeryfiSucsess = "VeryfiStart";
+const VeryfiFail = "VeryfiStart";
+
 let initialState = {
   error: null,
-  loading: false
+  loading: false,
+  verifyemail: {
+    error: null,
+    loading: false
+  }
 };
 
 const registrationReducer = (state = initialState, action) => {
-   switch (action.type) {
+  switch (action.type) {
     case RegSucces:
       return {
         ...state,
@@ -19,7 +28,7 @@ const registrationReducer = (state = initialState, action) => {
         ...state,
         error: action.payload
       };
-   
+
     case RegStart:
       return {
         ...state,
@@ -30,7 +39,25 @@ const registrationReducer = (state = initialState, action) => {
         ...state,
         loading: false
       };
-
+    case CleanUp:
+      return {
+        ...state,
+        error: null,verifyemail:{...state.verifyemail,loading:false,error:null}
+      };
+    case VeryfiStart:
+      return {
+        ...state,verifyemail:{...state.verifyemail,loading:true}
+      };
+      case VeryfiSucsess:{
+        return{
+          ...state,verifyemail:{...state.verifyemail,loading:false,error:false}
+        }
+      }
+    case VeryfiFail: {
+      return {
+        ...state,verifyemail:{...state.verifyemail,error:action.payload}
+      };
+    }
     default:
       return state;
   }
@@ -38,6 +65,7 @@ const registrationReducer = (state = initialState, action) => {
 
 export default registrationReducer;
 
+//регистрация
 export const SignUpUsers = data => async (
   dispatch,
   getState,
@@ -51,6 +79,10 @@ export const SignUpUsers = data => async (
       .auth()
       //специальная firestore функция в которую передаются данные
       .createUserWithEmailAndPassword(data.email, data.password);
+    //верфикация емейла
+    const user = firebase.auth().currentUser;
+    await user.sendEmailVerification();
+
     await firestore
       //в коллекцию юзерс передаются юзер айди и ставятся дополнительные данные
       .collection("users")
@@ -62,17 +94,47 @@ export const SignUpUsers = data => async (
     dispatch({ type: RegSucces });
   } catch (err) {
     dispatch({ type: NewUserEror, payload: err.message });
-    console.log(err.message);
+  }
+  dispatch({ type: RegEnd });
+};
+//выход
+export const signOut = () => async (dispatch, getState, { getFirebase }) => {
+  const firebase = getFirebase();
+  try {
+    await firebase.auth().signOut();
+  } catch (err) {}
+};
+
+//логин
+export const LogInUser = data => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
+  const firebase = getFirebase();
+  dispatch({ type: RegStart });
+  try {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    dispatch({ type: RegSucces });
+  } catch (err) {
+    dispatch({ type: NewUserEror, payload: err.message });
   }
   dispatch({ type: RegEnd });
 };
 
-export const signOut = () => async (dispatch, getState, { getFirebase }) => {
-  const firebase = getFirebase();
-  try {
-  await firebase.auth().signOut();
-  } catch (err) {
-    console.log(err.message);
-  }
-};
+//чистка ошибок
+export const Clean = () => ({ type: CleanUp });
 
+// верификация емейла
+export const verifyEmail=()=>async(dispatch,getState,{getFirebase})=>{
+  const firebase = getFirebase();
+  try{
+    dispatch({type:VeryfiStart})
+    const user = firebase.auth().currentUser
+    await user.sendEmailVerification()
+    dispatch({type:VeryfiSucsess})
+  }
+  catch(err){
+    dispatch({type:VeryfiFail,payload:err.message})
+  }
+}

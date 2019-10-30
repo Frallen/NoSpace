@@ -1,17 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import {SignUpUsers} from "../../../redux/registrationReducer"
+import {SignUpUsers,Clean} from "../../../redux/registrationReducer"
 import SignUp from "./signUp";
 
 
 class SignUpBox extends React.Component{
-  componentDidMount(){
+  CleanUP=()=>{
+    this.props.Clean()
   }
   NewUser=(formdata)=>{
       this.props.SignUpUsers(formdata)
     }
   render(){
-    return<SignUp {...this.props} NewUser={this.NewUser}></SignUp>
+    return<SignUp {...this.props} NewUser={this.NewUser} CleanUP={this.CleanUP}></SignUp>
   }
 }
 
@@ -25,4 +26,4 @@ let mapStateToProps=(state)=>{
 }
 
 
-export default connect(mapStateToProps,{SignUpUsers})(SignUpBox);
+export default connect(mapStateToProps,{SignUpUsers,Clean})(SignUpBox);
