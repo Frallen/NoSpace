@@ -5,14 +5,14 @@ import SignUp from "./signUp";
 
 
 class SignUpBox extends React.Component{
-  CleanUP=()=>{
+  CleanUp=()=>{
     this.props.Clean()
   }
   NewUser=(formdata)=>{
       this.props.SignUpUsers(formdata)
     }
   render(){
-    return<SignUp {...this.props} NewUser={this.NewUser} CleanUP={this.CleanUP}></SignUp>
+    return<SignUp {...this.props} NewUser={this.NewUser} CleanUp={this.CleanUp}></SignUp>
   }
 }
 

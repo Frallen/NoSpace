@@ -7,10 +7,10 @@ import LoginContainer from "./components/auth/login/loginContainer";
 import SignupContainer from "./components/auth/signup/signupContainer";
 import ProjectsContainer from "./components/Project/projects/ProjectsContainer";
 import CreateContainer from "./components/Project/create/createContainer";
-import RecoverContainer from "./untils/RecoverPassword/recoverContainer"
 import { connect } from "react-redux";
 import LogOut from "./components/auth/LogOut/LogOut";
 import Email from "./untils/EmailVerification/EmailContainer";
+import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer";
 
 const App = ({ loggedIn, emailVerified }) => {
   let routes;

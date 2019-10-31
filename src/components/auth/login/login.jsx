@@ -1,7 +1,7 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import { required, PasswordCheck } from "../../../untils/validators/validators";
 import { authInput } from "../../../components/commons/formsControls/formsControls";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -10,7 +10,6 @@ import EmailIcon from "@material-ui/icons/Email";
 import { useSnackbar } from "notistack";
 const MinValue = PasswordCheck(8);
 const FormBox = props => {
-
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={classes.flexspace}>
@@ -60,35 +59,39 @@ const LoginForm = reduxForm({
   form: "Auth"
 })(FormBox);
 
-const Login = (props) => {
-
-
-
-  const { enqueueSnackbar } = useSnackbar();
+const Login = props => {
   //let message = "Такая почта или никейм уже имеется";
-  let onSubmit = formData => {
-    props.Userlogin(formData);
-  };
   let message = "Неправильный пароль или емейл";
-useEffect(()=>{
-  return()=>{
-    props.CleanUP()
-  }
-},[props.CleanUP])
+  const { enqueueSnackbar } = useSnackbar();
+  let onSubmit = (formData) => {
+    props.Userlogin(formData);
 
+   
+  };
+ if (props.error) {
+      enqueueSnackbar(message, {
+        variant: "error",
+        preventDuplicate: true,
+        autoHideDuration: 3000
+      });
+    }
+  useEffect(() => {
+    return () => {
+      props.CleanUp();
+    };
+  }, [props.CleanUp]);
 
   return (
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Вход</h5>
-        <LoginForm onSubmit={onSubmit} {...props.loading}></LoginForm>
-        {props.error &&
-          enqueueSnackbar(message, {
-            variant: "error",
-            preventDuplicate: true,
-            autoHideDuration: 3000,
-          })}
-          <NavLink to={"/recover-password"} className={classes.recoverPass}>Забыли пароль?</NavLink>
+        <LoginForm
+          onSubmit={onSubmit}
+          {...props.loading}
+        ></LoginForm>
+        <NavLink to={"/recover-password"} className={classes.recoverPass}>
+          Забыли пароль?
+        </NavLink>
       </div>
     </div>
   );

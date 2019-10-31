@@ -8,11 +8,11 @@ class AuthBox extends React.Component{
 
    this.props.LogInUser(data)
   }
-  CleanUP=()=>{
+  CleanUp=()=>{
     this.props.Clean()
   }
   render(){
-    return<Login {...this.props} Userlogin={this.Userlogin} CleanUP={this.CleanUP}></Login>
+    return<Login {...this.props} Userlogin={this.Userlogin} CleanUp={this.CleanUp}></Login>
   }
 }
 

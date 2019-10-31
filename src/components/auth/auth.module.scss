@@ -11,6 +11,9 @@
     .formtitle {
       color: #5a5252;
       font-size: 1.5rem;
+      @media (max-width:300px) {
+        text-align: center;
+      }
     }
     .submited {
       display: inline-block;
@@ -22,6 +25,7 @@
       color: #fff;
       background: #4b4950;
       transition: 0.2s ease-in-out;
+      cursor: pointer;
     }
     .submited:hover {
       transition: 0.2s ease-in-out;
@@ -37,6 +41,12 @@
       width: 100%;
       padding: 0.5rem 1rem;
       text-decoration: none;
+      transition: 0.2s ease-in-out;
+    }
+    .recoverPass:hover{
+      background: #4b4950;
+      color: #fff;
+      transition: 0.2s ease-in-out;
     }
   }
 }

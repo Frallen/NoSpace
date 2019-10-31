@@ -109,9 +109,9 @@ const SignUp = (props) => {
 
     useEffect(()=>{
     return()=>{
-      props.CleanUP()
+      props.CleanUp()
     }
-  },[props.CleanUP])
+  },[props.CleanUp])
   
   const { enqueueSnackbar } = useSnackbar();
   let message = "Такая почта или никейм уже имеется";

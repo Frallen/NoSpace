@@ -17,7 +17,7 @@ store.firebaseAuthIsReady.then(()=>{
   ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <SnackbarProvider maxSnack={3}>
+      <SnackbarProvider maxSnack={10}>
         <App />
       </SnackbarProvider>
     </Provider>

@@ -6,11 +6,18 @@ const CleanUp = "CleanUp";
 const VeryfiStart = "VeryfiStart";
 const VeryfiSucsess = "VeryfiStart";
 const VeryfiFail = "VeryfiStart";
+const RecoverStart = "RecoverStart";
+const RecoverSucsess = "RecoverSucsess";
+const RecvoerFail = "RecvoerFail";
 
 let initialState = {
   error: null,
   loading: false,
   verifyemail: {
+    error: null,
+    loading: false
+  },
+  recoverpass: {
     error: null,
     loading: false
   }
@@ -42,22 +49,44 @@ const registrationReducer = (state = initialState, action) => {
     case CleanUp:
       return {
         ...state,
-        error: null,verifyemail:{...state.verifyemail,loading:false,error:null}
+        error: null,
+        verifyemail: { ...state.verifyemail, loading: false, error: null }
       };
     case VeryfiStart:
       return {
-        ...state,verifyemail:{...state.verifyemail,loading:true}
+        ...state,
+        verifyemail: { ...state.verifyemail, loading: true }
       };
-      case VeryfiSucsess:{
-        return{
-          ...state,verifyemail:{...state.verifyemail,loading:false,error:false}
-        }
-      }
-    case VeryfiFail: {
+    case VeryfiSucsess: {
       return {
-        ...state,verifyemail:{...state.verifyemail,error:action.payload}
+        ...state,
+        verifyemail: { ...state.verifyemail, loading: false, error: false }
       };
     }
+    case VeryfiFail:
+      return {
+        ...state,
+        verifyemail: { ...state.verifyemail, error: action.payload }
+      };
+
+    case RecoverStart:
+      return {
+        ...state,
+        loading: true
+      };
+    case RecoverSucsess:
+      return {
+        ...state,
+        loading: false,
+        error: null
+      };
+
+    case RecvoerFail:
+      return {
+        ...state,
+        error: action.payload
+      };
+
     default:
       return state;
   }
@@ -126,15 +155,33 @@ export const LogInUser = data => async (
 export const Clean = () => ({ type: CleanUp });
 
 // верификация емейла
-export const verifyEmail=()=>async(dispatch,getState,{getFirebase})=>{
+export const verifyEmail = () => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
   const firebase = getFirebase();
-  try{
-    dispatch({type:VeryfiStart})
-    const user = firebase.auth().currentUser
-    await user.sendEmailVerification()
-    dispatch({type:VeryfiSucsess})
+  try {
+    dispatch({ type: VeryfiStart });
+    const user = firebase.auth().currentUser;
+    await user.sendEmailVerification();
+    dispatch({ type: VeryfiSucsess });
+  } catch (err) {
+    dispatch({ type: VeryfiFail, payload: err.message });
   }
-  catch(err){
-    dispatch({type:VeryfiFail,payload:err.message})
+};
+
+export const RecoverPass = data => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
+  const firebase = getFirebase();
+  dispatch({ type: RecoverStart });
+  try {
+    await firebase.auth().sendPasswordResetEmail(data.email);
+    dispatch({ type: RecoverSucsess });
+  } catch (err) {
+    dispatch({ type: RecvoerFail, payload: err.message });
   }
-}
+};
