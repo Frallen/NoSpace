@@ -13,8 +13,3 @@ export const PasswordCheck = MinValue => value => {
     return `Пароль не может быть меньше ${MinValue} символов`;
   return undefined;
 };
-export const ProjectNameCheck = MinValue => value => {
-  if (value.length < MinValue)
-    return `Проект не может имень название меньше ${MinValue} символов`;
-  return undefined;
-};

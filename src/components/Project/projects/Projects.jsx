@@ -14,14 +14,14 @@ const Projects = props => {
   
     content = (
       <div>
-          You have no props.projects!</div>
+          You have no projects!</div>
     
     );
   } else if (props.projects[props.userId].project.length === 0) {
     content = (
      
       
-         <div>You have no props.projects!</div>
+         <div>You have no projects!</div>
     
     );
   } else {
@@ -32,14 +32,14 @@ const Projects = props => {
           .reverse()
           .map(p => (
             
-            <NavLink to="/" className={classes.projectsBox} key={p.id}>
-            <h2 className={classes.title}>{p.NameProj}</h2>
-            <p className={classes.text}>{p.Text}</p>
+            <div  className={classes.projectsBox} key={p.id}>
+            <h2 className={classes.title}>{p.project.NameProj}</h2>
+            <p className={classes.text}>{p.project.Text}</p>
             <div className={classes.bottom}>
-              <p className={classes.date}>{p.startdate}</p>
-              <p className={classes.date}>{p.enddate}</p>
+              <p className={classes.date}>{p.project.startdate}</p>
+              <p className={classes.date}>{p.project.enddate}</p>
             </div>
-          </NavLink>
+          </div>
           ))
      
     );

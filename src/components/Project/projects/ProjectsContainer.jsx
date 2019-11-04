@@ -13,6 +13,8 @@ let mapStateToProps = ({ firebase,firestore }) => {
   return {
     userId: firebase.auth.uid,
     projects:firestore.data.Projects,
+    loading:firestore.status.requesting,
+    fetched:firestore.status.requested,
   };
 };
 

@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import classes from "./create.module.scss";
 import { Field, reduxForm } from "redux-form";
 import {
@@ -6,14 +6,10 @@ import {
   ProjectTextArea,
   ProjectDate
 } from "../../commons/formsControls/formsControls";
-import {
-  required,
-  ProjectNameCheck
-} from "../../../untils/validators/validators";
-import { useSnackbar } from 'notistack';
+import { required } from "../../../untils/validators/validators";
+import { useSnackbar } from "notistack";
 
 const CreateBox = props => {
-  const minValue = ProjectNameCheck(0);
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
@@ -22,11 +18,16 @@ const CreateBox = props => {
           label="Название проекта"
           type="text"
           name="NameProj"
-          validate={[required, minValue]}
+          validate={[required]}
         />
       </div>
       <div className={classes.flexspace}>
-        <Field component={ProjectTextArea}   label="Описание проекта" name="Text" validate={[required]} />
+        <Field
+          component={ProjectTextArea}
+          label="Описание проекта"
+          name="Text"
+          validate={[required]}
+        />
       </div>
       <div className={classes.flexspace}>
         <Field
@@ -38,13 +39,25 @@ const CreateBox = props => {
       </div>
       <div className={classes.datebox}>
         <div>
-          <Field component={ProjectDate}   label="Начало проекта" name="startdate"   validate={[required]}/>
+          <Field
+            component={ProjectDate}
+            label="Начало проекта"
+            name="startdate"
+            validate={[required]}
+          />
         </div>
         <div>
-          <Field component={ProjectDate}   label="Окнончание проекта" name="enddate"   validate={[required]}/>
+          <Field
+            component={ProjectDate}
+            label="Окнончание проекта"
+            name="enddate"
+            validate={[required]}
+          />
         </div>
       </div>
-      <button className={classes.creabtn} disabled={props.loading}>Создать проект</button>
+      <button className={classes.creabtn} disabled={props.loading}>
+        Создать проект
+      </button>
     </form>
   );
 };
@@ -60,8 +73,8 @@ useEffect(()=>{
   }
 })
 let message = "";
-const { enqueueSnackbar } = useSnackbar(); 
-if (props.error) {
+  const { enqueueSnackbar } = useSnackbar();
+  if (props.error) {
     enqueueSnackbar(props.error, {
       variant: "error",
       preventDuplicate: true,

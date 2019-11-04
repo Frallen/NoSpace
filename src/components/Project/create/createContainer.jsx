@@ -4,7 +4,7 @@ import Create from "./create";
 import { CreateNewproject,CleanUp } from "../../../redux/projectReducer";
 
 class dashBox extends React.Component {
-  componentDidMount() {}
+ 
   NewProject = formData => {
     
     this.props.CreateNewproject(formData);
