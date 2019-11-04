@@ -126,7 +126,7 @@ const Settings = props => {
   ////////////////
   if (!props.profile.isLoaded) return null;
 //отправка данных с формы
-  let SubmitEm = formdata => {
+  let Submit = formdata => {
     props.NewSett(formdata);
   };
 // удалить аккаунт
@@ -139,7 +139,7 @@ const Settings = props => {
         <div>
           <h3>Обновление профиля</h3>
           <SettForm
-            onSubmit={SubmitEm}
+            onSubmit={Submit}
             {...props.loading}
             {...props.profile}
             {...props.auth}

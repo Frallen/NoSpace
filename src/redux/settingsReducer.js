@@ -57,7 +57,7 @@ export const ChangeProfile = data => async (
     //если новый введенный емейл не равен старому то изменяем
     if (data.email !== userEmail && data.email) {
       await user.updateEmail(data.email);
-    
+      await firebase.auth().signOut();
     }
     if (data.FIO !== profile.FIO &&data.FIO) {
       await firestore

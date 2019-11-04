@@ -7,24 +7,12 @@
   border: 2px solid red;
 }
 
-.projinput {
-  background: #e8e8e8;
-  border: none;
-  outline: none;
-  width: 100%;
-  padding: 10px 10px;
-  box-sizing: border-box;
-}
-
 .textarea {
   width: 100%;
   outline: none;
   box-sizing: border-box;
   resize: none;
-  height: 13rem;
-  color: #fff;
   background: transparent;
-  padding: 10px;
 }
 
 .reqError {
@@ -37,7 +25,16 @@
   color: #292f36;
   animation: showError 0.5s ease-in-out;
 }
-
+.reqErrorProj {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 20px;
+  text-align: center;
+  background: #333;
+  color: #32c6e0;
+  animation: showError 0.5s ease-in-out;
+}
 //animation
 
 @keyframes showError {

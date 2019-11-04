@@ -11,9 +11,9 @@
     grid-auto-rows: max-content;
     justify-content: center;
     .dangerbutton {
-      background: #fff;
-      color: #333;
-      box-shadow: 0px 2px 12px 3px red;
+      background: red;
+      color: #fff;
+      box-shadow: 0px 0px 9px 1px red;
       display: inline-block;
       width: 100%;
       border: none;
@@ -23,7 +23,8 @@
       transition: 0.2s ease-in-out;
     }
     .dangerbutton:hover {
-      background: red;
+      background: #c70707;
+      box-shadow: none;
       transition: 0.2s ease-in-out;
       color: #fff;
     }

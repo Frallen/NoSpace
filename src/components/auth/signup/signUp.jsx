@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { authInput } from "../../../components/commons/formsControls/formsControls";
@@ -100,32 +100,33 @@ const SignUpForm = reduxForm({
   form: "signUp"
 })(SignUpBox);
 
-const SignUp = (props) => {
+const SignUp = props => {
+  useEffect(() => {
+    return () => {
+      props.CleanUp();
+    };
+  });
 
-  
   let onSubmit = formData => {
     props.NewUser(formData);
   };
 
-    useEffect(()=>{
-    return()=>{
-      props.CleanUp()
-    }
-  },[props.CleanUp])
-  
   const { enqueueSnackbar } = useSnackbar();
-  let message = "Такая почта или никейм уже имеется";
+  let message = "Этот адрес почты уже кем-то используется";
+  if (
+    props.error === "The email address is already in use by another account."
+  ) {
+    enqueueSnackbar(message, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+  }
   return (
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Регистрация</h5>
         <SignUpForm onSubmit={onSubmit} {...props.loading}></SignUpForm>
-        {props.error &&
-          enqueueSnackbar(message, {
-            variant: "error",
-            preventDuplicate: true,
-            autoHideDuration: 3000,
-          })}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
-const Newproject = "Newproject";
+const StartNewProject = "StartNewProject";
+const NewProjectSucc = "NewProjectSucc";
 const NewProjectErr = "NewProjectErr";
-
+const Clean = "Clean";
 let initialState = {
-  Newproject: [],
   Propjects: [
     { id: 1, text: "bla bla", Title: "pamagite" },
     { id: 2, text: "hehe", Title: "pamagite" },
@@ -10,45 +10,81 @@ let initialState = {
     { id: 4, text: "tutu", Title: "pamagite" },
     { id: 5, text: "tutu", Title: "pamagite" },
     { id: 6, text: "tutu", Title: "pamagite" }
-  ]
+  ],
+  error: null,
+  loading: false
 };
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Newproject: {
+    case StartNewProject:
       return {
         ...state,
-        Newproject: action.project
+        loading: true
       };
-    }
-    case NewProjectErr: {
-      return {};
-    }
+
+    case NewProjectSucc:
+      return {
+        ...state,
+        loading: false,
+        error: null
+      };
+    case NewProjectErr:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+    case Clean:
+      return {
+        ...state,
+        error: null,
+        loading: false
+      };
     default:
       return state;
   }
 };
 
-//export const NewProject = data => ({ type: Newproject, data });
+export const CleanUp = () => ({ type: Clean });
 
-export const CreateNewproject = project => async (
+export const CreateNewproject = data => async (
   dispatch,
   getState,
-  { getFirestore, getFirebase }
+  { getFirestore }
 ) => {
-  const firebase = getFirebase();
   const firestore = getFirestore();
+  const { uid: userId } = getState().firebase.auth;
+
+  dispatch({ type: StartNewProject });
   try {
-    const res = await firebase
+    const res = await firestore
       .collection("Projects")
-      .add({
-        ...project
-     
-      })
-      .then(() => {
-        dispatch({ project});
-      });
-  } catch (err) {}
+      .doc(userId)
+      .get();
+    const newProject = {
+      id: new Date().valueOf(),
+      project: data
+    };
+    if (!res.data()) {
+      firestore
+        .collection("Projects")
+        .doc(userId)
+        .set({
+          project: [newProject]
+        });
+    } else {
+      firestore
+        .collection("Projects")
+        .doc(userId)
+        .update({
+          project: [...res.data().project, newProject]
+        });
+    }
+    dispatch({ type: NewProjectSucc });
+  } catch (err) {
+    dispatch({ type: NewProjectErr, payload: err.message });
+  }
 };
 
 export default dashboardReducer;

@@ -1,20 +1,57 @@
 import React from "react";
 import classes from "./Projects.module.scss";
 import { NavLink } from "react-router-dom";
+import {Preloader} from "./../../../untils/preloader/preloader"
 const Projects = props => {
+
+
+  let content;
+  if (!props.projects) {
+    content = (
+   <Preloader></Preloader>
+    );
+  } else if (!props.projects[props.userId] || !props.projects[props.userId].project) {
+  
+    content = (
+      <div>
+          You have no props.projects!</div>
+    
+    );
+  } else if (props.projects[props.userId].project.length === 0) {
+    content = (
+     
+      
+         <div>You have no props.projects!</div>
+    
+    );
+  } else {
+    content = (
+     
+        props.projects[props.userId].project
+          .slice(0)
+          .reverse()
+          .map(p => (
+            
+            <NavLink to="/" className={classes.projectsBox} key={p.id}>
+            <h2 className={classes.title}>{p.NameProj}</h2>
+            <p className={classes.text}>{p.Text}</p>
+            <div className={classes.bottom}>
+              <p className={classes.date}>{p.startdate}</p>
+              <p className={classes.date}>{p.enddate}</p>
+            </div>
+          </NavLink>
+          ))
+     
+    );
+  }
+
+
+
+
   return (
     <div className={classes.Panel}>
       <div className={classes.projects}>
-        {props.Projects.map(p => (
-          <NavLink to="/" className={classes.projectsBox} key={p.id}>
-            <h2 className={classes.title}>{p.title}</h2>
-            <p className={classes.text}>{p.text}</p>
-            <div className={classes.bottom}>
-              <p className={classes.count}>count of sotrudnikov</p>
-              <p className={classes.date}>Project end date</p>
-            </div>
-          </NavLink>
-        ))}
+        {content}
       </div>
     </div>
   );

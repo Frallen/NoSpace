@@ -18,11 +18,3 @@ export const ProjectNameCheck = MinValue => value => {
     return `Проект не может имень название меньше ${MinValue} символов`;
   return undefined;
 };
-/*
-export const Email = value => {
-  // if(value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
-};
-
-export const Simbols=()=(value)=>{
-    return undefined
-}*/

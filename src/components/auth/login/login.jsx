@@ -60,34 +60,30 @@ const LoginForm = reduxForm({
 })(FormBox);
 
 const Login = props => {
-  //let message = "Такая почта или никейм уже имеется";
-  let message = "Неправильный пароль или емейл";
-  const { enqueueSnackbar } = useSnackbar(); 
-  if (props.error) {
-      enqueueSnackbar(message, {
-        variant: "error",
-        preventDuplicate: true,
-        autoHideDuration: 3000
-      });
-    }
-  let onSubmit = (formData) => {
-    props.Userlogin(formData);
-  };
-
   useEffect(() => {
     return () => {
       props.CleanUp();
     };
-  }, [props.CleanUp]);
+  });
+  //let message = "Такая почта или никейм уже имеется";
+  let message = "Неправильный пароль или емейл";
+  const { enqueueSnackbar } = useSnackbar();
+  if (props.error) {
+    enqueueSnackbar(message, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+  }
+  let onSubmit = formData => {
+    props.Userlogin(formData);
+  };
 
   return (
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Вход</h5>
-        <LoginForm
-          onSubmit={onSubmit}
-          {...props.loading}
-        ></LoginForm>
+        <LoginForm onSubmit={onSubmit} {...props.loading}></LoginForm>
         <NavLink to={"/recover-password"} className={classes.recoverPass}>
           Забыли пароль?
         </NavLink>
