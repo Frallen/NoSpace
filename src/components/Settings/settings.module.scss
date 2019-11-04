@@ -1,0 +1,47 @@
+.formbox {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+  .form {
+    padding: 4vmin;
+    background: #ffe66d;
+    display: grid;
+    grid-template-columns: minmax(14rem, 1fr);
+    grid-gap: 1rem;
+    grid-auto-rows: max-content;
+    justify-content: center;
+    .dangerbutton {
+      background: #fff;
+      color: #333;
+      box-shadow: 0px 2px 12px 3px red;
+      display: inline-block;
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 0.8rem 2rem;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+    .dangerbutton:hover {
+      background: red;
+      transition: 0.2s ease-in-out;
+      color: #fff;
+    }
+    .flexspace {
+      padding-top: 2rem;
+    }
+    .submited {
+      display: inline-block;
+      width: 100%;
+      border: none;
+      outline: none;
+      margin: 1.1rem 0;
+      padding: 0.8rem 5rem;
+      color: #fff;
+      background: #4b4950;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+    }
+   
+  }
+}

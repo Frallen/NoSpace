@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import LogOut from "./components/auth/LogOut/LogOut";
 import Email from "./untils/EmailVerification/EmailContainer";
 import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer";
+import SettingsContainer from "./components/Settings/settingsContainer";
 
 const App = ({ loggedIn, emailVerified }) => {
   let routes;
@@ -36,6 +37,7 @@ const App = ({ loggedIn, emailVerified }) => {
           render={() => <CreateContainer></CreateContainer>}
         ></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
+        <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );

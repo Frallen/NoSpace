@@ -62,19 +62,18 @@ const LoginForm = reduxForm({
 const Login = props => {
   //let message = "Такая почта или никейм уже имеется";
   let message = "Неправильный пароль или емейл";
-  const { enqueueSnackbar } = useSnackbar();
-  let onSubmit = (formData) => {
-    props.Userlogin(formData);
-
-   
-  };
- if (props.error) {
+  const { enqueueSnackbar } = useSnackbar(); 
+  if (props.error) {
       enqueueSnackbar(message, {
         variant: "error",
         preventDuplicate: true,
         autoHideDuration: 3000
       });
     }
+  let onSubmit = (formData) => {
+    props.Userlogin(formData);
+  };
+
   useEffect(() => {
     return () => {
       props.CleanUp();

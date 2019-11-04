@@ -6,16 +6,16 @@ import { reducer as formReducer } from "redux-form";
 import firebase from "./../config/firebase";
 
 import thunk from "redux-thunk";
-import authReducer from "./authReducer";
 import NavigationReducer from "./navigationReducer";
 import projectReducer from "./projectReducer";
 import registrationReducer from "./registrationReducer";
+import settingsReducer from "./settingsReducer";
 
 let reducers = combineReducers({
   Navigation: NavigationReducer,
-  Auth: authReducer,
   Regis: registrationReducer,
   project: projectReducer,
+  settings:settingsReducer,
   form: formReducer,
   firebase: firebaseReducer
 });
