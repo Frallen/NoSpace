@@ -3,14 +3,6 @@ const NewProjectSucc = "NewProjectSucc";
 const NewProjectErr = "NewProjectErr";
 const Clean = "Clean";
 let initialState = {
-  Propjects: [
-    { id: 1, text: "bla bla", Title: "pamagite" },
-    { id: 2, text: "hehe", Title: "pamagite" },
-    { id: 3, text: "tutu", Title: "pamagite" },
-    { id: 4, text: "tutu", Title: "pamagite" },
-    { id: 5, text: "tutu", Title: "pamagite" },
-    { id: 6, text: "tutu", Title: "pamagite" }
-  ],
   error: null,
   loading: false
 };

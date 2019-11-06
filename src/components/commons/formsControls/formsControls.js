@@ -51,6 +51,7 @@ export const ProjectDate = ({ input, meta, ...props }) => {
         {...input}
         {...props}
         id="date"
+       
         type="date"
         InputLabelProps={{
           shrink: true

@@ -12,8 +12,11 @@ import LogOut from "./components/auth/LogOut/LogOut";
 import Email from "./untils/EmailVerification/EmailContainer";
 import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer";
 import SettingsContainer from "./components/Settings/settingsContainer";
+import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 
-const App = ({ loggedIn, emailVerified }) => {
+const App = ({ loggedIn, emailVerified,project }) => {
   let routes;
   if (loggedIn && !emailVerified) {
     routes = (
@@ -36,6 +39,7 @@ const App = ({ loggedIn, emailVerified }) => {
           path={"/create"}
           render={() => <CreateContainer></CreateContainer>}
         ></Route>
+        <Route path={`/project/:${project}`} render={()=><ProjViewCont></ProjViewCont>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
         <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
         <Redirect to={"/"}></Redirect>
@@ -66,14 +70,17 @@ const App = ({ loggedIn, emailVerified }) => {
   );
 };
 
-let mapStateToProps = ({ firebase }) => {
+let mapStateToProps = ({ firebase,firestore }) => {
   return {
     loggedIn: firebase.auth.uid,
-    emailVerified: firebase.auth.emailVerified
+    emailVerified: firebase.auth.emailVerified,
+    projects:firestore.data.Projects,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null
+
+export default compose(
+  connect(mapStateToProps),
+  //получение данных юзера
+  firestoreConnect(props => [`App/${props.loggedIn}`])
 )(App);

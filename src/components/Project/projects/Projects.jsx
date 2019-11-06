@@ -29,11 +29,9 @@ const Projects = props => {
      
         props.projects[props.userId].project
           .slice(0)
-          .reverse()
           .map(p => (
-            
             <div  className={classes.projectsBox} key={p.id}>
-            <h2 className={classes.title}>{p.project.NameProj}</h2>
+            <NavLink to={`/project/${p.id}`} className={classes.title} >{p.project.NameProj}</NavLink>
             <p className={classes.text}>{p.project.Text}</p>
             <div className={classes.bottom}>
               <p className={classes.date}>{p.project.startdate}</p>
