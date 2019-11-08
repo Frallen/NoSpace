@@ -34,10 +34,10 @@ let EmailVer = props => {
       <div className={classes.box}>
         <img src={EmailAnim} alt="Email" />
         <h2 className={classes.Emailh2}>
-          Вам на почту отравленно письмо с подтвержением регистрации.
+          Вам на почту отравленно письмо с подтверждением регистрации.
         </h2>
         <p className={classes.text}>
-          Чтобы продолжить передите по ссылке в письме.
+          Чтобы продолжить перейдите по ссылке в письме.
         </p>
         <button
           className={classes.button}

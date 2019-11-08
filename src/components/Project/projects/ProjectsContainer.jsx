@@ -19,6 +19,7 @@ let mapStateToProps = ({ firebase,firestore }) => {
 };
 
 export default compose(
+ 
   connect(mapStateToProps),
   //получение данных юзера
   firestoreConnect(props => [`Projects/${props.userId}`])

@@ -39,7 +39,7 @@ const App = ({ loggedIn, emailVerified,project }) => {
           path={"/create"}
           render={() => <CreateContainer></CreateContainer>}
         ></Route>
-        <Route path={`/project/:${project}`} render={()=><ProjViewCont></ProjViewCont>}></Route>
+        <Route path={"/project/:id"} render={()=><ProjViewCont></ProjViewCont>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
         <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
         <Redirect to={"/"}></Redirect>
@@ -74,13 +74,14 @@ let mapStateToProps = ({ firebase,firestore }) => {
   return {
     loggedIn: firebase.auth.uid,
     emailVerified: firebase.auth.emailVerified,
-    projects:firestore.data.Projects,
+    //project:firestore.data.Projects,
+    
   };
 };
-
+//    ${props.project[props.loggedIn].project.id}
 
 export default compose(
   connect(mapStateToProps),
   //получение данных юзера
-  firestoreConnect(props => [`App/${props.loggedIn}`])
+//firestoreConnect(props => [`Projects/${props.logged}/project/id`])
 )(App);

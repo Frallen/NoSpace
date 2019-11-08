@@ -51,7 +51,7 @@ const WelcomePage = () => {
           <h3 className={classes.titleSmall}>Готово к использованию</h3>
         </div>
         <div className={classes.item}>
-          <h3 className={classes.titleSmall}>Бесплано</h3>
+          <h3 className={classes.titleSmall}>Бесплатно</h3>
         </div>
         <div className={classes.item}>
           <h3 className={classes.titleSmall}>Открытый исходный код</h3>
