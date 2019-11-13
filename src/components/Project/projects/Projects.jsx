@@ -14,18 +14,19 @@ const Projects = props => {
   } else if (props.projects[props.userId].project.length === 0) {
     content = <div>You have no projects!</div>;
   } else {
-    content = props.projects[props.userId].project.slice(0).map(p => (
+    
+    content = (props.projects.project.slice(0).map(p => (
       <div className={classes.projectsBox} key={p.id}>
         <NavLink to={"/project/" + p.id} className={classes.title}>
-          {p.project.NameProj}
+          {p.NameProj}
         </NavLink>
-        <p className={classes.text}>{p.project.Text}</p>
+        <p className={classes.text}>{p.Text}</p>
         <div className={classes.bottom}>
-          <p className={classes.date}>{p.project.startdate}</p>
-          <p className={classes.date}>{p.project.enddate}</p>
+          <p className={classes.date}>{p.startdate}</p>
+          <p className={classes.date}>{p.enddate}</p>
         </div>
       </div>
-    ));
+    )))
   }
 
   return (

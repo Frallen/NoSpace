@@ -115,10 +115,10 @@ export const SignUpUsers = data => async (
     await firestore
       //в коллекцию юзерс передаются юзер айди и ставятся дополнительные данные
       .collection("users")
-      .doc(res.user.uid)
+      .doc(data.username)
       .set({
         FIO: data.FIO,
-        username: data.username
+       // username: 
       });
     dispatch({ type: RegSucces });
   } catch (err) {

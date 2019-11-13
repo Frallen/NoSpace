@@ -1,17 +1,16 @@
 import React from "react"
 
 const ProjView=(props)=>{
-    console.log(
-        
-    )
+ console.log(props.error)
     let content
     if (props.project) {
      content = (
 
-  <div>{props.project[props.userId].project[props.id]}</div>
-
-        )
+        props.projects[props.userId].slice(0).map(p => 
+            <div>{p.NameProj} </div>
+        ))
     }
+
     return(
         <div>
            {content}
