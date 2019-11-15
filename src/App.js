@@ -13,7 +13,6 @@ import Email from "./untils/EmailVerification/EmailContainer";
 import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer";
 import SettingsContainer from "./components/Settings/settingsContainer";
 import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const App = ({ loggedIn, emailVerified,project }) => {
@@ -82,6 +81,4 @@ let mapStateToProps = ({ firebase,firestore }) => {
 
 export default compose(
   connect(mapStateToProps),
-  //получение данных юзера
-//firestoreConnect(props => [`Projects/${props.logged}/project/id`])
 )(App);

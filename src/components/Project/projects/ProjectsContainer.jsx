@@ -2,25 +2,41 @@ import React from "react";
 import Projects from "./Projects";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { firestoreConnect,withFirestore } from "react-redux-firebase";
+import {GetAllProjects} from "./../../../redux/projectReducer"
+import { firestoreConnect } from "react-redux-firebase";
 class dashBox extends React.Component {
+componentDidMount(){
+  this.props.GetAllProjects()
+}
+/*
+getData(){
+  this.props.GetAllProjects().then(
+    snap=>{
+      snap.forEach(
+        doc=>{
+     let items= doc.data()
+      this.setState({items:items})
+        }
+      )
+    }
+  )
+
+}*/
+
   render() {
-    return <Projects {...this.props}></Projects>;
+    return <Projects {...this.props} ></Projects>;
   }
 }
 
-let mapStateToProps = ({ firebase, firestore }) => {
+let mapStateToProps = (state) => {
+ 
   return {
-    userId: firebase.auth.uid,
-    projects: firestore.data.Projects,
-    loading: firestore.status.requesting,
-    fetched: firestore.status.requested
+  projects:state.project.DataProjects
   };
 };
 
 export default compose(
-  connect(mapStateToProps),
-  withFirestore,
+  connect(mapStateToProps,{GetAllProjects}),
   //получение данных юзера
-  firestoreConnect(props => [`Projects/${props.userId}`])
+ 
 )(dashBox);

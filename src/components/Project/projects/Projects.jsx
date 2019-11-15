@@ -6,16 +6,9 @@ const Projects = props => {
   let content;
   if (!props.projects) {
     content = <Preloader></Preloader>;
-  } else if (
-    !props.projects[props.userId] ||
-    !props.projects[props.userId].project
-  ) {
-    content = <div>You have no projects!</div>;
-  } else if (props.projects[props.userId].project.length === 0) {
-    content = <div>You have no projects!</div>;
-  } else {
+  }  else {
     
-    content = (props.projects.project.slice(0).map(p => (
+    content = (props.projects.map(p => (
       <div className={classes.projectsBox} key={p.id}>
         <NavLink to={"/project/" + p.id} className={classes.title}>
           {p.NameProj}
