@@ -2,41 +2,24 @@ import React from "react";
 import Projects from "./Projects";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import {GetAllProjects} from "./../../../redux/projectReducer"
-import { firestoreConnect } from "react-redux-firebase";
+import { GetAllProjects } from "./../../../redux/projectReducer";
 class dashBox extends React.Component {
-componentDidMount(){
-  this.props.GetAllProjects()
-}
-/*
-getData(){
-  this.props.GetAllProjects().then(
-    snap=>{
-      snap.forEach(
-        doc=>{
-     let items= doc.data()
-      this.setState({items:items})
-        }
-      )
-    }
-  )
-
-}*/
+  componentDidMount() {
+    this.props.GetAllProjects();
+  }
 
   render() {
-    return <Projects {...this.props} ></Projects>;
+    return <Projects {...this.props}></Projects>;
   }
 }
 
-let mapStateToProps = (state) => {
- 
+let mapStateToProps = state => {
   return {
-  projects:state.project.DataProjects
+    projects: state.project.DataProjects
   };
 };
 
 export default compose(
-  connect(mapStateToProps,{GetAllProjects}),
+  connect(mapStateToProps, { GetAllProjects })
   //получение данных юзера
- 
 )(dashBox);

@@ -3,35 +3,34 @@ import ProjView from "./projectview";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
-import { firestoreConnect } from "react-redux-firebase";
-import {GetProjData} from "./../../../../redux/projectReducer"
+import { GetProjData } from "./../../../../redux/projectReducer";
 
 class View extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     //беру айди из пропсов
-   let id=this.props.match.params.id
-   //отправляю его в стейт
+    let id = this.props.match.params.id;
+    //отправляю его в стейт
     this.props.GetProjData(id);
-
   }
-  
+
   render() {
     return <ProjView {...this.props}></ProjView>;
   }
 }
 
-let mapStateToProps = ({ firestore, firebase },) => {
+let mapStateToProps = state => {
   return {
-    userId: firebase.auth.uid,
-    users:firestore.data.users,
+    initialValues:{
+      NameProj:state.project.OneProject.NameProj,
+      Text:state.project.OneProject.Text,
+      target:state.project.OneProject.target,
+      startdate:state.project.OneProject.startdate,
+      enddate:state.project.OneProject.enddate,
+    }
   };
 };
 
 export default compose(
-  connect(
-    mapStateToProps,
-    {GetProjData}
-  ),
-  withRouter,
-  firestoreConnect(props => [`users/${props.userId}/Projects`])
+  connect(mapStateToProps, { GetProjData }),
+  withRouter
 )(View);

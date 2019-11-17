@@ -2,11 +2,16 @@ const StartNewProject = "StartNewProject";
 const NewProjectSucc = "NewProjectSucc";
 const NewProjectErr = "NewProjectErr";
 const Clean = "Clean";
-const SuccData = "SuccData";
+const Getall = "Getall";
+const getOne="getOne";
+
 let initialState = {
   error: null,
   loading: false,
-  DataProjects: []
+  //Контейнер для все проектов
+  DataProjects: [],
+  //Контейнер для одного проекта
+  OneProject:[]
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -33,13 +38,18 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        loading: false
+        loading: false,
       };
-    case SuccData:
+    case Getall:
       return {
         ...state,
         DataProjects: action.data
       };
+      case getOne:
+        return{
+          ...state,
+          OneProject:action.project
+        }
     default:
       return state;
   }
@@ -60,7 +70,7 @@ export const CreateNewproject = data => async (
     //вариан создания своего айди let id = new Date().valueOf();
 
     //получаю данные из коллекций
-     const res = await firestore.collection("Projects").where("idOwner", "==",userId).get();
+   await firestore.collection("Projects").where("idOwner", "==",userId).get();
 
     //создается новый проект,от проекта берется айди
     //и записывается в коллекцию
@@ -74,19 +84,7 @@ export const CreateNewproject = data => async (
     comm.set({
       ...data
     });
-    /* есдиничный вывод проекта
-    firestore
-      .collection("Projects")
-      .where("idOwner", "==", userId)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          console.log(doc.data());
-        });
-      });
-      */
-
-    //тестовый вывод всей пользовательской коллекции
+  //тестовый вывод всей пользовательской коллекции
     //console.log(res.docs.map(doc => doc.data()));
     //получение айди коммита
     // -->    console.log(comm.id)
@@ -96,7 +94,7 @@ export const CreateNewproject = data => async (
     dispatch({ type: NewProjectErr, payload: err.message });
   }
 };
-
+//Отрисовываю все проекты
 export const GetAllProjects = datas => async (
   dispatch,
   getState,
@@ -111,38 +109,30 @@ await firestore
       .get().then(snap=>{
       let  data=snap.docs.map(doc=>doc.data())
         console.log(data)
-        dispatch({ type: SuccData, data });
+        dispatch({ type: Getall, data });
       })
- 
-   // 
-    /*
-    await firestore.collection("Projects").where("idOwner", "==",userId).get().then(
-      snap=>{
-        snap.map(doc=>
-         data=doc.data()
-         
-        )
-        dispatch({type:SuccData,data})
-      }
-    )*/
   } catch (err) {}
 };
 
 export const GetProjData = data => async (
   dispatch,
   getState,
-  { firebase, firestore }
+  { getFirestore }
 ) => {
-  const { uid: userId } = getState().firebase.auth;
+  const firestore=getFirestore()
   try {
-    const res = await firestore
-      .collection("Projects")
-      .doc(userId)
-      .collection("project")
-      .where("id", "==", data)
-      .get();
+    await firestore
+    .collection("Projects")
+    .where("idProject", "==", data)
+    .get().then(snap => {
+      snap.forEach(doc => {
+       let project=doc.data()
+        console.log(doc.data());
+        dispatch({type:getOne,project})
+      });
+    })
 
-    console.log(res);
+ 
   } catch (err) {}
 };
 
