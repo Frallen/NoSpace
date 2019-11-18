@@ -69,7 +69,7 @@ const CreateForm = reduxForm({
 const Create = props => {
 useEffect(()=>{
   return()=>{
-    props.Clean()
+    props.CleanUp()
   }
 })
 let message = "";

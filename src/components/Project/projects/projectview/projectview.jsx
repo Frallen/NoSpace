@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Preloader } from "../../../../untils/preloader/preloader";
 import { Field, reduxForm } from "redux-form";
 import { required } from "../../../../untils/validators/validators";
@@ -8,10 +8,11 @@ import {
   ProjectInput
 } from "../../../commons/formsControls/formsControls";
 import classes from "./projectView.module.scss";
+import { useSnackbar } from "notistack";
 
 const ProjBox = props => {
   return (
-    <form onSubmit={props.handleSubmit} initialValues={{
+    <form onSubmit={props.handleSubmit} initialvalues={{
       NameProj: props.initialValues.NameProj,
       Text: props.initialValues.Text,
       target: props.initialValues.target,
@@ -67,24 +68,22 @@ const ProjBox = props => {
     </form>
   );
 };
-/*
-let mapStateToProps = props => {
-  return {
-    initialValues: {
-      NameProj: props.initialValues.NameProj,
-      Text: props.initialValues.Text,
-      target: props.initialValues.target,
-      startdate: props.initialValues.startdate,
-      enddate: props.initialValues.enddate
-    }
-  };
-};
-*/
 const ChangeForm = reduxForm({
   form: "ChangeForm"
 })(ProjBox);
 
 const ProjView = props => {
+ 
+ // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
+  const { enqueueSnackbar } = useSnackbar(); 
+  if (props.error) {
+      enqueueSnackbar(props.error, {
+        variant: "error",
+        preventDuplicate: true,
+        autoHideDuration: 3000
+      });
+    }
+
   let onSubmit = FormData => {};
   return (
     <div>
@@ -93,7 +92,6 @@ const ProjView = props => {
       ) : (
         <div className={classes.create}>
           <div className={classes.createbox}>
-            <div>{props.initialValues.NameProj}</div>
             <ChangeForm onSubmit={onSubmit} {...props}></ChangeForm>
           </div>
         </div>

@@ -1,7 +1,7 @@
 const StartNewProject = "StartNewProject";
 const NewProjectSucc = "NewProjectSucc";
 const NewProjectErr = "NewProjectErr";
-const Clean = "Clean";
+const CleanUp = "CleanUp";
 const Getall = "Getall";
 const getOne="getOne";
 
@@ -34,11 +34,12 @@ const dashboardReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
-    case Clean:
+    case CleanUp:
       return {
         ...state,
         error: null,
         loading: false,
+        OneProject:[]
       };
     case Getall:
       return {
@@ -55,7 +56,7 @@ const dashboardReducer = (state = initialState, action) => {
   }
 };
 
-export const CleanUp = () => ({ type: Clean });
+export const Clean = () => ({ type: CleanUp });
 
 export const CreateNewproject = data => async (
   dispatch,

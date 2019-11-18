@@ -15,16 +15,23 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Preloader } from "../../untils/preloader/preloader";
 
 let Sett = props => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form
+      onSubmit={props.handleSubmit}
+      initialvalues={{
+        FIO: props.initialValues.FIO,
+        username:props.initialValues.username,
+        email: props.initialValues.email
+      }}
+    >
       <div className={classes.flexspace}>
         <Field
           component={authInput}
           type="text"
-          label={props.FIO}
-          value={props.FIO}
+          label="ФИО"
           name="FIO"
           validate={[OnlyLetters]}
           //иконки
@@ -41,7 +48,7 @@ let Sett = props => {
         <Field
           component={authInput}
           type="text"
-          label={props.username}
+          label="Никнейм"
           name="username"
           //иконки
           InputProps={{
@@ -57,7 +64,7 @@ let Sett = props => {
         <Field
           component={authInput}
           type="email"
-          label={props.email}
+          label="Почта"
           name="email"
           //иконки.
           InputProps={{
@@ -94,25 +101,25 @@ let Sett = props => {
 
 //форма смены емейла
 const SettForm = reduxForm({
-  form: "ChangeSettings"
+  form: "SettForm"
 })(Sett);
 
 const Settings = props => {
-  useEffect(() => {
-    return () => {
-      props.CleanUp();
-    };
-  });
 
-  let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
-  const { enqueueSnackbar } = useSnackbar(); 
-  if (props.error==="This operation is sensitive and requires recent authentication. Log in again before retrying this request.") {
-      enqueueSnackbar(message, {
-        variant: "error",
-        preventDuplicate: true,
-        autoHideDuration: 3000
-      });
-    }
+
+  let message =
+    "Для выполнения этой операции нужно выполнить повторный вход в систему";
+  const { enqueueSnackbar } = useSnackbar();
+  if (
+    props.error ===
+    "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
+  ) {
+    enqueueSnackbar(message, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+  }
 
   /// Dialog material ui
   const [open, setOpen] = useState(false);
@@ -124,12 +131,12 @@ const Settings = props => {
     setOpen(false);
   };
   ////////////////
-  if (!props.profile.isLoaded) return null;
-//отправка данных с формы
+  if (!props.initialValues) return null;
+  //отправка данных с формы
   let Submit = formdata => {
     props.NewSett(formdata);
   };
-// удалить аккаунт
+  // удалить аккаунт
   let tryDelete = () => {
     props.Delete();
   };
@@ -138,12 +145,7 @@ const Settings = props => {
       <div className={classes.form}>
         <div>
           <h3>Обновление профиля</h3>
-          <SettForm
-            onSubmit={Submit}
-            {...props.loading}
-            {...props.profile}
-            {...props.auth}
-          ></SettForm>
+          <SettForm onSubmit={Submit} {...props}></SettForm>
         </div>
         <div>
           <button className={classes.dangerbutton} onClick={handleClickOpen}>

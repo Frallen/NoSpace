@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import Create from "./create";
-import { CreateNewproject,CleanUp } from "../../../redux/projectReducer";
+import { CreateNewproject,Clean } from "../../../redux/projectReducer";
 
 class dashBox extends React.Component {
  
@@ -9,11 +9,11 @@ class dashBox extends React.Component {
     
     this.props.CreateNewproject(formData);
   };
-  Clean=()=>{
-    this.props.CleanUp()
+  CleanUp=()=>{
+    this.props.Clean()
   }
   render() {
-    return <Create {...this.props} NewProject={this.NewProject} Clean={this.Clean}></Create>;
+    return <Create {...this.props} NewProject={this.NewProject} CleanUp={this.CleanUp}></Create>;
   }
 }
 
@@ -24,6 +24,6 @@ let mapStateToProps = state => {
   };
 };
 
-const CreateContainer = connect(mapStateToProps,{ CreateNewproject,CleanUp })(dashBox);
+const CreateContainer = connect(mapStateToProps,{ CreateNewproject,Clean })(dashBox);
 
 export default CreateContainer;
