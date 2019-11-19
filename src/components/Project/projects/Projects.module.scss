@@ -6,7 +6,7 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
     grid-auto-rows: 352px;
     justify-content: center;
-    grid-gap:30px 50px;
+    grid-gap: 30px 50px;
 
     .projectsBox {
       background: #f2f3ef;
@@ -37,6 +37,22 @@
       background: #fff;
       box-shadow: 0px 3px 20px 0px #f9ddd6;
       transition: 0.2s ease-in-out;
+    }
+  }
+}
+
+//Если нет проекта(В КОНТЕЙТЕРЕ)
+.NoProj {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  .NoProjBox {
+    align-self: center;
+    .alert {
+      padding-top: 0.5rem;
+      font-size: 2rem;
+      color: #fff;
     }
   }
 }

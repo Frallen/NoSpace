@@ -7,6 +7,7 @@ import { GetProjData, Clean } from "./../../../../redux/projectReducer";
 import { Preloader } from "../../../../untils/preloader/preloader";
 
 class View extends React.Component {
+  //до того как компонента примонтирована закидываю айди в функцию 
  constructor(props) {
     super(props);
     this.props.Clean()
@@ -17,6 +18,8 @@ class View extends React.Component {
   }
 
   render() {
+       //потом копонента дожидается пропсов,а не отрисовывает сразу
+       //если не сделать условие то компонента при первом ренеде окажется без пропсов
     if (this.props.initialValues && this.props.initialValues.NameProj) {
       return <ProjView {...this.props} />;
     }

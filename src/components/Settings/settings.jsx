@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import classes from "./settings.module.scss";
 import { OnlyLetters } from "../../untils/validators/validators";

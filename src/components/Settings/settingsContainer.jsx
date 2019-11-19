@@ -16,6 +16,8 @@ class SettBox extends React.Component {
     this.props.Delete();
   };
   render() {
+    //копонента дожидается пропсов,а не отрисовывает сразу
+     //если не сделать условие то компонента при первом ренеде окажется без пропсов
     if (this.props.initialValues && this.props.initialValues.FIO) {
       return (
         <Settings
