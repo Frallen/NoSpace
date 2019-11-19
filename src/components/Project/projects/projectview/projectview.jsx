@@ -1,5 +1,4 @@
-import React,{useEffect} from "react";
-import { Preloader } from "../../../../untils/preloader/preloader";
+import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { required } from "../../../../untils/validators/validators";
 import {
@@ -12,13 +11,16 @@ import { useSnackbar } from "notistack";
 
 const ProjBox = props => {
   return (
-    <form onSubmit={props.handleSubmit} initialvalues={{
-      NameProj: props.initialValues.NameProj,
-      Text: props.initialValues.Text,
-      target: props.initialValues.target,
-      startdate: props.initialValues.startdate,
-      enddate: props.initialValues.enddate
-    }}>
+    <form
+      onSubmit={props.handleSubmit}
+      initialvalues={{
+        NameProj: props.initialValues.NameProj,
+        Text: props.initialValues.Text,
+        target: props.initialValues.target,
+        startdate: props.initialValues.startdate,
+        enddate: props.initialValues.enddate
+      }}
+    >
       <div>
         <Field
           component={ProjectInput}
@@ -73,29 +75,24 @@ const ChangeForm = reduxForm({
 })(ProjBox);
 
 const ProjView = props => {
- 
- // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
-  const { enqueueSnackbar } = useSnackbar(); 
+  // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
+  const { enqueueSnackbar } = useSnackbar();
   if (props.error) {
-      enqueueSnackbar(props.error, {
-        variant: "error",
-        preventDuplicate: true,
-        autoHideDuration: 3000
-      });
-    }
+    enqueueSnackbar(props.error, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+  }
 
   let onSubmit = FormData => {};
   return (
     <div>
-      {!props.initialValues ? (
-        <Preloader></Preloader>
-      ) : (
-        <div className={classes.create}>
-          <div className={classes.createbox}>
-            <ChangeForm onSubmit={onSubmit} {...props}></ChangeForm>
-          </div>
+      <div className={classes.create}>
+        <div className={classes.createbox}>
+          <ChangeForm onSubmit={onSubmit} {...props}></ChangeForm>
         </div>
-      )}
+      </div>
     </div>
   );
 };

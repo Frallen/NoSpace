@@ -1,13 +1,9 @@
 import React from "react";
 import classes from "./Projects.module.scss";
 import { NavLink } from "react-router-dom";
-import { Preloader } from "./../../../untils/preloader/preloader";
 const Projects = props => {
-
   let content;
-  if (!props.projects) {
-    content = <Preloader></Preloader>;
-  } else {
+  if (props.projects) {
     content = props.projects.map(p => (
       <div className={classes.projectsBox} key={p.idProject}>
         <NavLink to={"/project/" + p.idProject} className={classes.title}>
