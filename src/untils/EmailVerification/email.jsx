@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./email.module.scss";
 import EmailAnim from "./../../media/EmailAnim.svg";
 import { useSnackbar } from "notistack";
 let EmailVer = props => {
-  useEffect(() => {
-    return () => {
-      props.CleanUp();
-    };
-  }, [props.CleanUp]);
+ 
 
   const { enqueueSnackbar } = useSnackbar();
   //Отправка письма на почту и сообщения (снебкары)

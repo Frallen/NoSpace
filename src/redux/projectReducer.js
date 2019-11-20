@@ -3,7 +3,7 @@ const NewProjectSucc = "NewProjectSucc";
 const NewProjectErr = "NewProjectErr";
 const CleanUp = "CleanUp";
 const Getall = "Getall";
-const getOne="getOne";
+const getOne = "getOne";
 
 let initialState = {
   error: null,
@@ -11,7 +11,7 @@ let initialState = {
   //Контейнер для все проектов
   DataProjects: [],
   //Контейнер для одного проекта
-  OneProject:[]
+  OneProject: []
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -39,18 +39,18 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: false,
-        OneProject:[]
+        OneProject: []
       };
     case Getall:
       return {
         ...state,
         DataProjects: action.data
       };
-      case getOne:
-        return{
-          ...state,
-          OneProject:action.project
-        }
+    case getOne:
+      return {
+        ...state,
+        OneProject: action.project
+      };
     default:
       return state;
   }
@@ -64,6 +64,7 @@ export const CreateNewproject = data => async (
   { getFirestore }
 ) => {
   const firestore = getFirestore();
+  //получение айди в firebase
   const { uid: userId } = getState().firebase.auth;
 
   dispatch({ type: StartNewProject });
@@ -71,7 +72,10 @@ export const CreateNewproject = data => async (
     //вариан создания своего айди let id = new Date().valueOf();
 
     //получаю данные из коллекций
-   await firestore.collection("Projects").where("idOwner", "==",userId).get();
+    await firestore
+      .collection("Projects")
+      .where("idOwner", "==", userId)
+      .get();
 
     //создается новый проект,от проекта берется айди
     //и записывается в коллекцию
@@ -85,7 +89,7 @@ export const CreateNewproject = data => async (
     comm.set({
       ...data
     });
-  //тестовый вывод всей пользовательской коллекции
+    //тестовый вывод всей пользовательской коллекции
     //console.log(res.docs.map(doc => doc.data()));
     //получение айди коммита
     // -->    console.log(comm.id)
@@ -104,14 +108,15 @@ export const GetAllProjects = datas => async (
   const firestore = getFirestore();
   const { uid: userId } = getState().firebase.auth;
   try {
-await firestore
+    await firestore
       .collection("Projects")
       .where("idOwner", "==", userId)
-      .get().then(snap=>{
-      let  data=snap.docs.map(doc=>doc.data())
-        console.log(data)
+      .get()
+      .then(snap => {
+        let data = snap.docs.map(doc => doc.data());
+        //console.log(data)
         dispatch({ type: Getall, data });
-      })
+      });
   } catch (err) {}
 };
 
@@ -120,21 +125,59 @@ export const GetProjData = data => async (
   getState,
   { getFirestore }
 ) => {
-  const firestore=getFirestore()
+  const firestore = getFirestore();
   try {
     await firestore
-    .collection("Projects")
-    .where("idProject", "==", data)
-    .get().then(snap => {
-      snap.forEach(doc => {
-       let project=doc.data()
-        console.log(doc.data());
-        dispatch({type:getOne,project})
+      .collection("Projects")
+      .where("idProject", "==", data)
+      .get()
+      .then(snap => {
+        snap.forEach(doc => {
+          let project = doc.data();
+          //console.log(doc.data());
+          dispatch({ type: getOne, project });
+        });
       });
-    })
-
- 
   } catch (err) {}
+};
+
+export const UpdateProject = data => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const firestore = getFirestore();
+
+  try {
+    //сначала получить коллекцию
+    firestore
+      .collection("Projects")
+      .doc(data.idProject)
+      .get();
+      //потом обновить
+    await firestore
+      .collection("Projects")
+      .doc(data.idProject)
+      .update({ ...data });
+  } catch (ex) {}
+};
+
+export const DeleteProject = data => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const firestore = getFirestore();
+  try {
+     //сначала получить коллекцию
+    await firestore.collection("Projects").doc(data).get()
+      //потом обновить
+    await firestore
+      .collection("Projects")
+      .doc(data)
+      .delete();
+    //  dispatch({type})
+  } catch (ex) {}
 };
 
 export default dashboardReducer;

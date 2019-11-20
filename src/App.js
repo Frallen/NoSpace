@@ -14,6 +14,7 @@ import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer
 import SettingsContainer from "./components/Settings/settingsContainer";
 import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
 import { compose } from "redux";
+import TasksContainer from "./components/MyTasks/TasksContainer";
 
 const App = ({ loggedIn, emailVerified,project }) => {
   let routes;
@@ -41,6 +42,7 @@ const App = ({ loggedIn, emailVerified,project }) => {
         <Route path={"/project/:id"} render={()=><ProjViewCont></ProjViewCont>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
         <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
+        <Route path={"Tasks"} render={()=><TasksContainer></TasksContainer>}></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );

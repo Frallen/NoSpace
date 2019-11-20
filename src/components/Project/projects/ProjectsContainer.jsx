@@ -11,7 +11,7 @@ class dashBox extends React.Component {
   }
 
   render() {
-    if (this.props.projects !== 0) {
+    if (this.props.projects.length !== 0) {
       return <Projects {...this.props}></Projects>;
     } else {
       return (
@@ -34,5 +34,4 @@ let mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps, { GetAllProjects })
-  //получение данных юзера
 )(dashBox);

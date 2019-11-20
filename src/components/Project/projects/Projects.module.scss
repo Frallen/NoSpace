@@ -9,16 +9,24 @@
     grid-gap: 30px 50px;
 
     .projectsBox {
-      background: #f2f3ef;
-      transition: 0.2s ease-in-out;
-      padding: 20px 10px;
+      background: #fff;
+      transition: 0.4s ease-in-out;
+      padding: 0 0 20px 0;
       text-align: center;
       text-decoration: none;
-      color: #ff6b6b;
+      color: #292F36;
       position: relative;
+      .boximg{
+        height: 7rem;
+        overflow: hidden;
+        .img{
+           height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
       .title {
         margin: 1rem 0;
-        color: #ff6b6b;
         font-size: 1.5rem;
         display: block;
       }
@@ -26,17 +34,31 @@
         overflow: hidden;
         padding: 2rem 0.5rem;
       }
-      .bottom {
-        padding: 1rem 0.3rem;
+      .datebox {
+        padding: 0rem 0rem;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        align-self: center;
+        .date {
+          padding: 0.5rem 0.3rem;
+        }
+      }
+      .openbutton {
+        text-decoration: none;
+        color: #fff;
+        background: #292F36;
+        padding: 10px 0px;
+        display: block;
+        margin: 2rem 0 1rem 0;
+        transition: 0.3s ease-in-out;
+      }
+      .openbutton:hover{
+        background: #4ECDC4;
+        transition: 0.3s ease-in-out;
       }
     }
     .projectsBox:hover {
-      border-bottom: 5px solid #4ecdc4;
-      background: #fff;
-      box-shadow: 0px 3px 20px 0px #f9ddd6;
-      transition: 0.2s ease-in-out;
+      transition: 0.4s ease-in-out;
     }
   }
 }

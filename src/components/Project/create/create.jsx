@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./create.module.scss";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, FieldArray,reset } from "redux-form";
 import {
   ProjectInput,
   ProjectTextArea,
@@ -8,6 +8,41 @@ import {
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
+
+
+const renderHobbies = ({ fields, meta: { error } }) => (
+  <ul>
+    {fields.map((hobby, index) => (
+      <li key={index}>
+        <Field
+          name={hobby}
+          type="text"
+          component={ProjectTextArea}
+          label={`Цель #${index + 1}`}
+          validate={[required]}
+        />
+        <button
+          type="button"
+          title="Удалить цель"
+          className={classes.deletetarget}
+          onClick={() => fields.remove(index)}
+        >
+          Удалить цель
+        </button>
+      </li>
+    ))}
+    <li className={classes.boxbutton}>
+      <button
+        type="button"
+        className={classes.addtarget}
+        onClick={() => fields.push()}
+      >
+        Добавить цель
+      </button>
+    </li>
+    {error && <li className="error">{error}</li>}
+  </ul>
+);
 
 const CreateBox = props => {
   return (
@@ -31,12 +66,13 @@ const CreateBox = props => {
       </div>
       <div className={classes.flexspace}>
         <Field
-          label="Название проекта"
+          label="Главная цель"
           component={ProjectTextArea}
-          name="target"
+          name="MainTarget"
           validate={[required]}
         />
       </div>
+      <FieldArray name="SubTargets" component={renderHobbies} />
       <div className={classes.datebox}>
         <div>
           <Field
@@ -67,12 +103,7 @@ const CreateForm = reduxForm({
 })(CreateBox);
 
 const Create = props => {
-useEffect(()=>{
-  return()=>{
-    props.CleanUp()
-  }
-})
-let message = "";
+  let message = "";
   const { enqueueSnackbar } = useSnackbar();
   if (props.error) {
     enqueueSnackbar(props.error, {
@@ -83,6 +114,7 @@ let message = "";
   }
   let onSubmit = formData => {
     props.NewProject(formData);
+   // dispatch(reset('createForm'))
   };
   return (
     <div className={classes.create}>

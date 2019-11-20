@@ -32,6 +32,7 @@ class SettBox extends React.Component {
 }
 let mapStateToProps = state => {
   return {
+    // initialValues это специальный конейнер для reduxForms чтобы подставить в поля
     initialValues: {
       FIO: state.firebase.profile.FIO,
       username: state.firebase.profile.username,
