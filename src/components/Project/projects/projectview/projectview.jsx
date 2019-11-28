@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Field, reduxForm,FieldArray } from "redux-form";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import { required } from "../../../../untils/validators/validators";
 import {
   ProjectDate,
@@ -8,13 +8,23 @@ import {
 } from "../../../commons/formsControls/formsControls";
 import classes from "./projectView.module.scss";
 import { useSnackbar } from "notistack";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@material-ui/core";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button
+} from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import moment from "moment";
 
-
-const renderHobbies = ({ fields, meta: { error } }) => (
+//для вставки массива целей
+const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
     {fields.map((hobby, index) => (
-      <li key={index}>
+      <li key={index} className={classes.targetSpace}>
         <Field
           name={hobby}
           type="text"
@@ -50,10 +60,9 @@ const ProjBox = props => {
     <form
       onSubmit={props.handleSubmit}
       initialvalues={{
-        NameProj: props.initialValues.NameProj,
+        NameMission: props.initialValues.NameMission,
         Text: props.initialValues.Text,
-        MainTarget: props.initialValues.MainTarget,
-        SubTargets:props.initialValues.SubTargets,
+        SubTargets: props.initialValues.SubTargets,
         startdate: props.initialValues.startdate,
         enddate: props.initialValues.enddate
       }}
@@ -61,42 +70,34 @@ const ProjBox = props => {
       <div>
         <Field
           component={ProjectInput}
-          label="Название проекта"
+          label="Название поручения"
           type="text"
-          name="NameProj"
+          name="NameMission"
           validate={[required]}
         />
       </div>
       <div className={classes.flexspace}>
         <Field
           component={ProjectTextArea}
-          label="Описание проекта"
+          label="Описание"
           name="Text"
           validate={[required]}
         />
       </div>
-      <div className={classes.flexspace}>
-        <Field
-          label="Главная цель"
-          component={ProjectTextArea}
-          name="MainTarget"
-          validate={[required]}
-        />
-      </div>
-      <FieldArray name="SubTargets" component={renderHobbies} />
+      <FieldArray name="SubTargets" component={AddSubTargets} />
       <div className={classes.datebox}>
-        <div>
+        <div className={classes.datespace}>
           <Field
             component={ProjectDate}
-            label="Начало проекта"
+            label="Начать с"
             name="startdate"
             validate={[required]}
           />
         </div>
-        <div>
+        <div className={classes.datespace}>
           <Field
             component={ProjectDate}
-            label="Окнончание проекта"
+            label="Сдать до"
             name="enddate"
             validate={[required]}
           />
@@ -108,14 +109,14 @@ const ProjBox = props => {
     </form>
   );
 };
+
 const ChangeForm = reduxForm({
   form: "ChangeForm"
 })(ProjBox);
 
 const ProjView = props => {
-
-
   /// Dialog material ui
+  //удаление проекта
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -124,12 +125,19 @@ const ProjView = props => {
   const handleClose = () => {
     setOpen(false);
   };
+  //чекбокс
+  //Состояние чекбоскса чекед/нечекед
+  const [state, setState] = React.useState({
+    checkedA: false
+  });
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
   ////////////////
-  let tryDelete=()=>{
-   
-      props.Delete(props.initialValues.idProject)
-      
-  }
+  let tryDelete = () => {
+    props.Delete(props.initialValues.idMission);
+  };
 
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
   const { enqueueSnackbar } = useSnackbar();
@@ -140,43 +148,76 @@ const ProjView = props => {
       autoHideDuration: 3000
     });
   }
-
-  let onSubmit = FormData => {
-    FormData.idProject=props.initialValues.idProject
-    FormData.idOwner=props.initialValues.idOwner
-    props.Update(FormData)
+  let onSubmitMain = FormData => {
+    //добавляю айди проекта и айди создателя
+    FormData.idMission = props.initialValues.idMission;
+    FormData.idOwner = props.initialValues.idOwner;
+    if (!FormData.SubTargets) {
+      delete FormData.SubTargets;
+    }
+    ///
+    props.Update(FormData);
   };
+
   return (
     <div>
       <div className={classes.create}>
-        <div className={classes.createbox}>
-          <ChangeForm onSubmit={onSubmit} {...props}></ChangeForm>
-          <button className={classes.dangerbutton} onClick={handleClickOpen}>
-            Удалить проект
-          </button>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
-          >
-            <DialogTitle id="responsive-dialog-title">
-              {"Удаление аккаута"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Ваш проект будет удален, вы действительно хотите удалить проект?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleClose} color="primary">
-                Отмена
-              </Button>
-              <Button onClick={tryDelete} color="primary" autoFocus>
-                Подтвердить
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+        <FormControlLabel
+          className={classes.Regactive}
+          control={
+            <Checkbox
+            className={classes.adaptRegactive}
+              checked={state.checkedA}
+              onChange={handleChange("checkedA")}
+              value="checkedA"
+            />
+          }
+          label="Режим редактирования"
+        />
+        {state.checkedA ? (
+          <div className={classes.createbox}>
+            <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
+            <button className={classes.dangerbutton} onClick={handleClickOpen}>
+              Удалить поручение
+            </button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                {"Удаление поручения"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Ваш проект будет удален, вы действительно хотите удалить
+                  поручение?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose} color="primary">
+                  Отмена
+                </Button>
+                <Button onClick={tryDelete} color="primary" autoFocus>
+                  Подтвердить
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        ) : (
+          <div className={classes.createbox}>
+            <div className={classes.boxcenter}>
+            <h3 className={classes.NameMission}>{props.initialValues.NameMission}</h3>
+            <p className={classes.Text}>{props.initialValues.Text}</p>
+</div>
+            <div className={classes.datebox}>
+              <p className={classes.datespace}> Начать  
+                 {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
+              </p>
+              <p className={classes.datespace}>Закончить {moment(props.initialValues.enddate).format("MM-DD-YYYY")}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

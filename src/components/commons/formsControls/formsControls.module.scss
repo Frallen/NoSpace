@@ -35,6 +35,15 @@
   color: #32c6e0;
   animation: showError 0.5s ease-in-out;
 }
+
+.combobox {
+  padding: 1rem 0;
+}
+.combo {
+  padding-top: 0.3rem;
+  width: 100%;
+}
+
 //animation
 
 @keyframes showError {

@@ -1,21 +1,22 @@
 import React from "react";
 import classes from "./Projects.module.scss";
 import { NavLink } from "react-router-dom";
+import moment from "moment"
 import projectsimg from "./../../../media/Projects.jpg"
 const Projects = props => {
   let content;
   if (props.projects) {
     content = props.projects.map(p => (
-      <div className={classes.projectsBox} key={p.idProject}>
+      <div className={classes.projectsBox} key={p.idMission}>
         <div className={classes.boximg}>
       <img src={projectsimg} className={classes.img} alt=""/>
         </div>
-        <h3 className={classes.title}>{p.NameProj}</h3>
+        <h3 className={classes.title}>{p.NameMission}</h3>
         <div className={classes.datebox}>
-          <p className={classes.date}>Начинается с {p.startdate}</p>
-          <p className={classes.date}>Закачивается {p.enddate}</p>
+          <p className={classes.date}>Начинается с {moment(p.startdate).format("MM-DD-YYYY")}</p>
+          <p className={classes.date}>Закачивается {moment(p.enddate).format("MM-DD-YYYY")}</p>
         </div>
-        <NavLink to={"/project/" + p.idProject} className={classes.openbutton}>
+        <NavLink to={"/mission/" + p.idMission} className={classes.openbutton}>
           Открыть
         </NavLink>
       </div>

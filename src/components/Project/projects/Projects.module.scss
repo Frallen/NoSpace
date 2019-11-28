@@ -14,13 +14,13 @@
       padding: 0 0 20px 0;
       text-align: center;
       text-decoration: none;
-      color: #292F36;
+      color: #292f36;
       position: relative;
-      .boximg{
+      .boximg {
         height: 7rem;
         overflow: hidden;
-        .img{
-           height: 100%;
+        .img {
+          height: 100%;
           width: 100%;
           object-fit: cover;
         }
@@ -46,14 +46,14 @@
       .openbutton {
         text-decoration: none;
         color: #fff;
-        background: #292F36;
+        background: #292f36;
         padding: 10px 0px;
         display: block;
         margin: 2rem 0 1rem 0;
         transition: 0.3s ease-in-out;
       }
-      .openbutton:hover{
-        background: #4ECDC4;
+      .openbutton:hover {
+        background: #4ecdc4;
         transition: 0.3s ease-in-out;
       }
     }
@@ -73,7 +73,7 @@
     align-self: center;
     .alert {
       padding-top: 0.5rem;
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: #fff;
     }
   }

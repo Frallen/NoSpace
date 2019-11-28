@@ -1,16 +1,16 @@
 import React from "react";
 import classes from "./create.module.scss";
-import { Field, reduxForm, FieldArray,reset } from "redux-form";
+import { Field, reduxForm, FieldArray } from "redux-form";
 import {
   ProjectInput,
   ProjectTextArea,
-  ProjectDate
+  ProjectDate,
+  SelectUser
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
 
-
-const renderHobbies = ({ fields, meta: { error } }) => (
+const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
     {fields.map((hobby, index) => (
       <li key={index}>
@@ -50,34 +50,35 @@ const CreateBox = props => {
       <div>
         <Field
           component={ProjectInput}
-          label="Название проекта"
+          label="Название поручения"
           type="text"
-          name="NameProj"
+          name="NameMission"
           validate={[required]}
         />
       </div>
       <div className={classes.flexspace}>
         <Field
           component={ProjectTextArea}
-          label="Описание проекта"
+          label="Описание"
           name="Text"
           validate={[required]}
         />
       </div>
+      <FieldArray name="SubTargets" component={AddSubTargets} />
       <div className={classes.flexspace}>
-        <Field
-          label="Главная цель"
-          component={ProjectTextArea}
-          name="MainTarget"
-          validate={[required]}
-        />
+        <Field component={SelectUser} name="SendTo" validate={[required]}>
+          <option value="" />
+          {//расчехляю массив юзеров в опции выбора (типо комбобокса)
+          props.initialValues.users.map(p => (
+            <option key={p}>{p}</option>
+          ))}
+        </Field>
       </div>
-      <FieldArray name="SubTargets" component={renderHobbies} />
       <div className={classes.datebox}>
         <div>
           <Field
             component={ProjectDate}
-            label="Начало проекта"
+            label="Начать с"
             name="startdate"
             validate={[required]}
           />
@@ -85,7 +86,7 @@ const CreateBox = props => {
         <div>
           <Field
             component={ProjectDate}
-            label="Окнончание проекта"
+            label="Сдать до"
             name="enddate"
             validate={[required]}
           />
@@ -114,12 +115,20 @@ const Create = props => {
   }
   let onSubmit = formData => {
     props.NewProject(formData);
-   // dispatch(reset('createForm'))
   };
   return (
     <div className={classes.create}>
       <div className={classes.createbox}>
-        <CreateForm onSubmit={onSubmit} {...props.loading}></CreateForm>
+        <h3>Создание поручения</h3>
+        <p>
+          Cдесь вы можете создать поручение введя название,текст и сроки
+          исполнения
+        </p>
+        <CreateForm
+          onSubmit={onSubmit}
+          {...props.loading}
+          {...props}
+        ></CreateForm>
       </div>
     </div>
   );

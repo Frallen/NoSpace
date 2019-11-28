@@ -18,7 +18,7 @@ class dashBox extends React.Component {
         <div className={classes.NoProj}>
           <div className={classes.NoProjBox}>
             <img src={face} alt="Sad face" />
-            <p className={classes.alert}>У вас нет проектов!</p>
+            <p className={classes.alert}>У вас нет активных поручений сотрудникам!</p>
           </div>
         </div>
       );

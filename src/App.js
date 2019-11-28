@@ -32,17 +32,17 @@ const App = ({ loggedIn, emailVerified,project }) => {
     routes = (
       <Switch>
         <Route
-          path={"/projects"}
+          path={"/missions"}
           render={() => <ProjectsContainer></ProjectsContainer>}
         ></Route>
         <Route
           path={"/create"}
           render={() => <CreateContainer></CreateContainer>}
         ></Route>
-        <Route path={"/project/:id"} render={()=><ProjViewCont></ProjViewCont>}></Route>
+        <Route path={"/mission/:id"} render={()=><ProjViewCont></ProjViewCont>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
         <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
-        <Route path={"Tasks"} render={()=><TasksContainer></TasksContainer>}></Route>
+        <Route path={"/Tasks"} render={()=><TasksContainer></TasksContainer>}></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );

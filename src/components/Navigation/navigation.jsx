@@ -31,8 +31,8 @@ class Navigation extends React.Component {
             </NavLink>
           </li>
           <li className={classes.item}>
-            <NavLink to="/projects" className={classes.login}>
-              Проекты
+            <NavLink to="/missions" className={classes.login}>
+              Поручения
             </NavLink>
           </li>
           <li className={classes.item}>
@@ -96,4 +96,3 @@ class Navigation extends React.Component {
   }
 }
 export default Navigation;
-//   <input type="checkbox" hidden id="toggle" onClick={this.Setactive} />

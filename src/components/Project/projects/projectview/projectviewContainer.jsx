@@ -28,13 +28,14 @@ class View extends React.Component {
   //удаление проекта
   Delete = data => {
     this.props.DeleteProject(data);
-    //простой редирект перед удалением
+    //простой редирект после удалением
     this.props.history.push('/')
   };
+  
   render() {
     //потом копонента дожидается пропсов,а не отрисовывает сразу
     //если не сделать условие то компонента при первом ренеде окажется без пропсов
-    if (this.props.initialValues && this.props.initialValues.NameProj) {
+    if (this.props.initialValues && this.props.initialValues.NameMission) {
       return <ProjView {...this.props} Update={this.Update} Delete={this.Delete}/>;
     }
     return <Preloader></Preloader>; // or loading graphic
@@ -45,11 +46,12 @@ let mapStateToProps = state => {
   return {
     // initialValues это специальный конейнер для reduxForms чтобы подставить в поля
     initialValues: {
-      idProject: state.project.OneProject.idProject,
+      //нужно для оновления и удаления
+      idMission: state.project.OneProject.idMission,
       idOwner: state.project.OneProject.idOwner,
-      NameProj: state.project.OneProject.NameProj,
+      //
+      NameMission: state.project.OneProject.NameMission,
       Text: state.project.OneProject.Text,
-      MainTarget: state.project.OneProject.MainTarget,
       SubTargets: state.project.OneProject.SubTargets,
       startdate: state.project.OneProject.startdate,
       enddate: state.project.OneProject.enddate
