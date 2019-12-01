@@ -32,7 +32,7 @@ let mapStateToProps = state => {
       users: state.project.DataUsers
     },
     error: state.project.error,
-    loading: state.project.loading
+    loading: state.project.loading,
   };
 };
 

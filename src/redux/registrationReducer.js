@@ -118,7 +118,7 @@ export const SignUpUsers = data => async (
       .doc(res.user.uid)
       .set({
         FIO: data.FIO,
-        username:data.username,
+        Email:data.email
       });
     dispatch({ type: RegSucces });
   } catch (err) {

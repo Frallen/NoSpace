@@ -1,7 +1,7 @@
 .Navigatigon {
   width: 100%;
   z-index: 99;
-  background: #ffe66d;
+  background: #84dcc6;
   .container {
     max-width: 1140px;
     margin: 0 auto;
@@ -10,16 +10,16 @@
     align-items: center;
     position: relative;
     padding: 20px;
-    @media (max-width:800px) {
+    @media (max-width: 800px) {
       flex-direction: column;
-   
     }
     .logo {
-      font-size: 1rem;
-      color: #4b4453;
-      letter-spacing: 1.5px;
+      font-size: 1.3rem;
+      color: #fff;
+      letter-spacing: 2px;
       cursor: pointer;
-      @media(max-width:800px) {
+      font-weight: 800;
+      @media (max-width: 800px) {
         align-self: flex-start;
       }
     }
@@ -27,17 +27,16 @@
       position: absolute;
       right: 2vw;
       top: 0.7vmin;
-  
+
       display: none;
       height: 50px;
       width: 50px;
       cursor: pointer;
-      
+
       @media (max-width: 800px) {
         display: block;
-        
       }
-     
+
       .hamburger,
       .hamburger::after,
       .hamburger::before {
@@ -84,7 +83,8 @@
         cursor: pointer;
         .login {
           text-decoration: none;
-          color: #4b4453;
+          font-weight: 600;
+          color: #333;
         }
       }
     }
@@ -94,12 +94,12 @@
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  @media (min-width:800px) {
+  @media (min-width: 800px) {
     display: none;
   }
   .item {
     margin-left: 10px;
-    @media (max-width:800px) {
+    @media (max-width: 800px) {
       margin-left: 0;
       margin-top: 1rem;
     }

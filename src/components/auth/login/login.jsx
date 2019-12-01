@@ -60,11 +60,7 @@ const LoginForm = reduxForm({
 })(FormBox);
 
 const Login = props => {
-  useEffect(() => {
-    return () => {
-      props.CleanUp();
-    };
-  });
+
   //let message = "Такая почта или никейм уже имеется";
   let message = "Неправильный пароль или емейл";
   const { enqueueSnackbar } = useSnackbar();

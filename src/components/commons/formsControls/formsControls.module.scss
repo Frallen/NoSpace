@@ -3,10 +3,6 @@
   box-sizing: border-box;
 }
 
-.errorInput {
-  border: 2px solid red;
-}
-
 .textarea {
   width: 100%;
   outline: none;
@@ -21,8 +17,8 @@
   padding: 0.6rem 0.8rem;
   border-radius: 20px;
   text-align: center;
-  background: #fff;
-  color: #292f36;
+  box-shadow: 0 1px 6px 3px #ff686b;
+  color: #333;
   animation: showError 0.5s ease-in-out;
 }
 .reqErrorProj {
@@ -31,8 +27,8 @@
   padding: 0.6rem 0.8rem;
   border-radius: 20px;
   text-align: center;
-  background: #333;
-  color: #32c6e0;
+  box-shadow: 0 1px 6px 3px #ff686b;
+  color: #333;
   animation: showError 0.5s ease-in-out;
 }
 

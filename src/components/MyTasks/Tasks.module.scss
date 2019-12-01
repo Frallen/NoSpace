@@ -4,17 +4,39 @@
   position: relative;
   margin: 1rem 0;
   background: #fff;
+  box-shadow: 0 3px 7px 3px #84dcc6;
   border-radius: 5px;
   .Regactive {
     position: absolute;
     top: 1rem;
     right: 0.5rem;
+    @media (max-width: 675px) {
+      top: auto;
+      bottom: -4rem;
+      color: #fff;
+    }
+    @media (max-width: 250px) {
+      right: 0;
+    }
+  }
+  .adaptRegactive {
+    @media (max-width: 675px) {
+      color: #fff;
+    }
   }
   .createbox {
     flex-basis: 100%;
     margin: 2.5rem 1.5rem 1rem 1.5rem;
   }
-
+  .boxcenter {
+    text-align: center;
+  }
+  .NameMission {
+    font-size: 1.8rem;
+  }
+  .Text {
+    padding: 1rem 0;
+  }
   .title {
     display: block;
     font-size: 1rem;
@@ -24,19 +46,59 @@
   .flexspace {
     padding-top: 1rem;
   }
+  .datebox {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    .datespace {
+      padding: 0.4rem;
+    }
+  }
   .creabtn {
     margin: 15px auto;
     display: block;
     outline: none;
     border: none;
+    cursor: pointer;
     font-size: 1rem;
     padding: 10px 20px;
-    background: #ffe66d;
+    border-radius: 55px;
+    background: #ffa69e;
     color: #333;
     transition: 0.2s ease-in-out;
   }
   .creabtn:hover {
-    background: #ecc606;
+    background: #333;
+    color: #fff;
     transition: 0.2s ease-in-out;
   }
+}
+.boxbutton {
+  text-align: center;
+  .addtarget {
+    margin: 15px auto;
+    display: block;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 55px;
+    background: #ffa69e;
+    color: #333;
+    transition: 0.2s ease-in-out;
+  }
+  .addtarget:hover {
+    background: #333;
+    color: #fff;
+    transition: 0.2s ease-in-out;
+  }
+}
+
+.targetSpace {
+  padding: 1rem 0;
 }

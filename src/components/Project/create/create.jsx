@@ -70,7 +70,7 @@ const CreateBox = props => {
           <option value="" />
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
           props.initialValues.users.map(p => (
-            <option key={p}>{p}</option>
+          <option key={p}>{p.Email}</option>
           ))}
         </Field>
       </div>

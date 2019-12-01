@@ -25,7 +25,7 @@
       height: 12px;
       width: 12px;
       border-radius: 100%;
-      background: #ffe66d;
+      background: #ffa69e;
       @media (max-width: 380px) {
         display: none;
       }
@@ -35,7 +35,7 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    background: #292f36;
+    background: url("./../../media/home.jpg") no-repeat center /cover;
     .text {
       display: flex;
       align-items: center;

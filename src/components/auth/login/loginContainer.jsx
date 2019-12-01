@@ -1,26 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import Login from "./login";
-import {LogInUser,Clean} from "./../../../redux/registrationReducer"
-class AuthBox extends React.Component{
-  
-  Userlogin=(data)=>{
-
-   this.props.LogInUser(data)
+import { LogInUser, Clean } from "./../../../redux/registrationReducer";
+class AuthBox extends React.Component {
+  Userlogin = data => {
+    this.props.LogInUser(data);
+  };
+  componentDidMount() {
+    this.props.Clean();
   }
-  CleanUp=()=>{
-    this.props.Clean()
-  }
-  render(){
-    return<Login {...this.props} Userlogin={this.Userlogin} CleanUp={this.CleanUp}></Login>
+  render() {
+    return <Login {...this.props} Userlogin={this.Userlogin}></Login>;
   }
 }
 
-let mapStateToProps=(state)=>{
-  return{
-  loading:state.Regis.loading,
-  error:state.Regis.error
-  }
-}
+let mapStateToProps = state => {
+  return {
+    loading: state.Regis.loading,
+    error: state.Regis.error
+  };
+};
 
-export default connect(mapStateToProps,{LogInUser,Clean})(AuthBox);
+export default connect(mapStateToProps, { LogInUser, Clean })(AuthBox);

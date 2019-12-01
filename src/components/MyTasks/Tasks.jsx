@@ -6,6 +6,7 @@ import {
 } from "../commons/formsControls/formsControls";
 import classes from "./Tasks.module.scss";
 import { required } from "../../untils/validators/validators";
+import moment from "moment";
 const TaskBox = props => {
   return (
     <form onSubmit={props.handleSumbit}>
@@ -42,6 +43,17 @@ const Task = props => {
   return (
     <div className={classes.create}>
       <div className={classes.createbox}>
+        <div>
+        <h3>{props.Task.NameMission}</h3>
+          <p>{props.Task.Text}</p>
+        {props.Task.SubTargets&&props.Task.SubTargets.map(p=><div key={p}>{p}</div>)}
+            <div className={classes.datebox}>
+              <p className={classes.datespace}> Начать  
+                 {moment(props.Task.startdate).format("MM-DD-YYYY")}
+              </p>
+              <p className={classes.datespace}>Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}</p>
+            </div>
+        </div>
         <TaskForm {...props} onSubmit={Submit}></TaskForm>
       </div>
     </div>

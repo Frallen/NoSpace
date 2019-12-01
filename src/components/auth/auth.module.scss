@@ -4,14 +4,14 @@
   margin: 4rem 0;
   .form {
     padding: 4vmin;
-    background: #ffe66d;
-    .flexspace{
-      padding-top:2rem;
+    box-shadow: 0 5px 13px 2px #333;
+    .flexspace {
+      padding-top: 2rem;
     }
     .formtitle {
       color: #5a5252;
       font-size: 1.5rem;
-      @media (max-width:300px) {
+      @media (max-width: 300px) {
         text-align: center;
       }
     }
@@ -20,31 +20,33 @@
       width: 100%;
       border: none;
       outline: none;
-      margin: 1.1rem 0;
+      margin: 1.4rem 0;
       padding: 0.8rem 5rem;
-      color: #fff;
-      background: #4b4950;
+      border-radius: 55px;
+      color: #333;
+      background: #ffa69e;
       transition: 0.2s ease-in-out;
       cursor: pointer;
     }
     .submited:hover {
       transition: 0.2s ease-in-out;
-      background: #fff;
-      color:#4b4950;
+      background: #ff686b;
+      color: #fff;
     }
-    .recoverPass{
+    .recoverPass {
       text-align: center;
       display: inline-block;
-      background: #fff;
+      background: #ffa69e;
       color: #333;
       box-sizing: border-box;
       width: 100%;
+      border-radius: 55px;
       padding: 0.5rem 1rem;
       text-decoration: none;
       transition: 0.2s ease-in-out;
     }
-    .recoverPass:hover{
-      background: #4b4950;
+    .recoverPass:hover {
+      background: #ff686b;
       color: #fff;
       transition: 0.2s ease-in-out;
     }

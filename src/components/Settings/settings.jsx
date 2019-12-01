@@ -46,22 +46,6 @@ let Sett = props => {
       <div className={classes.flexspace}>
         <Field
           component={authInput}
-          type="text"
-          label="Никнейм"
-          name="username"
-          //иконки
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircleIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          component={authInput}
           type="email"
           label="Почта"
           name="email"

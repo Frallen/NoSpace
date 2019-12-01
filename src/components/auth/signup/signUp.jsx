@@ -39,23 +39,6 @@ const SignUpBox = props => {
       <div className={classes.flexspace}>
         <Field
           component={authInput}
-          type="text"
-          label="Никнейм"
-          name="username"
-          validate={[required]}
-          //иконки
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AccountCircleIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          component={authInput}
           type="email"
           label="Почта"
           name="email"
@@ -101,12 +84,6 @@ const SignUpForm = reduxForm({
 })(SignUpBox);
 
 const SignUp = props => {
-  useEffect(() => {
-    return () => {
-      props.CleanUp();
-    };
-  });
-
   let onSubmit = formData => {
     props.NewUser(formData);
   };

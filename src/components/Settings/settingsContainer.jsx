@@ -35,7 +35,6 @@ let mapStateToProps = state => {
     // initialValues это специальный конейнер для reduxForms чтобы подставить в поля
     initialValues: {
       FIO: state.firebase.profile.FIO,
-      username: state.firebase.profile.username,
       email: state.firebase.auth.email
     },
     error: state.settings.error,

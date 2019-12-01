@@ -8,17 +8,26 @@ const CleanUp = "CleanUp";
 const GetallProj = "GetallProj";
 //взять один проект
 const getOne = "getOne";
+//взять всех узеров
 const GetallUsers = "GetallUsers";
+//взять все задачи
+const GetAllTask = "GetAllTask";
+//взять одну задачу
+const GetMyTask = "GetMyTask";
 
 let initialState = {
   error: null,
   loading: false,
+  Exist: null,
   //Контейнер для всех проектов
   DataProjects: [],
   //Контейнер для одного проекта
   OneProject: [],
   //Контейнер для всех юзеров(для их выбора)
-  DataUsers: []
+  DataUsers: [],
+  Tasks: [],
+  //задача сотрудника
+  MyTask: []
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -62,6 +71,16 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         DataUsers: action.users
+      };
+    case GetAllTask:
+      return {
+        ...state,
+        Tasks: action.tasks
+      };
+    case GetMyTask:
+      return {
+        ...state,
+        MyTask: action.task
       };
     default:
       return state;
@@ -169,7 +188,7 @@ export const AllUsers = data => async (
       .get()
       .then(snap => {
         //беру всех юзеров
-        let users = snap.docs.map(doc => doc.data().username);
+        let users = snap.docs.map(doc => doc.data());
         // и отправляю их
         dispatch({ type: GetallUsers, users });
       });
@@ -195,19 +214,7 @@ export const UpdateProject = data => async (
       .collection("Mission")
       .doc(data.idMission)
       .update({ ...data });
-      
-      await firestore
-      .collection("Mission")
-      .where("idMission", "==", data)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          let project = doc.data();
-          //console.log(doc.data());
-          dispatch({ type: getOne, project });
-        });
-      });
-  } catch (ex) {}
+  } catch (err) {}
 };
 //удаления проекта
 export const DeleteProject = data => async (
@@ -227,7 +234,50 @@ export const DeleteProject = data => async (
       .collection("Mission")
       .doc(data)
       .delete();
-  } catch (ex) {}
+  } catch (err) {}
+};
+export const GetAllTasks = data => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const firestore = getFirestore();
+  const { email: Email } = getState().firebase.auth;
+  // const { uid: userId } = getState().firebase.auth;
+
+  try {
+    await firestore
+      .collection("Mission")
+      .where("SendTo", "==", Email)
+      .get()
+      .then(snap => {
+        //беру все докуметы с совпадающим айди и расчехляю их
+        let tasks = snap.docs.map(doc => doc.data());
+       // console.log(tasks);
+        dispatch({ type: GetAllTask, tasks });
+      });
+  } catch (err) {}
+};
+
+export const GetTask = data => async (
+  dispatch,
+  getState,
+  { getFirestore, getFirebase }
+) => {
+  const firestore = getFirestore();
+  try {
+    await firestore
+      .collection("Mission")
+      .where("idMission", "==", data)
+      .get()
+      .then(snap => {
+        snap.forEach(doc => {
+          let task = doc.data();
+          console.log(task);
+          dispatch({ type: GetMyTask, task });
+        });
+      });
+  } catch (err) {}
 };
 
 export default dashboardReducer;
