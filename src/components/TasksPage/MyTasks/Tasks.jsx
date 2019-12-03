@@ -3,32 +3,32 @@ import { Field, reduxForm } from "redux-form";
 import {
   ProjectTextArea,
   ProjectInput
-} from "../commons/formsControls/formsControls";
+} from "../../commons/formsControls/formsControls";
 import classes from "./Tasks.module.scss";
-import { required } from "../../untils/validators/validators";
+import { required } from "../../../untils/validators/validators";
 import moment from "moment";
 const TaskBox = props => {
   return (
-    <form onSubmit={props.handleSumbit}>
+    <form onSubmit={props.handleSubmit}>
       <div>
         <Field
           component={ProjectInput}
-          label="Название поручения"
+          label="Заголовок ответа"
           type="text"
-          name="NameMission"
+          name="MissionDone"
           validate={[required]}
         />
       </div>
       <div className={classes.flexspace}>
         <Field
           component={ProjectTextArea}
-          label="Описание"
-          name="Text"
+          label="Дополнение"
+          name="TextDone"
           validate={[required]}
         />
       </div>
-      <button className={classes.creabtn} disabled={props.loading}>
-        Отправить
+      <button className={classes.creabtn} disabled={props.loading || props.Task.isDone===true}>
+        Отправить на проверку
       </button>
     </form>
   );
@@ -39,22 +39,26 @@ const TaskForm = reduxForm({
 })(TaskBox);
 
 const Task = props => {
-  let Submit = formData => {};
+  let onSubmit = FormData => {
+   FormData.isDone=true
+    FormData.idMission = props.Task.idMission;
+    props.SendTask(FormData)
+
+  };
   return (
     <div className={classes.create}>
       <div className={classes.createbox}>
-        <div>
+        <div className={classes.boxcenter}>
         <h3>{props.Task.NameMission}</h3>
           <p>{props.Task.Text}</p>
-        {props.Task.SubTargets&&props.Task.SubTargets.map(p=><div key={p}>{p}</div>)}
+        {props.Task.SubTargets&&props.Task.SubTargets.map((p,index)=><div key={index}>{p}</div>)}
             <div className={classes.datebox}>
-              <p className={classes.datespace}> Начать  
-                 {moment(props.Task.startdate).format("MM-DD-YYYY")}
+              <p className={classes.datespace}>Начать с {moment(props.Task.startdate).format("MM-DD-YYYY")}
               </p>
               <p className={classes.datespace}>Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}</p>
             </div>
         </div>
-        <TaskForm {...props} onSubmit={Submit}></TaskForm>
+        <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
       </div>
     </div>
   );

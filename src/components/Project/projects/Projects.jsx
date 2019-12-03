@@ -15,7 +15,10 @@ const Projects = props => {
           <p className={classes.date}>
             Закачивается {moment(p.enddate).format("MM-DD-YYYY")}
           </p>
+          {p.isDone===true&&<div className={classes.personeDone}>Сотрудник прислал отчет!</div>}
         </div>
+        
+
         <NavLink to={"/mission/" + p.idMission} className={classes.openbutton}>
           Открыть
         </NavLink>

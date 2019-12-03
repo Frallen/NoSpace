@@ -7,7 +7,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSnackbar } from "notistack";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";

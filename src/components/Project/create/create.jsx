@@ -69,8 +69,9 @@ const CreateBox = props => {
         <Field component={SelectUser} name="SendTo" validate={[required]}>
           <option value="" />
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
-          props.initialValues.users.map(p => (
-          <option key={p}>{p.Email}</option>
+          props.initialValues.users.map((p,index) => (
+            //Когда нет заданных ID для списка можно использовать индекс элемента как ключ
+          <option key={index}>{p.Email}</option>
           ))}
         </Field>
       </div>

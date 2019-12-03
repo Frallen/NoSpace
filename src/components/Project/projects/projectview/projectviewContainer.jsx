@@ -54,7 +54,12 @@ let mapStateToProps = state => {
       Text: state.project.OneProject.Text,
       SubTargets: state.project.OneProject.SubTargets,
       startdate: state.project.OneProject.startdate,
-      enddate: state.project.OneProject.enddate
+      enddate: state.project.OneProject.enddate,
+      //данные о выполнении
+      isDone:state.project.OneProject.isDone,
+      MissionDone: state.project.OneProject.MissionDone,
+      TextDone: state.project.OneProject.TextDone,
+      //
     },
     error: state.settings.error,
     loading: state.settings.loading

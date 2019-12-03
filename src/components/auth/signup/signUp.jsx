@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { authInput } from "../../../components/commons/formsControls/formsControls";
@@ -11,7 +11,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSnackbar } from "notistack";
 //firestore вроде как принимает пароли от 8 символов
 const MinValue = PasswordCheck(8);

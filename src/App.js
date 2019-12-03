@@ -14,9 +14,8 @@ import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer
 import SettingsContainer from "./components/Settings/settingsContainer";
 import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
 import { compose } from "redux";
-import TasksContainer from "./components/MyTasks/TasksContainer";
-import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
-
+import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
+import TaskPageContainer from "./components/TasksPage/TaskPageContainer"
 const App = ({ loggedIn, emailVerified,project }) => {
   let routes;
   if (loggedIn && !emailVerified) {

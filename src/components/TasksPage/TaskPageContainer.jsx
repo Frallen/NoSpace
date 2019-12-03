@@ -19,7 +19,7 @@ class TaskBox extends React.Component {
           <div className={classes.NoProjBox}>
             <img src={face} alt="Sad face" />
             <p className={classes.alert}>
-              У вас нет активных поручений !
+              Для вас нет заданий !
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { NavLink } from "react-router-dom";

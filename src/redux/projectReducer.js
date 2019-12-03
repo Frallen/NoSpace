@@ -18,7 +18,6 @@ const GetMyTask = "GetMyTask";
 let initialState = {
   error: null,
   loading: false,
-  Exist: null,
   //Контейнер для всех проектов
   DataProjects: [],
   //Контейнер для одного проекта
@@ -115,6 +114,7 @@ export const CreateNewproject = data => async (
     //добавляю в пришедшие данные айди
     data.idMission = comm.id;
     data.idOwner = userId;
+    data.isDone=false
     //не знаю почему в массиве юзеры,удаляю вручную
     delete data.users;
     ///////////////
@@ -273,11 +273,30 @@ export const GetTask = data => async (
       .then(snap => {
         snap.forEach(doc => {
           let task = doc.data();
-          console.log(task);
+          //console.log(task);
           dispatch({ type: GetMyTask, task });
         });
       });
   } catch (err) {}
 };
+//отправка отчета сотрудника
+export const SendBackTask=data=>async(
+  dispatch,
+  getState,
+  {getFirestore}
+)=>{
+  const firestore=getFirestore()
+  firestore
+  .collection("Mission")
+  .doc(data.idMission)
+  .get();
+//потом обновить
+
+await firestore
+  .collection("Mission")
+  .doc(data.idMission)
+  .update({ ...data });
+}
+
 
 export default dashboardReducer;

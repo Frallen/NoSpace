@@ -135,9 +135,16 @@ const ProjView = props => {
     setState({ ...state, [name]: event.target.checked });
   };
   ////////////////
+
+  //удаление поручения
   let tryDelete = () => {
     props.Delete(props.initialValues.idMission);
   };
+// успешно выполненное задание
+
+let SuccDone=()=>{
+  props.Delete(props.initialValues.idMission);
+}
 
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
   const { enqueueSnackbar } = useSnackbar();
@@ -152,6 +159,7 @@ const ProjView = props => {
     //добавляю айди проекта и айди создателя
     FormData.idMission = props.initialValues.idMission;
     FormData.idOwner = props.initialValues.idOwner;
+    FormData.isDone=false;
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
     }
@@ -159,8 +167,44 @@ const ProjView = props => {
     props.Update(FormData);
   };
 
+
   return (
     <div>
+     {props.initialValues.isDone===true && <div className={classes.done}>
+     <div className={classes.createbox}>
+            <div className={classes.boxcenter}>
+              <h2>Задание выполненно, проверьте отчет !</h2>
+  <h3 className={classes.NameMission}>{props.initialValues.MissionDone}</h3>
+  
+<p className={classes.Text}>{props.initialValues.TextDone}</p>
+<button className={classes.succbutton} onClick={handleClickOpen}>
+              Подтвердить выполнение
+            </button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                {"Удаление поручения"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Вы уверенны в правильности выполненного задания?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose} color="primary">
+                  Отмена
+                </Button>
+                <Button onClick={SuccDone} color="primary" autoFocus>
+                  Подтвердить
+                </Button>
+              </DialogActions>
+            </Dialog>
+</div>
+</div>
+       </div>}
       <div className={classes.create}>
         <FormControlLabel
           className={classes.Regactive}
@@ -186,7 +230,7 @@ const ProjView = props => {
               aria-labelledby="responsive-dialog-title"
             >
               <DialogTitle id="responsive-dialog-title">
-                {"Удаление поручения"}
+                {"Завершить выполнение"}
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -211,8 +255,7 @@ const ProjView = props => {
             <p className={classes.Text}>{props.initialValues.Text}</p>
 </div>
             <div className={classes.datebox}>
-              <p className={classes.datespace}> Начать  
-                 {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
+              <p className={classes.datespace}> Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
               </p>
               <p className={classes.datespace}>Закончить {moment(props.initialValues.enddate).format("MM-DD-YYYY")}</p>
             </div>

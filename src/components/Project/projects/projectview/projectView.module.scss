@@ -32,7 +32,7 @@
     text-align: center;
   }
   .NameMission {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
   .Text {
     padding: 1rem 0;
@@ -56,6 +56,7 @@
     }
     .datespace{
       padding: 0.4rem;
+      background: #ffa69e;
     }
   }
   .creabtn {
@@ -128,4 +129,40 @@
 
 .targetSpace {
   padding: 1rem 0;
+}
+
+//блок отчета сотрудника
+.done{
+  margin: 2rem 0 3rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 2px 2px 3px #FF686B;
+  border-radius: 5px;
+  .createbox {
+    flex-basis: 100%;
+    margin: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+  .boxcenter {
+    text-align: center;
+  }
+  .NameMission {
+    font-size: 1.5rem;
+    padding: 0.8rem;
+  }
+  .succbutton{
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    background: #10cf9f;
+    cursor: pointer;
+    margin: 1rem 0;
+    padding: 0.8rem 1.5rem;
+    transition: 0.2s ease-in-out;
+  }
+  .succbutton:hover{
+    background: #ffbc7ce6;;
+   color: #fff;
+    transition: 0.2s ease-in-out;
+  }
 }

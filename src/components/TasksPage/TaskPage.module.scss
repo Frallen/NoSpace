@@ -15,7 +15,9 @@
     grid-auto-rows: 352px;
     justify-content: center;
     grid-gap: 30px 37px;
-
+    @media (max-width: 260px) {
+      grid-auto-rows: max-content;
+    }
     .projectsBox {
      background: #FFA69E;
       padding: 0 0 20px 0;
@@ -50,9 +52,6 @@
         display: inline-block;
         margin: 2rem 0 1rem 0;
         transition: 0.3s ease-in-out;
-        position: absolute;
-        right: 2.8rem;
-        bottom: 1rem;
       }
       .openbutton:hover {
         background: #A5FFD6;
@@ -73,7 +72,7 @@
     .alert {
       padding-top: 0.5rem;
       font-size: 1.9rem;
-      color: #fff;
+      color: #333;
     }
   }
 }
