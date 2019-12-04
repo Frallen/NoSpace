@@ -51,8 +51,11 @@ const Task = props => {
         <div className={classes.boxcenter}>
         <h3>{props.Task.NameMission}</h3>
           <p>{props.Task.Text}</p>
-        {props.Task.SubTargets&&props.Task.SubTargets.map((p,index)=><div key={index}>{p}</div>)}
-            <div className={classes.datebox}>
+          <div className={classes.targetsbox}>
+            <h4 className={classes.targetstitle}>Цели:</h4>
+        {props.Task.SubTargets&&props.Task.SubTargets.map((p,index)=><div key={index} className={classes.targets}>{p}</div>)}
+           </div> 
+           <div className={classes.datebox}>
               <p className={classes.datespace}>Начать с {moment(props.Task.startdate).format("MM-DD-YYYY")}
               </p>
               <p className={classes.datespace}>Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}</p>

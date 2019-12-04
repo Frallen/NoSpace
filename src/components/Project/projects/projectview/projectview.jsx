@@ -253,7 +253,11 @@ let SuccDone=()=>{
             <div className={classes.boxcenter}>
             <h3 className={classes.NameMission}>{props.initialValues.NameMission}</h3>
             <p className={classes.Text}>{props.initialValues.Text}</p>
-</div>
+            <div className={classes.targetsbox}>
+              <h4 className={classes.targetstitle}>Цели:</h4>
+        {props.initialValues.SubTargets&&props.initialValues.SubTargets.map((p,index)=><div key={index} className={classes.targets}>{p}</div>)}
+           </div> 
+           </div>
             <div className={classes.datebox}>
               <p className={classes.datespace}> Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
               </p>

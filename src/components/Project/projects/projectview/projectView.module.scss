@@ -43,6 +43,20 @@
     color: #fff;
     padding-bottom: 10px;
   }
+  .targetsbox {
+    padding: 1rem 0;
+    .targetstitle{
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      background: #ffa69e;
+      border-radius: 21px;
+    }
+    .targets {
+      padding: 0.5rem 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+  }
   .flexspace {
     padding-top: 1rem;
   }

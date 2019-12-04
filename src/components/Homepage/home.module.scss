@@ -31,17 +31,29 @@
       }
     }
   }
-  .home {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    background: url("./../../media/home.jpg") no-repeat center /cover;
-    .text {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      color: #fff;
+}
+.home {
+  height: 100vh;
+  padding: 0 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #3a3231;
+  .textbox {
+    color: #fff;
+    .title {
+      font-size: 3rem;
+      text-decoration: underline;
+      font-style: italic;
+    }
+    .subtext {
+      font-style: italic;
+      font-size: 2rem;
+    }
+    .fire {
+      width: 14rem;
+      height: 15rem;
     }
   }
 }

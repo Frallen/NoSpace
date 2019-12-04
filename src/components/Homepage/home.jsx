@@ -4,6 +4,7 @@ import { Link } from "react-scroll";
 import redux from "./../../media/redux.svg";
 import react from "./../../media/react.svg";
 import firebase from "./../../media/firebase.svg";
+import fire from "./../../media/fire.svg";
 const WelcomePage = () => {
   return (
     <div className={classes.landing}>
@@ -37,13 +38,12 @@ const WelcomePage = () => {
         ></Link>
       </ul>
       <div className={classes.home} id="home">
-        <div className={classes.text}>
-          <div className={classes.textbox}>
-            <h2 className={classes.title}>
-              Все генеальное <span>просто</span>
-            </h2>
-            <p className={classes.subtext}>ваш беспланый бизнес помощник</p>
-          </div>
+        <div className={classes.textbox}>
+          <img src={fire} alt="nospace" className={classes.fire}/>
+          <h2 className={classes.title}>
+            NOSPACE
+          </h2>
+          <p className={classes.subtext}>То что нужно вашему бизнесу.</p>
         </div>
       </div>
       <div className={classes.advantages} id="advantages">
@@ -65,7 +65,7 @@ const WelcomePage = () => {
         </div>
         <div className={classes.item}>
           <div className={classes.box}>
-            <img src={firebase} alt="firebase"  />
+            <img src={firebase} alt="firebase" />
           </div>
         </div>
         <div className={classes.item}>
