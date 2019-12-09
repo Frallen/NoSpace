@@ -39,7 +39,12 @@
   padding-top: 0.3rem;
   width: 100%;
 }
-
+.InputFile {
+  display: none;
+}
+.boxUload {
+  text-align: center;
+}
 //animation
 
 @keyframes showError {

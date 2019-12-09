@@ -26,7 +26,8 @@ class TaksBox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    Task: state.project.MyTask
+    Task: state.project.MyTask,
+    LinkBoss: state.project.LinkBoss,
   };
 };
 

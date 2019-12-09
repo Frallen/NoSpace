@@ -19,11 +19,12 @@
       grid-auto-rows: max-content;
     }
     .projectsBox {
-      background: #ffa69e;
-      padding: 0 0 20px 0;
+      background: linear-gradient(to bottom right, #B0DB7D 40%, #99DBB4 100%);
+      box-shadow: 3px 3px 10px 0px #908f8f;
+      border-radius: 6px;
       text-align: center;
       text-decoration: none;
-      color: #333;
+      color: #fff;
       position: relative;
       .title {
         margin: 1rem 0;
@@ -53,14 +54,16 @@
         text-decoration: none;
         color: #333;
         background: #fff;
-        padding: 0.5rem 3rem;
+        padding: 0.8rem 3.4rem;
+        box-shadow: 1px 3px 5px 0px #333;
         border-radius: 45px;
         display: inline-block;
         margin: 2rem 0 1rem 0;
         transition: 0.3s ease-in-out;
       }
       .openbutton:hover {
-        background: #a5ffd6;
+        background: #333;
+        color: #fff;
         transition: 0.3s ease-in-out;
       }
     }

@@ -7,7 +7,7 @@ import {
   GetProjData,
   Clean,
   UpdateProject,
-  DeleteProject,
+  DeleteProject
 } from "./../../../../redux/projectReducer";
 import { Preloader } from "../../../../untils/preloader/preloader";
 
@@ -28,15 +28,21 @@ class View extends React.Component {
   //удаление проекта
   Delete = data => {
     this.props.DeleteProject(data);
-    //простой редирект после удалением
-    this.props.history.push('/')
+    //простой редирект после удаления
+    this.props.history.push("/");
   };
-  
+
   render() {
     //потом копонента дожидается пропсов,а не отрисовывает сразу
     //если не сделать условие то компонента при первом ренеде окажется без пропсов
-    if (this.props.initialValues && this.props.initialValues.NameMission) {
-      return <ProjView {...this.props} Update={this.Update} Delete={this.Delete}/>;
+    if (
+      this.props.initialValues &&
+      this.props.initialValues.NameMission &&
+      this.props.initialValues.LinkBoss
+    ) {
+      return (
+        <ProjView {...this.props} Update={this.Update} Delete={this.Delete} />
+      );
     }
     return <Preloader></Preloader>; // or loading graphic
   }
@@ -53,12 +59,16 @@ let mapStateToProps = state => {
       NameMission: state.project.OneProject.NameMission,
       Text: state.project.OneProject.Text,
       SubTargets: state.project.OneProject.SubTargets,
+      ////
+      LinkBoss: state.project.LinkBoss,
+      LinkWorker: state.project.LinkWorker,
+      ////
       startdate: state.project.OneProject.startdate,
       enddate: state.project.OneProject.enddate,
       //данные о выполнении
-      isDone:state.project.OneProject.isDone,
-      MissionDone: state.project.OneProject.MissionDone,
-      TextDone: state.project.OneProject.TextDone,
+      isDone: state.project.OneProject.isDone,
+      MissionDoneTitle: state.project.OneProject.MissionDoneTitle,
+      TextDone: state.project.OneProject.TextDone
       //
     },
     error: state.settings.error,
@@ -67,6 +77,11 @@ let mapStateToProps = state => {
 };
 
 export default compose(
-  connect(mapStateToProps, { GetProjData, Clean, UpdateProject,DeleteProject }),
+  connect(mapStateToProps, {
+    GetProjData,
+    Clean,
+    UpdateProject,
+    DeleteProject
+  }),
   withRouter
 )(View);

@@ -1,7 +1,8 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import classes from "./formsControls.module.scss";
-import { Select, InputLabel } from "@material-ui/core";
+import { Select, InputLabel, Button } from "@material-ui/core";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 //кастомный инпут аутификации
 export const authInput = ({ input, meta, ...props }) => {
   const HasError = meta.touched && meta.error;
@@ -72,7 +73,6 @@ export const SelectUser = ({ input, meta, children, ...props }) => {
       <Select
         native
         {...input}
-       
         className={classes.combo}
         inputProps={{
           id: "age-native-simple"
@@ -80,6 +80,44 @@ export const SelectUser = ({ input, meta, children, ...props }) => {
       >
         {children}
       </Select>
+      {HasError && (
+        <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
+      )}
+    </div>
+  );
+};
+
+export const Upload = ({ input, meta }) => {
+  // delete input.value
+  const HasError = meta.touched && meta.error;
+  const resetKey = input.value && delete input.value;
+  const { value, ...inputProps } = input;
+
+  const handleChange = e => {
+    input.onChange(e.target.files[0]);
+  };
+
+  return (
+    <div className={classes.boxUload}>
+      <input
+        {...inputProps}
+        key={resetKey}
+        type="file"
+        id="contained-button-file"
+        className={classes.InputFile}
+        onChange={handleChange}
+        onBlur={() => {}}
+      />
+      <label htmlFor="contained-button-file">
+        <Button
+          variant="contained"
+          color="default"
+          component="span"
+          startIcon={<CloudUploadIcon />}
+        >
+          Загрузить
+        </Button>
+      </label>
       {HasError && (
         <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
       )}

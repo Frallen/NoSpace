@@ -5,10 +5,18 @@ import {
   ProjectInput,
   ProjectTextArea,
   ProjectDate,
-  SelectUser
+  SelectUser,
+  Upload,
+  
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
+/*
+const Upload = (field) => {
+  delete field.input.value; // <-- just delete the value property
+  return <input type="file" id="document" {...field.input} />;
+};
+*/
 
 const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
@@ -69,11 +77,19 @@ const CreateBox = props => {
         <Field component={SelectUser} name="SendTo" validate={[required]}>
           <option value="" />
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
-          props.initialValues.users.map((p,index) => (
+          props.initialValues.users.map((p, index) => (
             //Когда нет заданных ID для списка можно использовать индекс элемента как ключ
-          <option key={index}>{p.Email}</option>
+            <option key={index}>{p.Email}</option>
           ))}
         </Field>
+      </div>
+      <div className={classes.flexspace}>
+        <Field
+          type="file"
+          component={Upload}
+          name="document"
+          validate={[required]}
+        ></Field>
       </div>
       <div className={classes.datebox}>
         <div>

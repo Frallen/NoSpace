@@ -80,6 +80,9 @@
   justify-content: center;
   text-align: center;
   align-content: center;
+  @media (max-width:320px) {
+    padding: 32px 0;
+  }
   .item {
     .box {
       object-fit: cover;

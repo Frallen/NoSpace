@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NavigationContainer from "./components/Navigation/navigationContainer";
@@ -15,22 +15,25 @@ import SettingsContainer from "./components/Settings/settingsContainer";
 import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
 import { compose } from "redux";
 import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
-import TaskPageContainer from "./components/TasksPage/TaskPageContainer"
-const App = ({ loggedIn, emailVerified,project }) => {
+import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { withRouter } from "react-router-dom";
+
+const App = ({ loggedIn, emailVerified, location }) => {
   let routes;
   if (loggedIn && !emailVerified) {
     routes = (
-      <Switch>
+      <Switch location={location}>
         <Route path={"/verification"} render={() => <Email></Email>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
-        <Redirect to={"/verification"}></Redirect>  
+        <Redirect to={"/verification"}></Redirect>
       </Switch>
     );
   }
   //если есть айди пользовалеля то
   else if (loggedIn && emailVerified) {
     routes = (
-      <Switch>
+      <Switch location={location}>
         <Route
           path={"/missions"}
           render={() => <ProjectsContainer></ProjectsContainer>}
@@ -39,17 +42,29 @@ const App = ({ loggedIn, emailVerified,project }) => {
           path={"/create"}
           render={() => <CreateContainer></CreateContainer>}
         ></Route>
-        <Route path={"/mission/:id"} render={()=><ProjViewCont></ProjViewCont>}></Route>
+        <Route
+          path={"/mission/:id"}
+          render={() => <ProjViewCont></ProjViewCont>}
+        ></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
-        <Route path={"/settings"} render={()=><SettingsContainer></SettingsContainer>}></Route>
-        <Route path={"/Tasks"} render={()=><TaskPageContainer></TaskPageContainer>}></Route>
-        <Route path={"/Task/:id"} render={()=><TasksContainer></TasksContainer>}></Route>
+        <Route
+          path={"/settings"}
+          render={() => <SettingsContainer></SettingsContainer>}
+        ></Route>
+        <Route
+          path={"/Tasks"}
+          render={() => <TaskPageContainer></TaskPageContainer>}
+        ></Route>
+        <Route
+          path={"/Task/:id"}
+          render={() => <TasksContainer></TasksContainer>}
+        ></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );
   } else {
     routes = (
-      <Switch>
+      <Switch location={location}>
         <Route
           path={"/login"}
           render={() => <LoginContainer></LoginContainer>}
@@ -58,7 +73,10 @@ const App = ({ loggedIn, emailVerified,project }) => {
           path={"/signup"}
           render={() => <SignupContainer></SignupContainer>}
         ></Route>
-        <Route path={"/recover-password"} render={()=><RecoverContainer></RecoverContainer>}></Route>
+        <Route
+          path={"/recover-password"}
+          render={() => <RecoverContainer></RecoverContainer>}
+        ></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );
@@ -72,16 +90,11 @@ const App = ({ loggedIn, emailVerified,project }) => {
   );
 };
 
-let mapStateToProps = ({ firebase,firestore }) => {
+let mapStateToProps = ({ firebase, firestore }) => {
   return {
     loggedIn: firebase.auth.uid,
-    emailVerified: firebase.auth.emailVerified,
-    //project:firestore.data.Projects,
-    
+    emailVerified: firebase.auth.emailVerified
   };
 };
-//    ${props.project[props.loggedIn].project.id}
 
-export default compose(
-  connect(mapStateToProps),
-)(App);
+export default compose(connect(mapStateToProps), withRouter)(App);

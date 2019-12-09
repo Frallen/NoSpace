@@ -4,7 +4,7 @@
   position: relative;
   margin: 1rem 0;
   background: #fff;
-  box-shadow: 0 3px 7px 3px #84DCC6;
+  box-shadow: 0 2px 5px 2px #2b2828;
   border-radius: 5px;
   .Regactive {
     position: absolute;
@@ -69,12 +69,15 @@
       flex-direction: column;
     }
     .datespace{
+      @media (max-width: 600px) {
+        margin: 0.5rem 0;
+      }
       padding: 0.4rem;
       background: #ffa69e;
     }
   }
   .creabtn {
-    margin: 15px auto;
+    margin: 27px auto 11px;
     display: block;
     outline: none;
     border: none;
@@ -144,7 +147,10 @@
 .targetSpace {
   padding: 1rem 0;
 }
-
+.donwloadbox{
+  text-align: center;
+  padding: 10px 0;
+}
 //блок отчета сотрудника
 .done{
   margin: 2rem 0 3rem;

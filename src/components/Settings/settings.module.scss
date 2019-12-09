@@ -4,16 +4,17 @@
   margin: 4rem 0;
   .form {
     padding: 4vmin;
-    box-shadow: 0 5px 13px 2px #333;
+    box-shadow: 2px 3px 6px 1px #333;
+    border-radius: 6px;
     display: grid;
     grid-template-columns: minmax(14rem, 1fr);
     grid-gap: 1rem;
     grid-auto-rows: max-content;
     justify-content: center;
     .dangerbutton {
+      border-radius: 23px;
       background: red;
       color: #fff;
-      box-shadow: 0px 0px 9px 1px red;
       display: inline-block;
       width: 100%;
       border: none;
@@ -22,9 +23,8 @@
       cursor: pointer;
       transition: 0.2s ease-in-out;
     }
-    .dangerbutton:hover {
+    .dangerbutton:active {
       background: #c70707;
-      box-shadow: none;
       transition: 0.2s ease-in-out;
       color: #fff;
     }
@@ -32,6 +32,7 @@
       padding-top: 2rem;
     }
     .submited {
+      border-radius: 23px;
       display: inline-block;
       width: 100%;
       border: none;
@@ -43,6 +44,8 @@
       transition: 0.2s ease-in-out;
       cursor: pointer;
     }
-   
+   .submited:active{
+    background: #000;
+   }
   }
 }

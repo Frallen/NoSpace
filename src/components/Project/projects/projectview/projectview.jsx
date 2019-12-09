@@ -4,7 +4,8 @@ import { required } from "../../../../untils/validators/validators";
 import {
   ProjectDate,
   ProjectTextArea,
-  ProjectInput
+  ProjectInput,
+  Upload
 } from "../../../commons/formsControls/formsControls";
 import classes from "./projectView.module.scss";
 import { useSnackbar } from "notistack";
@@ -85,6 +86,14 @@ const ProjBox = props => {
         />
       </div>
       <FieldArray name="SubTargets" component={AddSubTargets} />
+      <div className={classes.flexspace}>
+        <Field
+          type="file"
+          component={Upload}
+          name="document"
+          validate={[required]}
+        ></Field>
+      </div>
       <div className={classes.datebox}>
         <div className={classes.datespace}>
           <Field
@@ -160,6 +169,7 @@ let SuccDone=()=>{
     FormData.idMission = props.initialValues.idMission;
     FormData.idOwner = props.initialValues.idOwner;
     FormData.isDone=false;
+    delete FormData.LinkBoss
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
     }
@@ -174,9 +184,11 @@ let SuccDone=()=>{
      <div className={classes.createbox}>
             <div className={classes.boxcenter}>
               <h2>Задание выполненно, проверьте отчет !</h2>
-  <h3 className={classes.NameMission}>{props.initialValues.MissionDone}</h3>
-  
+  <h3 className={classes.NameMission}>{props.initialValues.MissionDoneTitle}</h3> 
 <p className={classes.Text}>{props.initialValues.TextDone}</p>
+<div className={classes.donwloadbox}>
+<a href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</a>
+</div>
 <button className={classes.succbutton} onClick={handleClickOpen}>
               Подтвердить выполнение
             </button>
@@ -254,9 +266,14 @@ let SuccDone=()=>{
             <h3 className={classes.NameMission}>{props.initialValues.NameMission}</h3>
             <p className={classes.Text}>{props.initialValues.Text}</p>
             <div className={classes.targetsbox}>
-              <h4 className={classes.targetstitle}>Цели:</h4>
+           {props.initialValues.SubTargets&&<h4 className={classes.targetstitle}>Цели:</h4>}
         {props.initialValues.SubTargets&&props.initialValues.SubTargets.map((p,index)=><div key={index} className={classes.targets}>{p}</div>)}
            </div> 
+           </div>
+           <div className={classes.donwloadbox}>
+           <Button
+        variant="contained"
+        color="default" href={props.initialValues.LinkBoss} className={classes.donwload}>Скачать</Button>
            </div>
             <div className={classes.datebox}>
               <p className={classes.datespace}> Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
