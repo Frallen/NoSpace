@@ -91,7 +91,6 @@ const ProjBox = props => {
           type="file"
           component={Upload}
           name="document"
-          validate={[required]}
         ></Field>
       </div>
       <div className={classes.datebox}>
@@ -168,8 +167,14 @@ let SuccDone=()=>{
     //добавляю айди проекта и айди создателя
     FormData.idMission = props.initialValues.idMission;
     FormData.idOwner = props.initialValues.idOwner;
+    //при обновлении изменять статус задачи
     FormData.isDone=false;
+    //удаляю мусор undefined тк выдает ошибку,поле с undefined не может быть обновленно
     delete FormData.LinkBoss
+    delete FormData.LinkWorker
+    delete FormData.TextDone
+    delete FormData.MissionDoneTitle
+
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
     }
@@ -187,7 +192,7 @@ let SuccDone=()=>{
   <h3 className={classes.NameMission}>{props.initialValues.MissionDoneTitle}</h3> 
 <p className={classes.Text}>{props.initialValues.TextDone}</p>
 <div className={classes.donwloadbox}>
-<a href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</a>
+<Button href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</Button>
 </div>
 <button className={classes.succbutton} onClick={handleClickOpen}>
               Подтвердить выполнение

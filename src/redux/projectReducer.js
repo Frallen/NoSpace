@@ -210,9 +210,9 @@ export const GetProjData = data => async (
             .then(url => {
               let xhr = new XMLHttpRequest();
               xhr.responseType = "blob";
-              xhr.onload = function(event) {
+              /*  xhr.onload = function(event) {
                 let blob = xhr.response;
-              };
+              };*/
               xhr.open("GET", url);
               xhr.send();
               dispatch({ type: DownLinkBoss, url });
@@ -230,9 +230,9 @@ export const GetProjData = data => async (
               .then(url => {
                 let xhr = new XMLHttpRequest();
                 xhr.responseType = "blob";
-                xhr.onload = function(event) {
+                /*xhr.onload = function(event) {
                   let blob = xhr.response;
-                };
+                };*/
                 xhr.open("GET", url);
                 xhr.send();
                 dispatch({ type: DownLinkWorker, url });
@@ -273,39 +273,43 @@ export const UpdateProject = data => async (
   const firestore = getFirestore();
   const firebase = getFirebase();
   try {
-    //сначала получить коллекцию чтобы вставить в url
-    await firestore
-      .collection("Mission")
-      .where("idMission", "==", data.idMission)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          let project = doc.data();
-          //удаляю файл босса
-          firebase
-            .storage()
-            .refFromURL(
-              `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
-            )
-            .delete();
+    if (data.document) {
+      //сначала получить коллекцию чтобы вставить в url
+      await firestore
+        .collection("Mission")
+        .where("idMission", "==", data.idMission)
+        .get()
+        .then(snap => {
+          snap.forEach(doc => {
+            let project = doc.data();
+            //удаляю файл босса
+            firebase
+              .storage()
+              .refFromURL(
+                `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
+              )
+              .delete();
+          });
         });
-      });
 
-    //загружаю документ в storage
-    await firebase
-      .storage()
-      .ref(`Missions/${data.idMission}/` + data.document.name)
-      .put(data.document);
-
+      //загружаю документ в storage
+      await firebase
+        .storage()
+        .ref(`Missions/${data.idMission}/` + data.document.name)
+        .put(data.document);
+      //добавляю в firestore имя добавляемого документа чтобы потом получить его
+      data.NameDoc = data.document.name;
+    }
     //удаляю массив документа тк он не поддерживается firestore
     delete data.document;
-
     //потом обновить
     await firestore
       .collection("Mission")
       .doc(data.idMission)
       .update({ ...data });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 //удаления проекта
 export const DeleteProject = data => async (
@@ -394,9 +398,9 @@ export const GetTask = data => async (
             .then(url => {
               let xhr = new XMLHttpRequest();
               xhr.responseType = "blob";
-              xhr.onload = function(event) {
+              /* xhr.onload = function(event) {
                 let blob = xhr.response;
-              };
+              };*/
               xhr.open("GET", url);
               xhr.send();
               dispatch({ type: DownLinkBoss, url });

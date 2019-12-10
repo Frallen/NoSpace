@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  margin: 1rem 0;
+  margin: 4rem 0 1rem;
   background: #fff;
   box-shadow: 0 2px 5px 2px #2b2828;
   border-radius: 5px;
@@ -11,9 +11,8 @@
     top: 1rem;
     right: 0.5rem;
     @media (max-width: 675px) {
-      top: auto;
-      bottom: -4rem;
-      color: #fff;
+      top: -3rem;
+      color: #333;
     }
     @media (max-width: 250px) {
       right: 0;
@@ -21,7 +20,7 @@
   }
   .adaptRegactive {
     @media (max-width: 675px) {
-      color: #fff;
+      color: #333;
     }
   }
   .createbox {
@@ -33,6 +32,7 @@
   }
   .NameMission {
     font-size: 1.5rem;
+    word-wrap: break-all;
   }
   .Text {
     padding: 1rem 0;
@@ -45,7 +45,7 @@
   }
   .targetsbox {
     padding: 1rem 0;
-    .targetstitle{
+    .targetstitle {
       font-size: 1.6rem;
       text-transform: uppercase;
       background: #ffa69e;
@@ -68,7 +68,7 @@
     @media (max-width: 600px) {
       flex-direction: column;
     }
-    .datespace{
+    .datespace {
       @media (max-width: 600px) {
         margin: 0.5rem 0;
       }
@@ -91,7 +91,7 @@
   }
   .creabtn:hover {
     background: #333;
-    color:#fff;
+    color: #fff;
     transition: 0.2s ease-in-out;
   }
 }
@@ -112,7 +112,7 @@
   }
   .addtarget:hover {
     background: #333;
-    color:#fff;
+    color: #fff;
     transition: 0.2s ease-in-out;
   }
 }
@@ -147,16 +147,16 @@
 .targetSpace {
   padding: 1rem 0;
 }
-.donwloadbox{
+.donwloadbox {
   text-align: center;
   padding: 10px 0;
 }
 //блок отчета сотрудника
-.done{
+.done {
   margin: 2rem 0 3rem;
   display: flex;
   justify-content: center;
-  box-shadow: 0 2px 2px 3px #FF686B;
+  box-shadow: 0 2px 2px 3px #ff686b;
   border-radius: 5px;
   .createbox {
     flex-basis: 100%;
@@ -169,7 +169,7 @@
     font-size: 1.5rem;
     padding: 0.8rem;
   }
-  .succbutton{
+  .succbutton {
     text-decoration: none;
     outline: none;
     border: none;
@@ -180,9 +180,9 @@
     padding: 0.8rem 1.5rem;
     transition: 0.2s ease-in-out;
   }
-  .succbutton:hover{
-    background: #ffbc7ce6;;
-   color: #fff;
+  .succbutton:hover {
+    background: #ffbc7ce6;
+    color: #fff;
     transition: 0.2s ease-in-out;
   }
 }

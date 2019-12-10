@@ -57,35 +57,65 @@
     }
   }
 }
-
 .advantages {
   background: #4ecdc4;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-  grid-auto-rows: max-content;
-  grid-gap: 30px;
-  justify-content: center;
-  text-align: center;
-  align-content: center;
-}
+  .headingTitlebox {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    .headingTitle {
+      position: absolute;
+      top: 8rem;
+      font-size: 1.8rem;
+    }
+  }
+  .advantagesbox {
+    height: 100vh;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    grid-auto-rows: max-content;
+    grid-gap: 30px;
+    justify-content: center;
 
+    align-content: center;
+  }
+}
 .tehnologes {
   background: #161a21;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-  grid-auto-rows: max-content;
-  grid-gap: 40px;
-  justify-content: center;
-  text-align: center;
-  align-content: center;
-  @media (max-width:320px) {
-    padding: 32px 0;
+  .headingTitlebox {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    .headingTitle {
+      position: absolute;
+      top: 7rem;
+      font-size: 1.8rem;
+      color: #fff;
+      @media (max-width: 460px) {
+        top: 1.5rem;
+      }
+    }
   }
-  .item {
-    .box {
-      object-fit: cover;
+  .tehnologesbox {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+    @media screen {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 167px));
+    }
+    grid-auto-rows: max-content;
+    grid-gap: 40px;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    @media (max-width: 320px) {
+      padding: 60px 0;
+    }
+    .item {
+      .box {
+        object-fit: cover;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ import fire from "./../../media/fire.svg";
 
 class WelcomePage extends React.Component {
   componentDidMount() {
-    //из-за редиректа удаления проекта главная страница скроллица вниз 
+    //из-за редиректа удаления проекта главная страница скроллица вниз
     //делаю автоматический скролл вверх при монтировании
     window.scrollTo(0, 0);
   }
@@ -52,17 +52,26 @@ class WelcomePage extends React.Component {
           </div>
         </div>
         <div className={classes.advantages} id="advantages">
-          <div className={classes.item}>
-            <h3 className={classes.titleSmall}>Готово к использованию</h3>
+          <div className={classes.headingTitlebox}>
+            <h2 className={classes.headingTitle}>Преимущества</h2>
           </div>
-          <div className={classes.item}>
-            <h3 className={classes.titleSmall}>Бесплатно</h3>
-          </div>
-          <div className={classes.item}>
-            <h3 className={classes.titleSmall}>Открытый исходный код</h3>
+          <div className={classes.advantagesbox}>
+            <div className={classes.item}>
+              <h3 className={classes.titleSmall}>OpenSource</h3>
+            </div>
+            <div className={classes.item}>
+              <h3 className={classes.titleSmall}>Бесплатно</h3>
+            </div>
+            <div className={classes.item}>
+              <h3 className={classes.titleSmall}>Лицензия MIT</h3>
+            </div>
           </div>
         </div>
         <div className={classes.tehnologes} id="tehnologes">
+        <div className={classes.headingTitlebox}>
+            <h2 className={classes.headingTitle}>Технологии</h2>
+          </div>
+        <div className={classes.tehnologesbox}>
           <div className={classes.item}>
             <div className={classes.box}>
               <img src={react} alt="react" />
@@ -78,6 +87,7 @@ class WelcomePage extends React.Component {
               <img src={redux} alt="redux" />
             </div>
           </div>
+        </div>
         </div>
       </div>
     );
