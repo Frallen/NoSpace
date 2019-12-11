@@ -14,6 +14,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Fade } from "react-reveal";
 
 let Sett = props => {
   return (
@@ -123,6 +124,7 @@ const Settings = props => {
     props.Delete();
   };
   return (
+    <Fade>
     <div className={classes.formbox}>
       <div className={classes.form}>
         <div>
@@ -158,7 +160,7 @@ const Settings = props => {
           </Dialog>
         </div>
       </div>
-    </div>
+    </div></Fade>
   );
 };
 export default Settings;

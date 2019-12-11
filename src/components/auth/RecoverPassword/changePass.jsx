@@ -6,6 +6,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import { authInput } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
+import { Fade } from "react-reveal";
 
 const Recover = props => {
   return (
@@ -61,13 +62,14 @@ let ChangePass = props => {
   };
 
   return (
+    <Fade>
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Восстановление пароля</h5>
         <RecoverForm onSubmit={onSubmit} {...props.loading}></RecoverForm>
       </div>
  
-    </div>
+    </div></Fade>
   );
 };
 export default ChangePass;

@@ -20,6 +20,7 @@ import {
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import moment from "moment";
+import { Fade } from "react-reveal";
 
 //для вставки массива целей
 const AddSubTargets = ({ fields, meta: { error } }) => (
@@ -184,6 +185,7 @@ let SuccDone=()=>{
 
 
   return (
+    <Fade>
     <div>
      {props.initialValues.isDone===true && <div className={classes.done}>
      <div className={classes.createbox}>
@@ -288,7 +290,7 @@ let SuccDone=()=>{
           </div>
         )}
       </div>
-    </div>
+    </div></Fade>
   );
 };
 

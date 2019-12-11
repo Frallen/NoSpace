@@ -12,6 +12,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
 import { useSnackbar } from "notistack";
+import { Fade } from "react-reveal";
 //firestore вроде как принимает пароли от 8 символов
 const MinValue = PasswordCheck(8);
 
@@ -99,12 +100,13 @@ const SignUp = props => {
     });
   }
   return (
+    <Fade>
     <div className={classes.formbox}>
       <div className={classes.form}>
         <h5 className={classes.formtitle}>Регистрация</h5>
         <SignUpForm onSubmit={onSubmit} {...props.loading}></SignUpForm>
       </div>
-    </div>
+    </div></Fade>
   );
 };
 

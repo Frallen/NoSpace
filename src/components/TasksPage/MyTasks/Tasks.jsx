@@ -9,6 +9,7 @@ import classes from "./Tasks.module.scss";
 import { required } from "../../../untils/validators/validators";
 import moment from "moment";
 import { Button } from "@material-ui/core";
+import { Fade } from "react-reveal";
 const TaskBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -56,6 +57,7 @@ const Task = props => {
 
   };
   return (
+    <Fade>
     <div className={classes.create}>
       <div className={classes.createbox}>
         <div className={classes.boxcenter}>
@@ -78,7 +80,7 @@ const Task = props => {
         </div>
         <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
       </div>
-    </div>
+    </div></Fade>
   );
 };
 

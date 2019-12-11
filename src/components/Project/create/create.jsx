@@ -6,17 +6,11 @@ import {
   ProjectTextArea,
   ProjectDate,
   SelectUser,
-  Upload,
-  
+  Upload
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
-/*
-const Upload = (field) => {
-  delete field.input.value; // <-- just delete the value property
-  return <input type="file" id="document" {...field.input} />;
-};
-*/
+import { Fade } from "react-reveal";
 
 const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
@@ -134,20 +128,22 @@ const Create = props => {
     props.NewProject(formData);
   };
   return (
-    <div className={classes.create}>
-      <div className={classes.createbox}>
-        <h3>Создание поручения</h3>
-        <p>
-          Cдесь вы можете создать поручение введя название,текст и сроки
-          исполнения
-        </p>
-        <CreateForm
-          onSubmit={onSubmit}
-          {...props.loading}
-          {...props}
-        ></CreateForm>
+    <Fade>
+      <div className={classes.create}>
+        <div className={classes.createbox}>
+          <h3>Создание поручения</h3>
+          <p>
+            Здесь вы можете создать поручение введя название,текст и сроки
+            исполнения
+          </p>
+          <CreateForm
+            onSubmit={onSubmit}
+            {...props.loading}
+            {...props}
+          ></CreateForm>
+        </div>
       </div>
-    </div>
+    </Fade>
   );
 };
 

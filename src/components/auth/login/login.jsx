@@ -8,6 +8,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import EmailIcon from "@material-ui/icons/Email";
 import { useSnackbar } from "notistack";
+import { Fade } from "react-reveal";
 const MinValue = PasswordCheck(8);
 const FormBox = props => {
   return (
@@ -60,7 +61,6 @@ const LoginForm = reduxForm({
 })(FormBox);
 
 const Login = props => {
-
   //let message = "Такая почта или никейм уже имеется";
   let message = "Неправильный пароль или емейл";
   const { enqueueSnackbar } = useSnackbar();
@@ -76,15 +76,17 @@ const Login = props => {
   };
 
   return (
-    <div className={classes.formbox}>
-      <div className={classes.form}>
-        <h5 className={classes.formtitle}>Вход</h5>
-        <LoginForm onSubmit={onSubmit} {...props.loading}></LoginForm>
-        <NavLink to={"/recover-password"} className={classes.recoverPass}>
-          Забыли пароль?
-        </NavLink>
+    <Fade>
+      <div className={classes.formbox}>
+        <div className={classes.form}>
+          <h5 className={classes.formtitle}>Вход</h5>
+          <LoginForm onSubmit={onSubmit} {...props.loading}></LoginForm>
+          <NavLink to={"/recover-password"} className={classes.recoverPass}>
+            Забыли пароль?
+          </NavLink>
+        </div>
       </div>
-    </div>
+    </Fade>
   );
 };
 

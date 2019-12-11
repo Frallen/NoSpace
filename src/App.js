@@ -18,12 +18,13 @@ import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
 import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { withRouter } from "react-router-dom";
+import { Fade } from "react-reveal";
 
 const App = ({ loggedIn, emailVerified, location }) => {
   let routes;
   if (loggedIn && !emailVerified) {
     routes = (
-      <Switch location={location}>
+      <Switch>
         <Route path={"/verification"} render={() => <Email></Email>}></Route>
         <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
         <Redirect to={"/verification"}></Redirect>
@@ -33,7 +34,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
   //если есть айди пользовалеля то
   else if (loggedIn && emailVerified) {
     routes = (
-      <Switch location={location}>
+      <Switch>
         <Route
           path={"/missions"}
           render={() => <ProjectsContainer></ProjectsContainer>}
@@ -64,7 +65,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
     );
   } else {
     routes = (
-      <Switch location={location}>
+      <Switch>
         <Route
           path={"/login"}
           render={() => <LoginContainer></LoginContainer>}

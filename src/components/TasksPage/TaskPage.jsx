@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./TaskPage.module.scss";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
+import { Fade } from "react-reveal";
 const TaskPage = props => {
   let content;
   content = props.Tasks.map(p => (
@@ -21,14 +22,16 @@ const TaskPage = props => {
     </div>
   ));
   return (
-    <div>
-      <div className={classes.Headhelp}>
-      <h2 className={classes.HeadhelpTitle}>Задачи к выполнению</h2>
-  </div>
-    <div className={classes.Panel}>
-      <div className={classes.projects}>{content}</div>
-    </div>
-    </div>
+    <Fade>
+      <div>
+        <div className={classes.Headhelp}>
+          <h2 className={classes.HeadhelpTitle}>Задачи к выполнению</h2>
+        </div>
+        <div className={classes.Panel}>
+          <div className={classes.projects}>{content}</div>
+        </div>
+      </div>
+    </Fade>
   );
 };
 
