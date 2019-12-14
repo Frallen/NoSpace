@@ -44,7 +44,8 @@ const registrationReducer = (state = initialState, action) => {
     case RegEnd:
       return {
         ...state,
-        loading: false
+        loading: false,
+        error:null,
       };
     case CleanUp:
       return {

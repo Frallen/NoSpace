@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Field, reduxForm } from "redux-form";
 import classes from "./../auth.module.scss";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -42,34 +42,30 @@ let RecoverForm = reduxForm({
 })(Recover);
 
 let ChangePass = props => {
-  useEffect(()=>{
-  
-     
-   if(props.error){ 
-        enqueueSnackbar(messageErr, {
-          variant: "error",
-          preventDuplicate: true,
-          autoHideDuration: 3000
-        })}
-  })
   const { enqueueSnackbar } = useSnackbar();
   let messageErr = "Не существует такого емейла";
-  let messageSucc = "Письмо успешно отправленно";
+
+  if (props.error) {
+    enqueueSnackbar(messageErr, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+  }
 
   let onSubmit = fromdata => {
     props.NewPass(fromdata);
-   
   };
 
   return (
     <Fade>
-    <div className={classes.formbox}>
-      <div className={classes.form}>
-        <h5 className={classes.formtitle}>Восстановление пароля</h5>
-        <RecoverForm onSubmit={onSubmit} {...props.loading}></RecoverForm>
+      <div className={classes.formbox}>
+        <div className={classes.form}>
+          <h5 className={classes.formtitle}>Восстановление пароля</h5>
+          <RecoverForm onSubmit={onSubmit} {...props.loading}></RecoverForm>
+        </div>
       </div>
- 
-    </div></Fade>
+    </Fade>
   );
 };
 export default ChangePass;

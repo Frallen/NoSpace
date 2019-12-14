@@ -18,7 +18,7 @@ const Projects = props => {
             Закачивается {moment(p.enddate).format("MM-DD-YYYY")}
           </p>
           <p className={classes.SendToBox}>Задание выданно<span >{p.SendTo}</span></p>
-          {p.isDone===true&&<div className={classes.personeDone}>Сотрудник прислал отчет!</div>}
+          {p.isDone===true&&<div className={classes.personeDone}>Сотрудник прислал отчет</div>}
         </div>
         
 

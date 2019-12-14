@@ -64,7 +64,7 @@ const Login = props => {
   //let message = "Такая почта или никейм уже имеется";
   let message = "Неправильный пароль или емейл";
   const { enqueueSnackbar } = useSnackbar();
-  if (props.error) {
+  if (props.error && props.error !==null) {
     enqueueSnackbar(message, {
       variant: "error",
       preventDuplicate: true,

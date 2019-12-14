@@ -19,7 +19,7 @@
       grid-auto-rows: max-content;
     }
     .projectsBox {
-      background: linear-gradient(to bottom right, #B0DB7D 40%, #99DBB4 100%);
+      background: linear-gradient(to bottom right, #b0db7d 40%, #99dbb4 100%);
       box-shadow: 3px 3px 10px 0px #908f8f;
       border-radius: 6px;
       text-align: center;
@@ -35,6 +35,12 @@
       .text {
         overflow: hidden;
         padding: 2rem 0.5rem;
+      }
+      .onDone {
+        padding: 1.3rem 0;
+        font-size: 1.2rem;
+        color: #5d5d5d;
+        font-weight: 600;
       }
       .datebox {
         padding: 0rem 0rem;

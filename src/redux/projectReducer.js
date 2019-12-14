@@ -1,8 +1,8 @@
 import { reset } from "redux-form";
 
-const StartNewProject = "StartNewProject";
-const NewProjectSucc = "NewProjectSucc";
-const NewProjectErr = "NewProjectErr";
+const Start = "Start";
+const End = "End";
+const ErrorProc = "ErrorProc";
 const CleanUp = "CleanUp";
 //взять все проекты
 const GetallProj = "GetallProj";
@@ -20,7 +20,9 @@ const DownLinkBoss = "DownLinkBoss";
 const DownLinkWorker = "DownLinkWorker";
 
 let initialState = {
+  //Контейнер для ошбики
   error: null,
+  //неактивная кнопка при запросе
   loading: false,
   //Контейнер для всех проектов
   DataProjects: [],
@@ -39,19 +41,19 @@ let initialState = {
 
 const dashboardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case StartNewProject:
+    case Start:
       return {
         ...state,
         loading: true
       };
 
-    case NewProjectSucc:
+    case End:
       return {
         ...state,
         loading: false,
         error: null
       };
-    case NewProjectErr:
+    case ErrorProc:
       return {
         ...state,
         loading: false,
@@ -62,7 +64,7 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: false,
-        OneProject: []
+     //   OneProject: null,
       };
     case GetallProj:
       return {
@@ -117,7 +119,7 @@ export const CreateNewproject = data => async (
   //получение айди в firebase
   const { uid: userId } = getState().firebase.auth;
 
-  dispatch({ type: StartNewProject });
+  dispatch({ type: Start });
   try {
     //вариан создания своего айди let id = new Date().valueOf();
 
@@ -156,11 +158,11 @@ export const CreateNewproject = data => async (
     //получение айди коммита
     // -->    console.log(comm.id)
 
-    dispatch({ type: NewProjectSucc });
+    dispatch({ type: End });
     //затираю поля формы
     dispatch(reset("createForm"));
   } catch (err) {
-    dispatch({ type: NewProjectErr, payload: err.message });
+    dispatch({ type: ErrorProc, payload: err.message });
   }
 };
 //Отрисовываю все проекты
@@ -272,6 +274,7 @@ export const UpdateProject = data => async (
 ) => {
   const firestore = getFirestore();
   const firebase = getFirebase();
+  dispatch({ type: Start });
   try {
     if (data.document) {
       //сначала получить коллекцию чтобы вставить в url
@@ -308,8 +311,9 @@ export const UpdateProject = data => async (
       .doc(data.idMission)
       .update({ ...data });
   } catch (err) {
-    console.log(err.message);
+    dispatch({ type: ErrorProc, payload: err.message });
   }
+  dispatch({ type: End });
 };
 //удаления проекта
 export const DeleteProject = data => async (
@@ -319,6 +323,7 @@ export const DeleteProject = data => async (
 ) => {
   const firestore = getFirestore();
   const firebase = getFirebase();
+  dispatch({ type: Start });
   try {
     //сначала получить коллекцию чтобы вставить в url
     await firestore
@@ -346,13 +351,15 @@ export const DeleteProject = data => async (
           }
         });
       });
-
     //потом обновить
     await firestore
       .collection("Mission")
       .doc(data)
       .delete();
-  } catch (err) {}
+  } catch (err) {
+    dispatch({ type: ErrorProc, payload: err.message });
+  }
+  dispatch({ type: End });
 };
 export const GetAllTasks = data => async (
   dispatch,
@@ -391,6 +398,7 @@ export const GetTask = data => async (
         snap.forEach(doc => {
           let task = doc.data();
           //console.log(task);
+          //беру ссылку на скачивание документа
           firebase
             .storage()
             .ref(`Missions/${task.idMission}/${task.NameDoc}`)
@@ -403,11 +411,13 @@ export const GetTask = data => async (
               };*/
               xhr.open("GET", url);
               xhr.send();
+              //отправля ссылку для скачивания
               dispatch({ type: DownLinkBoss, url });
             })
             .catch(function(error) {
               // Handle any errors
             });
+            //отправляю пришедшие данные(только firestore)
           dispatch({ type: GetMyTask, task });
         });
       });
@@ -421,6 +431,7 @@ export const SendBackTask = data => async (
 ) => {
   const firestore = getFirestore();
   const firebase = getFirebase();
+  dispatch({ type: Start });
   try {
     await firestore
       .collection("Mission")
@@ -442,7 +453,39 @@ export const SendBackTask = data => async (
       .collection("Mission")
       .doc(data.idMission)
       .update({ ...data });
-  } catch (err) {}
+
+    await firestore
+      .collection("Mission")
+      .where("idMission", "==", data)
+      .get()
+      .then(snap => {
+        snap.forEach(doc => {
+          let task = doc.data();
+          //console.log(task);
+          firebase
+            .storage()
+            .ref(`Missions/${task.idMission}/${task.NameDoc}`)
+            .getDownloadURL()
+            .then(url => {
+              let xhr = new XMLHttpRequest();
+              xhr.responseType = "blob";
+              /* xhr.onload = function(event) {
+                let blob = xhr.response;
+              };*/
+              xhr.open("GET", url);
+              xhr.send();
+              dispatch({ type: DownLinkBoss, url });
+            })
+            .catch(function(error) {
+              // Handle any errors
+            });
+          dispatch({ type: GetMyTask, task });
+        });
+      });
+  } catch (err) {
+    dispatch({ type: ErrorProc, payload: err.message });
+  }
+  dispatch({ type: End });
 };
 
 export default dashboardReducer;

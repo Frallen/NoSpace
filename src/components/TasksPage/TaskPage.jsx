@@ -16,6 +16,7 @@ const TaskPage = props => {
           Закачивается {moment(p.enddate).format("MM-DD-YYYY")}
         </p>
       </div>
+      {p.isDone===true&&<p className={classes.onDone}>Находится на проверке</p>}
       <NavLink to={"/Task/" + p.idMission} className={classes.openbutton}>
         Открыть
       </NavLink>

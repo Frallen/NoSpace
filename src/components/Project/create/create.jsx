@@ -115,7 +115,7 @@ const CreateForm = reduxForm({
 })(CreateBox);
 
 const Create = props => {
-  let message = "";
+  
   const { enqueueSnackbar } = useSnackbar();
   if (props.error) {
     enqueueSnackbar(props.error, {
@@ -126,6 +126,12 @@ const Create = props => {
   }
   let onSubmit = formData => {
     props.NewProject(formData);
+   let message = "Поручение успешно созданно";
+    enqueueSnackbar(message, {
+      variant: "success",
+      preventDuplicate: true,
+      autoHideDuration: 4000
+    });
   };
   return (
     <Fade>

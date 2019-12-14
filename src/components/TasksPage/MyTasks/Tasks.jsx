@@ -10,6 +10,9 @@ import { required } from "../../../untils/validators/validators";
 import moment from "moment";
 import { Button } from "@material-ui/core";
 import { Fade } from "react-reveal";
+import { useSnackbar } from "notistack";
+import CheckIcon from '@material-ui/icons/Check';
+
 const TaskBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -38,7 +41,10 @@ const TaskBox = props => {
           validate={[required]}
         ></Field>
       </div>
-      <button className={classes.creabtn} disabled={props.loading || props.Task.isDone===true}>
+      <button
+        className={classes.creabtn}
+        disabled={props.loading || props.Task.isDone === true}
+      >
         Отправить на проверку
       </button>
     </form>
@@ -51,36 +57,62 @@ const TaskForm = reduxForm({
 
 const Task = props => {
   let onSubmit = FormData => {
-   FormData.isDone=true
+    FormData.isDone = true;
     FormData.idMission = props.Task.idMission;
-    props.SendTask(FormData)
-
+    props.SendTask(FormData);
+    let message = "Отчет отправлен";
+    enqueueSnackbar(message, {
+      variant: "success",
+      preventDuplicate: true,
+      autoHideDuration: 4000
+    });
   };
+  const { enqueueSnackbar } = useSnackbar();
+ 
   return (
     <Fade>
-    <div className={classes.create}>
-      <div className={classes.createbox}>
-        <div className={classes.boxcenter}>
-        <h3>{props.Task.NameMission}</h3>
-          <p>{props.Task.Text}</p>
-          <div className={classes.targetsbox}>
-          {props.Task.SubTargets &&<h4 className={classes.targetstitle}>Цели:</h4>}
-        {props.Task.SubTargets&&props.Task.SubTargets.map((p,index)=><div key={index} className={classes.targets}>{p}</div>)}
-           </div> 
-           <div className={classes.donwloadbox}>
-           <Button
-        variant="contained"
-        color="default" href={props.LinkBoss} className={classes.donwload}>Скачать</Button>
-           </div>
-           <div className={classes.datebox}>
-              <p className={classes.datespace}>Начать с {moment(props.Task.startdate).format("MM-DD-YYYY")}
-              </p>
-              <p className={classes.datespace}>Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}</p>
+      <div>
+      {props.Task.isDone&&<div className={classes.BoxIsDone}><CheckIcon /><p className={classes.BoxIsDoneText}> Задание на проверке</p></div>}
+      <div className={classes.create}>
+        <div className={classes.createbox}>
+          <div className={classes.boxcenter}>
+            <h3>{props.Task.NameMission}</h3>
+            <p>{props.Task.Text}</p>
+            <div className={classes.targetsbox}>
+              {props.Task.SubTargets && (
+                <h4 className={classes.targetstitle}>Цели:</h4>
+              )}
+              {props.Task.SubTargets &&
+                props.Task.SubTargets.map((p, index) => (
+                  <div key={index} className={classes.targets}>
+                    {p}
+                  </div>
+                ))}
             </div>
+            <div className={classes.donwloadbox}>
+              <Button
+                variant="contained"
+                color="default"
+                href={props.LinkBoss}
+                className={classes.donwload}
+              >
+                Скачать
+              </Button>
+            </div>
+            <div className={classes.datebox}>
+              <p className={classes.datespace}>
+                Начать с {moment(props.Task.startdate).format("MM-DD-YYYY")}
+              </p>
+              <p className={classes.datespace}>
+                Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}
+              </p>
+            </div>
+          </div>
+          <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
         </div>
-        <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
       </div>
-    </div></Fade>
+      </div>
+    </Fade>
   );
 };
 

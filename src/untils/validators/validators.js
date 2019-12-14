@@ -10,6 +10,6 @@ export const OnlyLetters = value => {
 
 export const PasswordCheck = MinValue => value => {
   if (value.length < MinValue)
-    return `Пароль не может быть меньше ${MinValue} символов`;
+    return `Не менее ${MinValue} символов`;
   return undefined;
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NavigationContainer from "./components/Navigation/navigationContainer";
@@ -16,9 +16,7 @@ import ProjViewCont from "./components/Project/projects/projectview/projectviewC
 import { compose } from "redux";
 import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
 import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { withRouter } from "react-router-dom";
-import { Fade } from "react-reveal";
 
 const App = ({ loggedIn, emailVerified, location }) => {
   let routes;
