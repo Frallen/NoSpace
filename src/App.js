@@ -17,6 +17,8 @@ import { compose } from "redux";
 import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
 import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
 import { withRouter } from "react-router-dom";
+import HistoryContainer from "./components/Project/projects/history/historyContainer";
+import OldContainer from "./components/Project/projects/history/old/oldContainer";
 
 const App = ({ loggedIn, emailVerified, location }) => {
   let routes;
@@ -58,6 +60,14 @@ const App = ({ loggedIn, emailVerified, location }) => {
           path={"/Task/:id"}
           render={() => <TasksContainer></TasksContainer>}
         ></Route>
+        <Route
+          path={"/history/"}
+          render={() => <HistoryContainer></HistoryContainer>}
+        ></Route>
+        <Route
+          path={"/old/:id"}
+          render={() => <OldContainer></OldContainer>}
+        ></Route>
         <Redirect to={"/"}></Redirect>
       </Switch>
     );
@@ -89,7 +99,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
   );
 };
 
-let mapStateToProps = ({ firebase, firestore }) => {
+let mapStateToProps = ({ firebase }) => {
   return {
     loggedIn: firebase.auth.uid,
     emailVerified: firebase.auth.emailVerified

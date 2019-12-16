@@ -63,8 +63,7 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        loading: false,
-     //   OneProject: null,
+        loading: false
       };
     case GetallProj:
       return {
@@ -210,13 +209,6 @@ export const GetProjData = data => async (
             .ref(`Missions/${project.idMission}/${project.NameDoc}`)
             .getDownloadURL()
             .then(url => {
-              let xhr = new XMLHttpRequest();
-              xhr.responseType = "blob";
-              /*  xhr.onload = function(event) {
-                let blob = xhr.response;
-              };*/
-              xhr.open("GET", url);
-              xhr.send();
               dispatch({ type: DownLinkBoss, url });
             })
             .catch(function(error) {
@@ -230,13 +222,6 @@ export const GetProjData = data => async (
               .ref(`Missions/${project.idMission}/otvet/${project.NameDocDone}`)
               .getDownloadURL()
               .then(url => {
-                let xhr = new XMLHttpRequest();
-                xhr.responseType = "blob";
-                /*xhr.onload = function(event) {
-                  let blob = xhr.response;
-                };*/
-                xhr.open("GET", url);
-                xhr.send();
                 dispatch({ type: DownLinkWorker, url });
               })
               .catch(function(error) {});
@@ -322,11 +307,32 @@ export const DeleteProject = data => async (
   { getFirestore, getFirebase }
 ) => {
   const firestore = getFirestore();
-  const firebase = getFirebase();
+ // const firebase = getFirebase();
   dispatch({ type: Start });
   try {
-    //сначала получить коллекцию чтобы вставить в url
     await firestore
+      .collection("Mission")
+      .where("idMission", "==", data)
+      .get()
+      .then(snap => {
+        snap.forEach(doc => {
+          let project = doc.data();
+          //если проект сдан то создать копию в историю поручений
+          if (project.isDone) {
+            firestore
+              .collection("History")
+              .doc(data)
+              .set({
+                //изначально получается вложенный массив project(в нем все данные)
+                //деструктуризацией я выношу все вложенные объекты наверх и забавляюсь от propject
+                ...project
+              });
+          }
+        });
+      });
+
+    //сначала получить коллекцию чтобы вставить в url
+    /*  await firestore
       .collection("Mission")
       .where("idMission", "==", data)
       .get()
@@ -351,7 +357,8 @@ export const DeleteProject = data => async (
           }
         });
       });
-    //потом обновить
+      */
+    //потом удалить
     await firestore
       .collection("Mission")
       .doc(data)
@@ -404,20 +411,13 @@ export const GetTask = data => async (
             .ref(`Missions/${task.idMission}/${task.NameDoc}`)
             .getDownloadURL()
             .then(url => {
-              let xhr = new XMLHttpRequest();
-              xhr.responseType = "blob";
-              /* xhr.onload = function(event) {
-                let blob = xhr.response;
-              };*/
-              xhr.open("GET", url);
-              xhr.send();
               //отправля ссылку для скачивания
               dispatch({ type: DownLinkBoss, url });
             })
             .catch(function(error) {
               // Handle any errors
             });
-            //отправляю пришедшие данные(только firestore)
+          //отправляю пришедшие данные(только firestore)
           dispatch({ type: GetMyTask, task });
         });
       });
@@ -467,13 +467,6 @@ export const SendBackTask = data => async (
             .ref(`Missions/${task.idMission}/${task.NameDoc}`)
             .getDownloadURL()
             .then(url => {
-              let xhr = new XMLHttpRequest();
-              xhr.responseType = "blob";
-              /* xhr.onload = function(event) {
-                let blob = xhr.response;
-              };*/
-              xhr.open("GET", url);
-              xhr.send();
               dispatch({ type: DownLinkBoss, url });
             })
             .catch(function(error) {

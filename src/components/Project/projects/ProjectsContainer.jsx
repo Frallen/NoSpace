@@ -3,11 +3,14 @@ import Projects from "./Projects";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { GetAllProjects } from "./../../../redux/projectReducer";
+import { GetHistory } from "./../../../redux/historyReducer";
 import classes from "./Projects.module.scss";
 import face from "./../../../media/sadface.svg";
+import { Fade } from "react-reveal";
 class dashBox extends React.Component {
   componentDidMount() {
     this.props.GetAllProjects();
+    this.props.GetHistory();
   }
 
   render() {
@@ -16,10 +19,14 @@ class dashBox extends React.Component {
     } else {
       return (
         <div className={classes.NoProj}>
-          <div className={classes.NoProjBox}>
-            <img src={face} alt="Sad face" />
-            <p className={classes.alert}>У вас нет активных поручений сотрудникам!</p>
-          </div>
+          <Fade>
+            <div className={classes.NoProjBox}>
+              <img src={face} alt="Sad face" />
+              <p className={classes.alert}>
+                У вас нет активных поручений сотрудникам!
+              </p>
+            </div>
+          </Fade>
         </div>
       );
     }
@@ -28,10 +35,11 @@ class dashBox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    projects: state.project.DataProjects
+    projects: state.project.DataProjects,
+    history:state.History.history,
   };
 };
 
 export default compose(
-  connect(mapStateToProps, { GetAllProjects })
+  connect(mapStateToProps, { GetAllProjects, GetHistory })
 )(dashBox);

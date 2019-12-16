@@ -1,7 +1,10 @@
 import React from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
-import { authInput } from "../../../components/commons/formsControls/formsControls";
+import {
+  authInput,
+  SelectUser
+} from "../../../components/commons/formsControls/formsControls";
 import {
   required,
   PasswordCheck,
@@ -13,6 +16,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
 import { useSnackbar } from "notistack";
 import { Fade } from "react-reveal";
+import { InputLabel } from "@material-ui/core";
 //firestore вроде как принимает пароли от 8 символов
 const MinValue = PasswordCheck(8);
 
@@ -70,6 +74,24 @@ const SignUpBox = props => {
           }}
         />
       </div>
+      <div className={classes.flexspace}>
+        <InputLabel htmlFor="age-native-simple">Выберите отдел</InputLabel>
+        <Field component={SelectUser} name="Otdel" validate={[required]} id="age-native-simple">
+          <option value="" />
+          <option value="Имущество">Хозяйство</option>
+          <option value="Хозяйства">Градостроительство</option>
+          <option value="Организационный">ЖКХ</option>
+          <option value="Управление делами">Управление делами</option>
+          <option value="Бухгалтерия">Бухгалтерия</option>
+          <option value="Градостроительства">Градостроительства</option>
+          <option value="Экономическое развитие">Экономическое развитие</option>
+          <option value="Муниципальный заказ">Муниципальный заказ</option>
+          <option value="Социальное развитие">Социальное развитие</option>
+          <option value="Образование">Образование</option>
+          <option value="Финансовый">Финансовый</option>
+          <option value="Социальная защита">Социальная защита</option>
+        </Field>
+      </div>
       <div>
         <button className={classes.submited} disabled={props.loading}>
           Завершить
@@ -101,12 +123,13 @@ const SignUp = props => {
   }
   return (
     <Fade>
-    <div className={classes.formbox}>
-      <div className={classes.form}>
-        <h5 className={classes.formtitle}>Регистрация</h5>
-        <SignUpForm onSubmit={onSubmit} {...props.loading}></SignUpForm>
+      <div className={classes.formbox}>
+        <div className={classes.form}>
+          <h5 className={classes.formtitle}>Регистрация</h5>
+          <SignUpForm onSubmit={onSubmit} {...props.loading}></SignUpForm>
+        </div>
       </div>
-    </div></Fade>
+    </Fade>
   );
 };
 

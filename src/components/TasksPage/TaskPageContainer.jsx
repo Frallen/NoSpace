@@ -4,11 +4,11 @@ import TaskPage from "./TaskPage";
 import { GetAllTasks } from "./../../redux/projectReducer";
 import classes from "./TaskPage.module.scss";
 import face from "./../../media/sadface.svg";
+import { Fade } from "react-reveal";
 class TaskBox extends React.Component {
   componentDidMount() {
     this.props.GetAllTasks();
   }
-  
 
   render() {
     if (this.props.Tasks.length !== 0) {
@@ -16,12 +16,12 @@ class TaskBox extends React.Component {
     } else {
       return (
         <div className={classes.NoProj}>
-          <div className={classes.NoProjBox}>
-            <img src={face} alt="Sad face" />
-            <p className={classes.alert}>
-              Для вас нет заданий !
-            </p>
-          </div>
+          <Fade>
+            <div className={classes.NoProjBox}>
+              <img src={face} alt="Sad face" />
+              <p className={classes.alert}>Для вас нет заданий !</p>
+            </div>
+          </Fade>
         </div>
       );
     }

@@ -41,6 +41,11 @@ class Navigation extends React.Component {
             </NavLink>
           </li>
           <li className={classes.item}>
+            <NavLink to="/history" className={classes.login}>
+              История
+            </NavLink>
+          </li>
+          <li className={classes.item}>
             <NavLink to="/settings" className={classes.login}>
               Настройки
             </NavLink>

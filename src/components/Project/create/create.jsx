@@ -11,6 +11,8 @@ import {
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
 import { Fade } from "react-reveal";
+import { InputLabel, TextField } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
@@ -68,7 +70,8 @@ const CreateBox = props => {
       </div>
       <FieldArray name="SubTargets" component={AddSubTargets} />
       <div className={classes.flexspace}>
-        <Field component={SelectUser} name="SendTo" validate={[required]}>
+      <InputLabel htmlFor="age-native-simple">Выберите сотрудника</InputLabel>
+        <Field component={SelectUser} name="SendTo" validate={[required]} id="age-native-simple">
           <option value="" />
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
           props.initialValues.users.map((p, index) => (

@@ -59,7 +59,7 @@ let mapStateToProps = state => {
       NameMission: state.project.OneProject.NameMission,
       Text: state.project.OneProject.Text,
       SubTargets: state.project.OneProject.SubTargets,
-      ////
+      ////ссылки для скачивания
       LinkBoss: state.project.LinkBoss,
       LinkWorker: state.project.LinkWorker,
       ////

@@ -126,9 +126,10 @@ const ChangeForm = reduxForm({
 const ProjView = props => {
   /// Dialog material ui
   //удаление проекта
-  const [open, setOpen] = useState(false);
+  const [open, setOpen,show] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
+    
   };
 
   const handleClose = () => {
@@ -194,7 +195,7 @@ let SuccDone=()=>{
   <h3 className={classes.NameMission}>{props.initialValues.MissionDoneTitle}</h3> 
 <p className={classes.Text}>{props.initialValues.TextDone}</p>
 <div className={classes.donwloadbox}>
-<Button href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</Button>
+<Button variant="contained" href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</Button>
 </div>
 <button className={classes.succbutton} onClick={handleClickOpen}>
               Подтвердить выполнение
@@ -239,7 +240,8 @@ let SuccDone=()=>{
         />
         {state.checkedA ? (
           <div className={classes.createbox}>
-            <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
+            <Fade when={show}>
+            <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm></Fade>
             <button className={classes.dangerbutton} onClick={handleClickOpen}>
               Удалить поручение
             </button>
@@ -283,7 +285,7 @@ let SuccDone=()=>{
         color="default" href={props.initialValues.LinkBoss} className={classes.donwload}>Скачать</Button>
            </div>
             <div className={classes.datebox}>
-              <p className={classes.datespace}> Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
+              <p className={classes.datespace}>Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
               </p>
               <p className={classes.datespace}>Закончить {moment(props.initialValues.enddate).format("MM-DD-YYYY")}</p>
             </div>

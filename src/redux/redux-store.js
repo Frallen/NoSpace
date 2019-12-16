@@ -1,6 +1,10 @@
-import { getFirebase, reactReduxFirebase,  } from "react-redux-firebase";
+import { getFirebase, reactReduxFirebase } from "react-redux-firebase";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { getFirestore, reduxFirestore,firestoreReducer } from "redux-firestore";
+import {
+  getFirestore,
+  reduxFirestore,
+  firestoreReducer
+} from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
 import { reducer as formReducer } from "redux-form";
 import firebase from "./../config/firebase";
@@ -9,14 +13,16 @@ import thunk from "redux-thunk";
 import projectReducer from "./projectReducer";
 import registrationReducer from "./registrationReducer";
 import settingsReducer from "./settingsReducer";
+import HistoryReducer from "./historyReducer";
 
 let reducers = combineReducers({
+  History: HistoryReducer,
   Regis: registrationReducer,
   project: projectReducer,
   settings: settingsReducer,
   form: formReducer,
   firebase: firebaseReducer,
-  firestore:firestoreReducer,
+  firestore: firestoreReducer
 });
 
 const rrfConfig = {

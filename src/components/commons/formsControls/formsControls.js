@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import classes from "./formsControls.module.scss";
-import { Select, InputLabel, Button } from "@material-ui/core";
+import { Select, Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 //кастомный инпут аутификации
 export const authInput = ({ input, meta, ...props }) => {
@@ -69,15 +69,7 @@ export const SelectUser = ({ input, meta, children, ...props }) => {
   const HasError = meta.touched && meta.error;
   return (
     <div className={classes.combobox}>
-      <InputLabel htmlFor="age-native-simple">Выберите сотрудника</InputLabel>
-      <Select
-        native
-        {...input}
-        className={classes.combo}
-        inputProps={{
-          id: "age-native-simple"
-        }}
-      >
+      <Select native {...input} className={classes.combo}>
         {children}
       </Select>
       {HasError && (
