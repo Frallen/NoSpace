@@ -307,7 +307,7 @@ export const DeleteProject = data => async (
   { getFirestore, getFirebase }
 ) => {
   const firestore = getFirestore();
- // const firebase = getFirebase();
+  // const firebase = getFirebase();
   dispatch({ type: Start });
   try {
     await firestore
@@ -433,48 +433,55 @@ export const SendBackTask = data => async (
   const firebase = getFirebase();
   dispatch({ type: Start });
   try {
-    await firestore
-      .collection("Mission")
-      .doc(data.idMission)
-      .get();
+    if (data.NotMy === true) {
+      await firestore
+        .collection("Mission")
+        .doc(data.idMission)
+        .update({ ...data });
+    } else {
+      await firestore
+        .collection("Mission")
+        .doc(data.idMission)
+        .get();
 
-    await firebase
-      .storage()
-      .ref(`Missions/${data.idMission}/otvet/` + data.document.name)
-      .put(data.document);
-    //добавляю в firestore имя добавляемого документа чтобы потом получить его
-    data.NameDocDone = data.document.name;
-    //удаляю массив документа тк он не поддерживается firestore
-    delete data.document;
+      await firebase
+        .storage()
+        .ref(`Missions/${data.idMission}/otvet/` + data.document.name)
+        .put(data.document);
+      //добавляю в firestore имя добавляемого документа чтобы потом получить его
+      data.NameDocDone = data.document.name;
+      //удаляю массив документа тк он не поддерживается firestore
+      delete data.document;
 
-    //потом обновить
+      //потом обновить
 
-    await firestore
-      .collection("Mission")
-      .doc(data.idMission)
-      .update({ ...data });
+      await firestore
+        .collection("Mission")
+        .doc(data.idMission)
+        .update({ ...data });
 
-    await firestore
-      .collection("Mission")
-      .where("idMission", "==", data)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          let task = doc.data();
-          //console.log(task);
-          firebase
-            .storage()
-            .ref(`Missions/${task.idMission}/${task.NameDoc}`)
-            .getDownloadURL()
-            .then(url => {
-              dispatch({ type: DownLinkBoss, url });
-            })
-            .catch(function(error) {
-              // Handle any errors
-            });
-          dispatch({ type: GetMyTask, task });
+      await firestore
+        .collection("Mission")
+        .where("idMission", "==", data)
+        .get()
+        .then(snap => {
+          snap.forEach(doc => {
+            let task = doc.data();
+            //console.log(task);
+            firebase
+              .storage()
+              .ref(`Missions/${task.idMission}/${task.NameDoc}`)
+              .getDownloadURL()
+              .then(url => {
+                dispatch({ type: DownLinkBoss, url });
+              })
+              .catch(function(error) {
+                // Handle any errors
+              });
+            dispatch({ type: GetMyTask, task });
+          });
         });
-      });
+    }
   } catch (err) {
     dispatch({ type: ErrorProc, payload: err.message });
   }

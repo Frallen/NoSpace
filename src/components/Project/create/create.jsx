@@ -11,8 +11,7 @@ import {
 import { required } from "../../../untils/validators/validators";
 import { useSnackbar } from "notistack";
 import { Fade } from "react-reveal";
-import { InputLabel, TextField } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { InputLabel } from "@material-ui/core";
 
 const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
@@ -76,7 +75,8 @@ const CreateBox = props => {
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
           props.initialValues.users.map((p, index) => (
             //Когда нет заданных ID для списка можно использовать индекс элемента как ключ
-            <option key={index}>{p.Email}</option>
+            //value беру только емейл
+<option key={index} value={p.Email}>{p.FIO+" "+p.Email+" "+p.Otdel}</option>
           ))}
         </Field>
       </div>
@@ -117,7 +117,7 @@ const CreateForm = reduxForm({
   form: "createForm"
 })(CreateBox);
 
-const Create = props => {
+const Create = (props) => {
   
   const { enqueueSnackbar } = useSnackbar();
   if (props.error) {
@@ -128,6 +128,15 @@ const Create = props => {
     });
   }
   let onSubmit = formData => {
+
+  /*  if(props.email===formData.SendTo){
+      let message = "Вы не можете отправить поручение самому себе";
+    enqueueSnackbar(message, {
+      variant: "error",
+      preventDuplicate: true,
+      autoHideDuration: 4000
+    });
+    }else{*/
     props.NewProject(formData);
    let message = "Поручение успешно созданно";
     enqueueSnackbar(message, {
@@ -135,6 +144,7 @@ const Create = props => {
       preventDuplicate: true,
       autoHideDuration: 4000
     });
+//}
   };
   return (
     <Fade>
@@ -147,7 +157,6 @@ const Create = props => {
           </p>
           <CreateForm
             onSubmit={onSubmit}
-            {...props.loading}
             {...props}
           ></CreateForm>
         </div>

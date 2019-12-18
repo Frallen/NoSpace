@@ -8,7 +8,7 @@ const HistoryPanel = props => {
 
   if (props.history) {
     hist = props.history.map(p => (
-      <div className={classes.projectsBox} key={p.idMission}>
+      <div className={classes.projectsBox+" "+classes.projectsBoxOld} key={p.idMission}>
         <h3 className={classes.title}>{p.NameMission}</h3>
         <div className={classes.datebox}>
           <p className={classes.date}>

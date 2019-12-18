@@ -112,7 +112,7 @@ const ProjBox = props => {
           />
         </div>
       </div>
-      <button className={classes.creabtn} disabled={props.loading}>
+      <button className={classes.creabtn} disabled={props.loading||props.initialvalues.NotMy}>
         Сохранить данные
       </button>
     </form>
@@ -188,6 +188,15 @@ let SuccDone=()=>{
   return (
     <Fade>
     <div>
+    { props.initialValues.NotMy===true&&
+    <div className={classes.done}>
+     <div className={classes.createbox}>
+            <div className={classes.boxcenter}>
+              <h2>Вы отправили задание не тому сотруднику,перепроверьте данные, удалите данное задание и создайте новое</h2>
+              </div>
+              </div>
+              </div>
+}
      {props.initialValues.isDone===true && <div className={classes.done}>
      <div className={classes.createbox}>
             <div className={classes.boxcenter}>

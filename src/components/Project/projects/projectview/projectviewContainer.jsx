@@ -68,7 +68,10 @@ let mapStateToProps = state => {
       //данные о выполнении
       isDone: state.project.OneProject.isDone,
       MissionDoneTitle: state.project.OneProject.MissionDoneTitle,
-      TextDone: state.project.OneProject.TextDone
+      TextDone: state.project.OneProject.TextDone,
+      //
+      //Если отправили не тому сотруднику
+      NotMy:state.project.OneProject.NotMy,
       //
     },
     error: state.settings.error,
