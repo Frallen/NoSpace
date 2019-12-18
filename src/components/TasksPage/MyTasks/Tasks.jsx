@@ -50,7 +50,7 @@ const TaskBox = props => {
       </div>
       <button
         className={classes.creabtn}
-        disabled={props.loading || props.Task.isDone === true||props.Task.NotMy}
+        disabled={props.loading || props.Task.isDone === true||props.Task.NotMy===true}
       >
         Отправить на проверку
       </button>
@@ -103,6 +103,11 @@ const Task = props => {
           <div className={classes.BoxIsDone}>
             <CheckIcon />
             <p className={classes.BoxIsDoneText}> Задание на проверке</p>
+          </div>
+        )}
+          {props.Task.NotMy && (
+          <div className={classes.BoxWrongCheck}>
+            <h3 className={classes.BoxWrongCheckText}> Вы уведомили начальнство, о ошибочной отправке</h3>
           </div>
         )}
         <div className={classes.create}>

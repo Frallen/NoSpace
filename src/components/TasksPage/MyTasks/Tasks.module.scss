@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  margin: 2rem 0 1rem;
+  margin:1rem 0;
   background: #fff;
   box-shadow: 0 2px 5px 2px #2b2828;
   border-radius: 5px;
@@ -117,6 +117,16 @@
   .BoxIsDoneText {
     margin-left: 10px;
   }
+}
+.BoxWrongCheck {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.5rem;
+  margin: 1rem 0 0;
+  border-radius: 7px;
+  color: #fff;
+  background: #443e3e;
 }
 
 .wrongblock {
