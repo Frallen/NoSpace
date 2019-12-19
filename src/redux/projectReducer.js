@@ -307,7 +307,7 @@ export const DeleteProject = data => async (
   { getFirestore, getFirebase }
 ) => {
   const firestore = getFirestore();
-  // const firebase = getFirebase();
+  const firebase = getFirebase();
   dispatch({ type: Start });
   try {
     await firestore
@@ -328,36 +328,28 @@ export const DeleteProject = data => async (
                 ...project
               });
           }
-        });
-      });
-
-    //сначала получить коллекцию чтобы вставить в url
-    /*  await firestore
-      .collection("Mission")
-      .where("idMission", "==", data)
-      .get()
-      .then(snap => {
-        snap.forEach(doc => {
-          let project = doc.data();
-          //удаляю файл босса
-          firebase
-            .storage()
-            .refFromURL(
-              `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
-            )
-            .delete();
-          //удаляю файл сотрудника
-          if (project.NameDocDone) {
+          //удаление файлов проекта только при неправильной отправке задания(ошибка начальника)
+          if (project.NotMy === true) {
+            //удаляю файл босса
             firebase
               .storage()
               .refFromURL(
-                `gs://nospace-92826.appspot.com/Missions/${project.idMission}/otvet/${project.NameDocDone}`
+                `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
               )
               .delete();
+            //удаляю файл сотрудника
+            if (project.NameDocDone) {
+              firebase
+                .storage()
+                .refFromURL(
+                  `gs://nospace-92826.appspot.com/Missions/${project.idMission}/otvet/${project.NameDocDone}`
+                )
+                .delete();
+            }
           }
         });
       });
-      */
+
     //потом удалить
     await firestore
       .collection("Mission")

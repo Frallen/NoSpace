@@ -16,6 +16,7 @@ class TaksBox extends React.Component {
 
   SendTask = data => {
     this.props.SendBackTask(data);
+    this.props.history.push("/");
   };
   render() {
     if (this.props.Task.length !== 0) {

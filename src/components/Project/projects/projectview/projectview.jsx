@@ -112,7 +112,7 @@ const ProjBox = props => {
           />
         </div>
       </div>
-      <button className={classes.creabtn} disabled={props.loading||props.initialvalues.NotMy}>
+      <button className={classes.creabtn} disabled={props.loading||props.initialValues.NotMy===true}>
         Сохранить данные
       </button>
     </form>
