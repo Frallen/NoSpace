@@ -176,9 +176,11 @@ let SuccDone=()=>{
     delete FormData.LinkWorker
     delete FormData.TextDone
     delete FormData.MissionDoneTitle
-
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
+    }
+    if(FormData.NotMy===undefined){
+      delete FormData.NotMy
     }
     ///
     props.Update(FormData);

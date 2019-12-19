@@ -156,7 +156,7 @@ const Task = props => {
                 aria-labelledby="responsive-dialog-title"
               >
                 <DialogTitle id="responsive-dialog-title">
-                  {"Удаление поручения"}
+                  {"Ошибка начальства"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
@@ -167,7 +167,7 @@ const Task = props => {
                   <Button autoFocus onClick={handleClose} color="primary">
                     Отмена
                   </Button>
-                  <Button onClick={NotMY} color="primary" autoFocus>
+                  <Button onClick={NotMY} color="primary" autoFocus disabled={props.Task.isDone===true}>
                     Подтвердить
                   </Button>
                 </DialogActions>
