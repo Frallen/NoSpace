@@ -17,9 +17,6 @@ const HistoryPanel = props => {
           <p className={classes.date}>
             Закачивается {moment(p.enddate).format("MM-DD-YYYY")}
           </p>
-          <p className={classes.SendToBox}>
-            Задание выданно<span>{p.SendTo}</span>
-          </p>
         </div>
 
         <NavLink to={"/old/" + p.idMission} className={classes.openbutton}>

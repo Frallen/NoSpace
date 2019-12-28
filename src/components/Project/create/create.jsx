@@ -75,8 +75,8 @@ const CreateBox = props => {
           {//расчехляю массив юзеров в опции выбора (типо комбобокса)
           props.initialValues.users.map((p, index) => (
             //Когда нет заданных ID для списка можно использовать индекс элемента как ключ
-            //value беру только емейл
-<option key={index} value={p.Email}>{p.FIO+" "+p.Email+" "+p.Otdel}</option>
+            //value беру только айди
+<option key={index} value={p.ID}>{p.FIO+" "+p.Email+" "+p.Otdel}</option>
           ))}
         </Field>
       </div>
@@ -107,7 +107,7 @@ const CreateBox = props => {
         </div>
       </div>
       <button className={classes.creabtn} disabled={props.loading}>
-        Создать проект
+        Создать поручение
       </button>
     </form>
   );

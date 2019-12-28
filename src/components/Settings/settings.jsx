@@ -22,7 +22,7 @@ let Sett = props => {
       onSubmit={props.handleSubmit}
       initialvalues={{
         FIO: props.initialValues.FIO,
-        username:props.initialValues.username,
+        username: props.initialValues.username,
         email: props.initialValues.email
       }}
     >
@@ -88,20 +88,29 @@ const SettForm = reduxForm({
 })(Sett);
 
 const Settings = props => {
-
-
-  let message =
-    "Для выполнения этой операции нужно выполнить повторный вход в систему";
   const { enqueueSnackbar } = useSnackbar();
+
   if (
     props.error ===
     "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
   ) {
+    let message =
+      "Для выполнения этой операции нужно выполнить повторный вход в систему";
     enqueueSnackbar(message, {
       variant: "error",
       preventDuplicate: true,
       autoHideDuration: 3000
     });
+  }
+
+  if (props.suc === true) {
+    let message = "Операция выполнена успешно";
+    enqueueSnackbar(message, {
+      variant: "success",
+      preventDuplicate: true,
+      autoHideDuration: 3000
+    });
+    props.CleanAfter();
   }
 
   /// Dialog material ui
@@ -125,42 +134,43 @@ const Settings = props => {
   };
   return (
     <Fade>
-    <div className={classes.formbox}>
-      <div className={classes.form}>
-        <div>
-          <h3>Обновление профиля</h3>
-          <SettForm onSubmit={Submit} {...props}></SettForm>
-        </div>
-        <div>
-          <button className={classes.dangerbutton} onClick={handleClickOpen}>
-            Удалить аккаунт
-          </button>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
-          >
-            <DialogTitle id="responsive-dialog-title">
-              {"Удаление аккаута"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Все ваши данные и проекты будут утеряны,вы действительно ходите
-                удалить аккаунт?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleClose} color="primary">
-                Отмена
-              </Button>
-              <Button onClick={tryDelete} color="primary" autoFocus>
-                Подтвердить
-              </Button>
-            </DialogActions>
-          </Dialog>
+      <div className={classes.formbox}>
+        <div className={classes.form}>
+          <div>
+            <h3>Обновление профиля</h3>
+            <SettForm onSubmit={Submit} {...props}></SettForm>
+          </div>
+          <div>
+            <button className={classes.dangerbutton} onClick={handleClickOpen}>
+              Удалить аккаунт
+            </button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                {"Удаление аккаута"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Все ваши данные и проекты будут утеряны,вы действительно
+                  ходите удалить аккаунт?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose} color="primary">
+                  Отмена
+                </Button>
+                <Button onClick={tryDelete} color="primary" autoFocus>
+                  Подтвердить
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         </div>
       </div>
-    </div></Fade>
+    </Fade>
   );
 };
 export default Settings;

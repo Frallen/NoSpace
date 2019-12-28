@@ -360,17 +360,18 @@ export const DeleteProject = data => async (
   }
   dispatch({ type: End });
 };
+//взятие всех задание которые отправленны конкретному сотруднику
 export const GetAllTasks = data => async (
   dispatch,
   getState,
   { getFirestore }
 ) => {
   const firestore = getFirestore();
-  const { email: Email } = getState().firebase.auth;
+  const { uid: id } = getState().firebase.auth;
   try {
     await firestore
       .collection("Mission")
-      .where("SendTo", "==", Email)
+      .where("SendTo", "==", id)
       .get()
       .then(snap => {
         //беру все докуметы с совпадающим айди и расчехляю их
@@ -380,7 +381,7 @@ export const GetAllTasks = data => async (
       });
   } catch (err) {}
 };
-
+//получение задания по приходящему айди который был подставлен в адресную строку(сотруднику)
 export const GetTask = data => async (
   dispatch,
   getState,

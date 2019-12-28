@@ -4,7 +4,8 @@ const ChangeFail = "ChangeFail";
 const CleanUp = "CleanUp";
 let initialState = {
   error: null,
-  loading: false
+  loading: false,
+  suc: null
 };
 
 let settingsReducer = (state = initialState, action) => {
@@ -18,7 +19,8 @@ let settingsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: null
+        error: null,
+        suc: true
       };
     case ChangeFail:
       return {
@@ -28,7 +30,8 @@ let settingsReducer = (state = initialState, action) => {
     case CleanUp:
       return {
         ...state,
-        error: null
+        error: null,
+        suc: null
       };
     default:
       return state;
@@ -50,6 +53,7 @@ export const ChangeProfile = data => async (
   const firestore = getFirestore();
   const user = firebase.auth().currentUser;
   //Получение доступа залогиненным данным (простой рефакторинг,тупое присвоение)
+  //uid текущий айди пользователя и email текущий емейл пользователя
   const { uid: userId, email: userEmail } = getState().firebase.auth;
   const profile = getState().firebase.profile;
   dispatch({ type: ChangeStart });
@@ -59,7 +63,7 @@ export const ChangeProfile = data => async (
       await user.updateEmail(data.email);
       await firebase.auth().signOut();
     }
-    if (data.FIO !== profile.FIO &&data.FIO) {
+    if (data.FIO !== profile.FIO && data.FIO) {
       await firestore
         .collection("users")
         .doc(userId)
@@ -67,17 +71,9 @@ export const ChangeProfile = data => async (
           FIO: data.FIO
         });
     }
-    if (data.username !== profile.username &&data.username) {
-      await firestore
-        .collection("users")
-        .doc(userId)
-        .update({
-          username: data.username
-        });
-    }
-    
+
     if (data.password) {
-      await user.updatePassword(data.password)
+      await user.updatePassword(data.password);
       await firebase.auth().signOut();
     }
 
@@ -92,6 +88,7 @@ export const Delete = () => async (
   getState,
   { getFirebase, getFirestore }
 ) => {
+  dispatch({ type: ChangeStart });
   const firebase = getFirebase();
   const firestore = getFirestore();
   const user = firebase.auth().currentUser;
@@ -99,7 +96,11 @@ export const Delete = () => async (
   const { uid: userId } = getState().firebase.auth;
   try {
     await user.delete();
-    await firestore.collection("users").doc(userId).delete()
+    await firestore
+      .collection("users")
+      .doc(userId)
+      .delete();
+    dispatch({ type: ChangeSucc });
   } catch (err) {
     dispatch({ type: ChangeFail, payload: err.message });
   }

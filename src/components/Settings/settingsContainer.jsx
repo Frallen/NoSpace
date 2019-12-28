@@ -8,6 +8,9 @@ class SettBox extends React.Component {
   componentDidMount() {
     this.props.Clean();
   }
+  CleanAfter = () => {
+    this.props.Clean();
+  };
 
   NewSett = data => {
     this.props.ChangeProfile(data);
@@ -17,17 +20,18 @@ class SettBox extends React.Component {
   };
   render() {
     //копонента дожидается пропсов,а не отрисовывает сразу
-     //если не сделать условие то компонента при первом ренеде окажется без пропсов
+    //если не сделать условие то компонента при первом ренеде окажется без пропсов
     if (this.props.initialValues && this.props.initialValues.FIO) {
       return (
         <Settings
           {...this.props}
           NewSett={this.NewSett}
           Delete={this.Delete}
+          CleanAfter={this.CleanAfter}
         ></Settings>
       );
     }
-    return <Preloader></Preloader>
+    return <Preloader></Preloader>;
   }
 }
 let mapStateToProps = state => {
@@ -38,7 +42,8 @@ let mapStateToProps = state => {
       email: state.firebase.auth.email
     },
     error: state.settings.error,
-    loading: state.settings.loading
+    loading: state.settings.loading,
+    suc: state.settings.suc
   };
 };
 
