@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {GetData} from "./../../../redux/projectReducer"
 import { Field, reduxForm } from "redux-form";
 import {
   ProjectTextArea,
@@ -19,6 +20,7 @@ import {
 import { Fade } from "react-reveal";
 import { useSnackbar } from "notistack";
 import CheckIcon from "@material-ui/icons/Check";
+
 
 const TaskBox = props => {
   return (
@@ -63,6 +65,7 @@ const TaskForm = reduxForm({
 })(TaskBox);
 
 const Task = props => {
+  const { enqueueSnackbar } = useSnackbar();
   //dialog
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -71,10 +74,11 @@ const Task = props => {
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }; 
   //
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
+  
     let data = {
       //обязательный айди задания для where
       idMission: props.Task.idMission,
@@ -94,8 +98,7 @@ const Task = props => {
       autoHideDuration: 4000
     });
   };
-  const { enqueueSnackbar } = useSnackbar();
-
+  
   return (
     <Fade>
       <div>

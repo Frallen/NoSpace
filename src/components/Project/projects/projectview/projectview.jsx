@@ -147,14 +147,15 @@ const ProjView = props => {
   ////////////////
 
   //удаление поручения
-  let tryDelete = () => {
-    props.Delete(props.initialValues.idMission);
+  let tryDelete = (data) => {
+    let get={
+id:props.initialValues.idMission,
+   tohistory:data
+    }    
+    
+    props.Delete(get);
   };
-// успешно выполненное задание
 
-let SuccDone=()=>{
-  props.Delete(props.initialValues.idMission);
-}
 
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
   const { enqueueSnackbar } = useSnackbar();
@@ -228,7 +229,7 @@ let SuccDone=()=>{
                 <Button autoFocus onClick={handleClose} color="primary">
                   Отмена
                 </Button>
-                <Button onClick={SuccDone} color="primary" autoFocus>
+                <Button onClick={()=>{tryDelete(true)}} color="primary" autoFocus>
                   Подтвердить
                 </Button>
               </DialogActions>
@@ -274,7 +275,9 @@ let SuccDone=()=>{
                 <Button autoFocus onClick={handleClose} color="primary">
                   Отмена
                 </Button>
-                <Button onClick={tryDelete} color="primary" autoFocus>
+                <Button onClick={()=>{
+                  tryDelete(false)
+                  }} color="primary" autoFocus>
                   Подтвердить
                 </Button>
               </DialogActions>
