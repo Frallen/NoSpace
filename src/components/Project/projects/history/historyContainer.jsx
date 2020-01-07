@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { GetHistory } from "./../../../../redux/historyReducer";
+import { GetHistory } from "./../../../../redux/projectReducer";
 import classes from "./../Projects.module.scss";
 import face from "./../../../../media/sadface.svg";
 import { Fade } from "react-reveal";
@@ -32,7 +32,7 @@ class dashBox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    history: state.History.history
+    history: state.project.DataProjects
   };
 };
 

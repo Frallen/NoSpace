@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { Preloader } from "../../../../../untils/preloader/preloader";
-import { HistoryOne } from "./../../../../../redux/historyReducer";
+import { HistoryOne } from "./../../../../../redux/projectReducer";
 import OneOld from "./old";
 
 class View extends React.Component {
@@ -29,10 +29,10 @@ class View extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    HistoryItem: state.History.OneProject,
+    HistoryItem: state.project.OneProject,
     ////ссылки для скачивания
-    LinkBoss: state.History.LinkBoss,
-    LinkWorker: state.History.LinkWorker
+    LinkBoss: state.project.LinkBoss,
+    LinkWorker: state.project.LinkWorker
     ////
   };
 };

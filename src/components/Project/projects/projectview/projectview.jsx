@@ -149,8 +149,8 @@ const ProjView = props => {
   //удаление поручения
   let tryDelete = (data) => {
     let get={
-id:props.initialValues.idMission,
-   tohistory:data
+    id:props.initialValues.idMission,
+    tohistory:data
     }    
     
     props.Delete(get);

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {GetData} from "./../../../redux/projectReducer"
+import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import {
   ProjectTextArea,

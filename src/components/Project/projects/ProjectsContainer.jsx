@@ -3,14 +3,12 @@ import Projects from "./Projects";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { GetAllProjects } from "./../../../redux/projectReducer";
-import { GetHistory } from "./../../../redux/historyReducer";
 import classes from "./Projects.module.scss";
 import face from "./../../../media/sadface.svg";
 import { Fade } from "react-reveal";
 class dashBox extends React.Component {
   componentDidMount() {
     this.props.GetAllProjects();
-    this.props.GetHistory();
   }
 
   render() {
@@ -35,11 +33,8 @@ class dashBox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    projects: state.project.DataProjects,
-    history:state.History.history,
+    projects: state.project.DataProjects
   };
 };
 
-export default compose(
-  connect(mapStateToProps, { GetAllProjects, GetHistory })
-)(dashBox);
+export default compose(connect(mapStateToProps, { GetAllProjects }))(dashBox);

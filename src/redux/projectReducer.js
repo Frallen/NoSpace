@@ -4,37 +4,47 @@ const Start = "Start";
 const End = "End";
 const ErrorProc = "ErrorProc";
 const CleanUp = "CleanUp";
-//взять все проекты
-const GetallProj = "GetallProj";
+
 //взять один проект
 const getOne = "getOne";
+
 //взять всех узеров
 const GetallUsers = "GetallUsers";
+
 //взять все задачи
 const GetAllTask = "GetAllTask";
+
 //взять одну задачу
 const GetMyTask = "GetMyTask";
+
 //взять ссылку для скачивания документа начальника
 const DownLinkBoss = "DownLinkBoss";
+
 //взять ссылку для скачивания отчета сотрудника
 const DownLinkWorker = "DownLinkWorker";
 
 let initialState = {
   //Контейнер для ошбики
   error: null,
+
   //неактивная кнопка при запросе
   loading: false,
+
   //Контейнер для всех проектов
   DataProjects: [],
+
   //Контейнер для одного проекта
   OneProject: [],
+
   //Контейнер для всех юзеров(для их выбора)
   DataUsers: [],
-  Tasks: [],
+
   //задача сотрудника
   MyTask: [],
+
   //ссылка на скачивание документа начальника
   LinkBoss: null,
+
   //ссылка на скачивание документа сотрудника
   LinkWorker: null
 };
@@ -65,11 +75,7 @@ const dashboardReducer = (state = initialState, action) => {
         error: null,
         loading: false
       };
-    case GetallProj:
-      return {
-        ...state,
-        DataProjects: action.data
-      };
+
     case getOne:
       return {
         ...state,
@@ -83,7 +89,7 @@ const dashboardReducer = (state = initialState, action) => {
     case GetAllTask:
       return {
         ...state,
-        Tasks: action.tasks
+        DataProjects: action.data
       };
     case GetMyTask:
       return {
@@ -134,7 +140,7 @@ export const CreateNewproject = data => async (
     //загружаю документ в storage
     firebase
       .storage()
-      .ref(`Missions/${comm.id}/` + data.document.name)
+      .ref(`Mission/${comm.id}/` + data.document.name)
       .put(data.document);
     //добавляю в firestore имя добавляемого документа чтобы потом получить его
     data.NameDoc = data.document.name;
@@ -164,46 +170,77 @@ export const CreateNewproject = data => async (
     dispatch({ type: ErrorProc, payload: err.message });
   }
 };
-//Отрисовываю все проекты начальника
-export const GetAllProjects = datas => async (
+
+const GetProjects = async (toCollec, dispatch, firestore, to, userId) => {
+  try {
+    let snap = await firestore
+      .collection(toCollec)
+      .where(to, "==", userId)
+      .get();
+    let data = snap.docs.map(d => d.data());
+    dispatch({ type: GetAllTask, data });
+  } catch (err) {}
+};
+
+//Отрисовка выданных заданий(как начальник)
+export const GetAllProjects = () => async (
   dispatch,
   getState,
   { getFirestore }
 ) => {
+  let toCollec = "Mission";
+  let to = "idOwner";
   const firestore = getFirestore();
   const { uid: userId } = getState().firebase.auth;
-  try {
-    let snap = await firestore
-      .collection("Mission")
-      .where("idOwner", "==", userId)
-      .get();
-
-    //беру все докуметы с совпадающим айди и расчехляю их
-    let data = snap.docs.map(doc => doc.data());
-    //console.log(data)
-    dispatch({ type: GetallProj, data });
-  } catch (err) {}
+  GetProjects(toCollec, dispatch, firestore, to, userId);
 };
 
-//взятие всех задание которые отправленны конкретному сотруднику
+export const GetHistory = () => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const { uid: userId } = getState().firebase.auth;
+  const firestore = getFirestore();
+  let toCollec = "History";
+  let to = "idOwner";
+  GetProjects(toCollec, dispatch, firestore, to, userId);
+};
+
+//Отрисовка заданий для личного выполнения(как подчиненный)
 export const GetAllTasks = data => async (
   dispatch,
   getState,
   { getFirestore }
 ) => {
+  let toCollec = "Mission";
+  let to = "SendTo";
   const firestore = getFirestore();
-  const { uid: id } = getState().firebase.auth;
-  try {
-    let snap = await firestore
-      .collection("Mission")
-      .where("SendTo", "==", id)
-      .get();
-
-    //беру все докуметы с совпадающим айди и расчехляю их
-    let tasks = snap.docs.map(doc => doc.data());
-    // console.log(tasks);
-    dispatch({ type: GetAllTask, tasks });
-  } catch (err) {}
+  const { uid: userId } = getState().firebase.auth;
+  GetProjects(toCollec, dispatch, firestore, to, userId);
+};
+//Взятие ссылки для скачивания
+const GetUrl = async (
+  dispatch,
+  firebase,
+  idMission,
+  NameDoc,
+  NameDocDone,
+  otvet
+) => {
+  let url = await firebase
+    .storage()
+    .ref("Mission/" + idMission + "/" + NameDoc)
+    .getDownloadURL();
+  dispatch({ type: DownLinkBoss, url });
+  //если задание выполненно,то можно скачать отчет сотрудника
+  if (otvet === true) {
+    let url = await firebase
+      .storage()
+      .ref("Mission/" + idMission + "/otvet/" + NameDocDone)
+      .getDownloadURL();
+    dispatch({ type: DownLinkWorker, url });
+  }
 };
 
 //получаю выбранный проект(начальник)
@@ -222,29 +259,101 @@ export const GetProjData = data => async (
 
     snap.forEach(doc => {
       let project = doc.data();
-      //console.log(doc.data());
 
       //взятие ссылки босса
-      let url = firebase
-        .storage()
-        .ref(`Missions/${project.idMission}/${project.NameDoc}`)
-        .getDownloadURL();
-
-      dispatch({ type: DownLinkBoss, url });
-
+      //переадю небходимые данные
+      GetUrl(
+        dispatch,
+        firebase,
+        project.idMission,
+        project.NameDoc,
+        project.NameDocDone
+      );
       //взятие ссылки сотрудника
       if (project.NameDocDone) {
-        let url = firebase
-          .storage()
-          .ref(`Missions/${project.idMission}/otvet/${project.NameDocDone}`)
-          .getDownloadURL();
-
-        dispatch({ type: DownLinkWorker, url });
+        let otvet = true;
+        GetUrl(
+          dispatch,
+          firebase,
+          project.idMission,
+          project.NameDoc,
+          project.NameDocDone,
+          otvet
+        );
       }
       dispatch({ type: getOne, project });
     });
   } catch (err) {}
 };
+
+export const HistoryOne = data => async (
+  dispatch,
+  getState,
+  { getFirestore, getFirebase }
+) => {
+  const firestore = getFirestore();
+  const firebase = getFirebase();
+  try {
+    let snap = await firestore
+      .collection("History")
+      .where("idMission", "==", data)
+      .get();
+
+    snap.forEach(doc => {
+      let project = doc.data();
+      //console.log(doc.data());
+
+      //взятие ссылки босса
+      GetUrl(
+        dispatch,
+        firebase,
+        project.idMission,
+        project.NameDoc,
+        project.NameDocDone
+      );
+
+      //взятие ссылки сотрудника
+      if (project.NameDocDone) {
+        let otvet = true;
+        GetUrl(
+          dispatch,
+          firebase,
+          project.idMission,
+          project.NameDoc,
+          project.NameDocDone,
+          otvet
+        );
+      }
+      dispatch({ type: getOne, project });
+    });
+  } catch (err) {}
+};
+
+//получение задания по приходящему айди который был подставлен в адресную строку(сотруднику)
+export const GetTask = data => async (
+  dispatch,
+  getState,
+  { getFirestore, getFirebase }
+) => {
+  const firestore = getFirestore();
+  const firebase = getFirebase();
+  try {
+    let snap = await firestore
+      .collection("Mission")
+      .where("idMission", "==", data)
+      .get();
+
+    snap.forEach(doc => {
+      let task = doc.data();
+
+      GetUrl(dispatch, firebase, task.idMission, task.NameDoc);
+
+      //отправляю пришедшие данные(только firestore)
+      dispatch({ type: GetMyTask, task });
+    });
+  } catch (err) {}
+};
+
 // Получение всех юзеров
 export const AllUsers = data => async (
   dispatch,
@@ -285,7 +394,7 @@ export const UpdateProject = data => async (
         firebase
           .storage()
           .refFromURL(
-            `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
+            `gs://nospace-92826.appspot.com/Mission/${project.idMission}/${project.NameDoc}`
           )
           .delete();
       });
@@ -293,7 +402,7 @@ export const UpdateProject = data => async (
       //загружаю документ в storage
       await firebase
         .storage()
-        .ref(`Missions/${data.idMission}/` + data.document.name)
+        .ref(`Mission/${data.idMission}/` + data.document.name)
         .put(data.document);
       //добавляю в firestore имя добавляемого документа чтобы потом получить его
       data.NameDoc = data.document.name;
@@ -344,7 +453,7 @@ export const DeleteProject = data => async (
         firebase
           .storage()
           .refFromURL(
-            `gs://nospace-92826.appspot.com/Missions/${project.idMission}/${project.NameDoc}`
+            `gs://nospace-92826.appspot.com/Mission/${project.idMission}/${project.NameDoc}`
           )
           .delete();
         //удаляю файл сотрудника
@@ -352,7 +461,7 @@ export const DeleteProject = data => async (
           firebase
             .storage()
             .refFromURL(
-              `gs://nospace-92826.appspot.com/Missions/${project.idMission}/otvet/${project.NameDocDone}`
+              `gs://nospace-92826.appspot.com/Mission/${project.idMission}/otvet/${project.NameDocDone}`
             )
             .delete();
         }
@@ -370,38 +479,6 @@ export const DeleteProject = data => async (
   dispatch({ type: End });
 };
 
-
-//получение задания по приходящему айди который был подставлен в адресную строку(сотруднику)
-export const GetTask = data => async (
-  dispatch,
-  getState,
-  { getFirestore, getFirebase }
-) => {
-  const firestore = getFirestore();
-  const firebase = getFirebase();
-  try {
-    let snap = await firestore
-      .collection("Mission")
-      .where("idMission", "==", data)
-      .get();
-
-    snap.forEach(doc => {
-      let task = doc.data();
-      //console.log(task);
-      //беру ссылку на скачивание документа
-      let url = firebase
-        .storage()
-        .ref(`Missions/${task.idMission}/${task.NameDoc}`)
-        .getDownloadURL();
-
-      //отправля ссылку для скачивания
-      dispatch({ type: DownLinkBoss, url });
-
-      //отправляю пришедшие данные(только firestore)
-      dispatch({ type: GetMyTask, task });
-    });
-  } catch (err) {}
-};
 //отправка отчета сотрудника
 export const SendBackTask = data => async (
   dispatch,
@@ -418,14 +495,14 @@ export const SendBackTask = data => async (
         .doc(data.idMission)
         .update({ ...data });
     } else {
-      await firestore
+      /*await firestore
         .collection("Mission")
         .doc(data.idMission)
         .get();
-
+*/
       await firebase
         .storage()
-        .ref(`Missions/${data.idMission}/otvet/` + data.document.name)
+        .ref(`Mission/${data.idMission}/otvet/` + data.document.name)
         .put(data.document);
       //добавляю в firestore имя добавляемого документа чтобы потом получить его
       data.NameDocDone = data.document.name;
@@ -446,13 +523,8 @@ export const SendBackTask = data => async (
 
       snap.forEach(doc => {
         let task = doc.data();
-        //console.log(task);
-        let url = firebase
-          .storage()
-          .ref(`Missions/${task.idMission}/${task.NameDoc}`)
-          .getDownloadURL();
 
-        dispatch({ type: DownLinkBoss, url });
+        GetUrl(dispatch, firebase, task.idMission, task.NameDoc);
 
         dispatch({ type: GetMyTask, task });
       });

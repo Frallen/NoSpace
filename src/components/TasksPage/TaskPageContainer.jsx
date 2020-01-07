@@ -30,7 +30,7 @@ class TaskBox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    Tasks: state.project.Tasks
+    Tasks: state.project.DataProjects
   };
 };
 
