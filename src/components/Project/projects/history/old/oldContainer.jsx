@@ -3,18 +3,17 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { Preloader } from "../../../../../untils/preloader/preloader";
-import { HistoryOne } from "./../../../../../redux/projectReducer";
+import { GetProjData } from "./../../../../../redux/projectReducer";
 import OneOld from "./old";
 
 class View extends React.Component {
-  //до того как компонента примонтирована закидываю айди в функцию
-  constructor(props) {
-    super(props);
-   
-    //беру айди из пропсов
+  //как данные будут готовы то они вмонтируются в функцию
+  componentDidMount(){
+     //беру айди из пропсов
     let id = this.props.match.params.id;
     //отправляю его в стейт
-    this.props.HistoryOne(id);
+    let to = "History";
+    this.props.GetProjData(id,to);
   }
 
   render() {
@@ -39,7 +38,7 @@ let mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps, {
-    HistoryOne
+    GetProjData
   }),
   withRouter
 )(View);

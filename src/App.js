@@ -93,7 +93,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
   return (
     <div className="main">
       <NavigationContainer></NavigationContainer>
-      <Route exact path={"/"} render={() => <HomePage></HomePage>}></Route>
+      <Route exact path="/" render={() => <HomePage></HomePage>}></Route>
       <div className="container">{routes}</div>
     </div>
   );
@@ -106,4 +106,4 @@ let mapStateToProps = ({ firebase }) => {
   };
 };
 
-export default compose(connect(mapStateToProps), withRouter)(App);
+export default compose(connect(mapStateToProps, null), withRouter)(App);

@@ -21,6 +21,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import moment from "moment";
 import { Fade } from "react-reveal";
+import { useHistory } from "react-router-dom";
 
 //для вставки массива целей
 const AddSubTargets = ({ fields, meta: { error } }) => (
@@ -88,11 +89,7 @@ const ProjBox = props => {
       </div>
       <FieldArray name="SubTargets" component={AddSubTargets} />
       <div className={classes.flexspace}>
-        <Field
-          type="file"
-          component={Upload}
-          name="document"
-        ></Field>
+        <Field type="file" component={Upload} name="document"></Field>
       </div>
       <div className={classes.datebox}>
         <div className={classes.datespace}>
@@ -112,7 +109,10 @@ const ProjBox = props => {
           />
         </div>
       </div>
-      <button className={classes.creabtn} disabled={props.loading||props.initialValues.NotMy===true}>
+      <button
+        className={classes.creabtn}
+        disabled={props.loading || props.initialValues.NotMy === true}
+      >
         Сохранить данные
       </button>
     </form>
@@ -124,12 +124,12 @@ const ChangeForm = reduxForm({
 })(ProjBox);
 
 const ProjView = props => {
+  const { enqueueSnackbar } = useSnackbar();
   /// Dialog material ui
   //удаление проекта
-  const [open, setOpen,show] = useState(false);
+  const [open, setOpen, show] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
-    
   };
 
   const handleClose = () => {
@@ -146,19 +146,21 @@ const ProjView = props => {
   };
   ////////////////
 
+  //вызываю историю роутинка из react-router дом
+  const history = useHistory();
   //удаление поручения
-  let tryDelete = (data) => {
-    let get={
-    id:props.initialValues.idMission,
-    tohistory:data
-    }    
-    
+  let tryDelete = data => {
+    let get = {
+      id: props.initialValues.idMission,
+      tohistory: data
+    };
     props.Delete(get);
+    //после передачи данных для удаления возращаюсь на предыдущую страницу (missions)
+    history.goBack();
   };
 
-
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
-  const { enqueueSnackbar } = useSnackbar();
+
   if (props.error) {
     enqueueSnackbar(props.error, {
       variant: "error",
@@ -168,145 +170,198 @@ const ProjView = props => {
   }
   let onSubmitMain = FormData => {
     //добавляю айди проекта и айди создателя
-    FormData.idMission = props.initialValues.idMission;
+    FormData.id = props.initialValues.idMission;
     FormData.idOwner = props.initialValues.idOwner;
     //при обновлении изменять статус задачи
-    FormData.isDone=false;
+    FormData.isDone = false;
     //удаляю мусор undefined тк выдает ошибку,поле с undefined не может быть обновленно
-    delete FormData.LinkBoss
-    delete FormData.LinkWorker
-    delete FormData.TextDone
-    delete FormData.MissionDoneTitle
+    delete FormData.LinkBoss;
+    delete FormData.LinkWorker;
+    delete FormData.TextDone;
+    delete FormData.MissionDoneTitle;
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
     }
-    if(FormData.NotMy===undefined){
-      delete FormData.NotMy
+    if (FormData.NotMy === undefined) {
+      delete FormData.NotMy;
     }
     ///
     props.Update(FormData);
   };
 
-
   return (
-    <Fade>
     <div>
-    { props.initialValues.NotMy===true&&
-    <div className={classes.done}>
-     <div className={classes.createbox}>
-            <div className={classes.boxcenter}>
-              <h2>Вы отправили задание не тому сотруднику,перепроверьте данные, удалите данное задание и создайте новое</h2>
+      {props.initialValues.NotMy === true && (
+        <Fade>
+          <div className={classes.done}>
+            <div className={classes.createbox}>
+              <div className={classes.boxcenter}>
+                <h2>
+                  Вы отправили задание не тому сотруднику,перепроверьте данные,
+                  удалите данное задание и создайте новое
+                </h2>
               </div>
-              </div>
-              </div>
-}
-     {props.initialValues.isDone===true && <div className={classes.done}>
-     <div className={classes.createbox}>
-            <div className={classes.boxcenter}>
-              <h2>Задание выполненно, проверьте отчет !</h2>
-  <h3 className={classes.NameMission}>{props.initialValues.MissionDoneTitle}</h3> 
-<p className={classes.Text}>{props.initialValues.TextDone}</p>
-<div className={classes.donwloadbox}>
-<Button variant="contained" href={props.initialValues.LinkWorker} className={classes.donwload}>Скачать отчет</Button>
-</div>
-<button className={classes.succbutton} onClick={handleClickOpen}>
-              Подтвердить выполнение
-            </button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="responsive-dialog-title"
-            >
-              <DialogTitle id="responsive-dialog-title">
-                {"Удаление поручения"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Вы уверенны в правильности выполненного задания?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button autoFocus onClick={handleClose} color="primary">
-                  Отмена
-                </Button>
-                <Button onClick={()=>{tryDelete(true)}} color="primary" autoFocus>
-                  Подтвердить
-                </Button>
-              </DialogActions>
-            </Dialog>
-</div>
-</div>
-       </div>}
-      <div className={classes.create}>
-        <FormControlLabel
-          className={classes.Regactive}
-          control={
-            <Checkbox
-            className={classes.adaptRegactive}
-              checked={state.checkedA}
-              onChange={handleChange("checkedA")}
-              value="checkedA"
-            />
-          }
-          label="Режим редактирования"
-        />
-        {state.checkedA ? (
-          <div className={classes.createbox}>
-            <Fade when={show}>
-            <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm></Fade>
-            <button className={classes.dangerbutton} onClick={handleClickOpen}>
-              Удалить поручение
-            </button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="responsive-dialog-title"
-            >
-              <DialogTitle id="responsive-dialog-title">
-                {"Завершить выполнение"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Ваш проект будет удален, вы действительно хотите удалить
-                  поручение?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button autoFocus onClick={handleClose} color="primary">
-                  Отмена
-                </Button>
-                <Button onClick={()=>{
-                  tryDelete(false)
-                  }} color="primary" autoFocus>
-                  Подтвердить
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        ) : (
-          <div className={classes.createbox}>
-            <div className={classes.boxcenter}>
-            <h3 className={classes.NameMission}>{props.initialValues.NameMission}</h3>
-            <p className={classes.Text}>{props.initialValues.Text}</p>
-            <div className={classes.targetsbox}>
-           {props.initialValues.SubTargets&&<h4 className={classes.targetstitle}>Цели:</h4>}
-        {props.initialValues.SubTargets&&props.initialValues.SubTargets.map((p,index)=><div key={index} className={classes.targets}>{p}</div>)}
-           </div> 
-           </div>
-           <div className={classes.donwloadbox}>
-           <Button
-        variant="contained"
-        color="default" href={props.initialValues.LinkBoss} className={classes.donwload}>Скачать</Button>
-           </div>
-            <div className={classes.datebox}>
-              <p className={classes.datespace}>Начать c {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
-              </p>
-              <p className={classes.datespace}>Закончить {moment(props.initialValues.enddate).format("MM-DD-YYYY")}</p>
             </div>
           </div>
-        )}
-      </div>
-    </div></Fade>
+        </Fade>
+      )}
+      {props.initialValues.isDone === true && (
+        <Fade>
+          <div className={classes.done}>
+            <div className={classes.createbox}>
+              <div className={classes.boxcenter}>
+                <h2>Задание выполненно, проверьте отчет !</h2>
+                <h3 className={classes.NameMission}>
+                  {props.initialValues.MissionDoneTitle}
+                </h3>
+                <p className={classes.Text}>{props.initialValues.TextDone}</p>
+                <div className={classes.donwloadbox}>
+                  <Button
+                    variant="contained"
+                    href={props.initialValues.LinkWorker}
+                    className={classes.donwload}
+                  >
+                    Скачать отчет
+                  </Button>
+                </div>
+                <button
+                  className={classes.succbutton}
+                  onClick={handleClickOpen}
+                >
+                  Подтвердить выполнение
+                </button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">
+                    {"Удаление поручения"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Вы уверенны в правильности выполненного задания?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button autoFocus onClick={handleClose} color="primary">
+                      Отмена
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        tryDelete(true);
+                      }}
+                      color="primary"
+                      autoFocus
+                    >
+                      Подтвердить
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            </div>
+          </div>
+        </Fade>
+      )}
+      <Fade>
+        <div className={classes.create}>
+          <FormControlLabel
+            className={classes.Regactive}
+            control={
+              <Checkbox
+                className={classes.adaptRegactive}
+                checked={state.checkedA}
+                onChange={handleChange("checkedA")}
+                value="checkedA"
+              />
+            }
+            label="Режим редактирования"
+          />
+          {state.checkedA ? (
+            <div className={classes.createbox}>
+              <Fade when={show}>
+                <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
+              </Fade>
+              <button
+                className={classes.dangerbutton}
+                onClick={handleClickOpen}
+              >
+                Удалить поручение
+              </button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">
+                  {"Завершить выполнение"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Ваш проект будет удален, вы действительно хотите удалить
+                    поручение?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button autoFocus onClick={handleClose} color="primary">
+                    Отмена
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      tryDelete(false);
+                    }}
+                    color="primary"
+                    autoFocus
+                  >
+                    Подтвердить
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          ) : (
+            <div className={classes.createbox}>
+              <div className={classes.boxcenter}>
+                <h3 className={classes.NameMission}>
+                  {props.initialValues.NameMission}
+                </h3>
+                <p className={classes.Text}>{props.initialValues.Text}</p>
+                <div className={classes.targetsbox}>
+                  {props.initialValues.SubTargets && (
+                    <h4 className={classes.targetstitle}>Цели:</h4>
+                  )}
+                  {props.initialValues.SubTargets &&
+                    props.initialValues.SubTargets.map((p, index) => (
+                      <div key={index} className={classes.targets}>
+                        {p}
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div className={classes.donwloadbox}>
+                <Button
+                  variant="contained"
+                  color="default"
+                  href={props.initialValues.LinkBoss}
+                  className={classes.donwload}
+                >
+                  Скачать
+                </Button>
+              </div>
+              <div className={classes.datebox}>
+                <p className={classes.datespace}>
+                  Начать c
+                  {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
+                </p>
+                <p className={classes.datespace}>
+                  Закончить
+                  {moment(props.initialValues.enddate).format("MM-DD-YYYY")}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </Fade>
+    </div>
   );
 };
 

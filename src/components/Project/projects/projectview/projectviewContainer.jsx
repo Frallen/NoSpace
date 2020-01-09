@@ -15,21 +15,24 @@ class View extends React.Component {
   //до того как компонента примонтирована закидываю айди в функцию
   constructor(props) {
     super(props);
-    this.props.Clean();
+    this.ReqData();
+  }
+
+  ReqData = () => {
     //беру айди из пропсов
     let id = this.props.match.params.id;
     //отправляю его в стейт
     this.props.GetProjData(id);
-  }
+  };
   //обновление полей проекта
   Update = data => {
     this.props.UpdateProject(data);
+    this.ReqData();
   };
   //удаление проекта
   Delete = data => {
     this.props.DeleteProject(data);
     //простой редирект после удаления
-    this.props.history.push("/");
   };
 
   render() {
@@ -71,7 +74,7 @@ let mapStateToProps = state => {
       TextDone: state.project.OneProject.TextDone,
       //
       //Если отправили не тому сотруднику
-      NotMy:state.project.OneProject.NotMy,
+      NotMy: state.project.OneProject.NotMy
       //
     },
     error: state.settings.error,

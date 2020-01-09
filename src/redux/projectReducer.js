@@ -39,9 +39,6 @@ let initialState = {
   //Контейнер для всех юзеров(для их выбора)
   DataUsers: [],
 
-  //задача сотрудника
-  MyTask: [],
-
   //ссылка на скачивание документа начальника
   LinkBoss: null,
 
@@ -73,7 +70,8 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        loading: false
+        loading: false,
+        DataProjects: []
       };
 
     case getOne:
@@ -90,11 +88,6 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         DataProjects: action.data
-      };
-    case GetMyTask:
-      return {
-        ...state,
-        MyTask: action.task
       };
     case DownLinkBoss:
       return {
@@ -127,12 +120,6 @@ export const CreateNewproject = data => async (
   dispatch({ type: Start });
   try {
     //вариан создания своего айди let id = new Date().valueOf();
-
-    //получаю данные из коллекций
-    await firestore
-      .collection("Mission")
-      .where("idOwner", "==", userId)
-      .get();
 
     //создается новый проект,от проекта берется айди
     //и записывается в коллекцию
@@ -194,7 +181,7 @@ export const GetAllProjects = () => async (
   const { uid: userId } = getState().firebase.auth;
   GetProjects(toCollec, dispatch, firestore, to, userId);
 };
-
+//взятие истории
 export const GetHistory = () => async (
   dispatch,
   getState,
@@ -243,8 +230,8 @@ const GetUrl = async (
   }
 };
 
-//получаю выбранный проект(начальник)
-export const GetProjData = data => async (
+//получаю выбранный проект
+export const GetProjData = (data, to) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -253,7 +240,7 @@ export const GetProjData = data => async (
   const firebase = getFirebase();
   try {
     let snap = await firestore
-      .collection("Mission")
+      .collection(to ? to : "Mission")
       .where("idMission", "==", data)
       .get();
 
@@ -286,74 +273,6 @@ export const GetProjData = data => async (
   } catch (err) {}
 };
 
-export const HistoryOne = data => async (
-  dispatch,
-  getState,
-  { getFirestore, getFirebase }
-) => {
-  const firestore = getFirestore();
-  const firebase = getFirebase();
-  try {
-    let snap = await firestore
-      .collection("History")
-      .where("idMission", "==", data)
-      .get();
-
-    snap.forEach(doc => {
-      let project = doc.data();
-      //console.log(doc.data());
-
-      //взятие ссылки босса
-      GetUrl(
-        dispatch,
-        firebase,
-        project.idMission,
-        project.NameDoc,
-        project.NameDocDone
-      );
-
-      //взятие ссылки сотрудника
-      if (project.NameDocDone) {
-        let otvet = true;
-        GetUrl(
-          dispatch,
-          firebase,
-          project.idMission,
-          project.NameDoc,
-          project.NameDocDone,
-          otvet
-        );
-      }
-      dispatch({ type: getOne, project });
-    });
-  } catch (err) {}
-};
-
-//получение задания по приходящему айди который был подставлен в адресную строку(сотруднику)
-export const GetTask = data => async (
-  dispatch,
-  getState,
-  { getFirestore, getFirebase }
-) => {
-  const firestore = getFirestore();
-  const firebase = getFirebase();
-  try {
-    let snap = await firestore
-      .collection("Mission")
-      .where("idMission", "==", data)
-      .get();
-
-    snap.forEach(doc => {
-      let task = doc.data();
-
-      GetUrl(dispatch, firebase, task.idMission, task.NameDoc);
-
-      //отправляю пришедшие данные(только firestore)
-      dispatch({ type: GetMyTask, task });
-    });
-  } catch (err) {}
-};
-
 // Получение всех юзеров
 export const AllUsers = data => async (
   dispatch,
@@ -371,6 +290,32 @@ export const AllUsers = data => async (
   } catch (err) {}
 };
 
+const DeleteFile = async (NameDoc, firebase, id, NameDocDone) => {
+  if (NameDoc) {
+    await firebase
+      .storage()
+      .refFromURL(`gs://nospace-92826.appspot.com/Mission/${id}/${NameDoc}`)
+      .delete();
+  }
+
+  if (NameDocDone) {
+    debugger;
+    await firebase
+      .storage()
+      .refFromURL(
+        `gs://nospace-92826.appspot.com/Mission/${id}/otvet/${NameDocDone}`
+      )
+      .delete();
+  }
+};
+//обновление данных
+const Update = async (firestore, id, data) => {
+  await firestore
+    .collection("Mission")
+    .doc(id)
+    .update({ ...data });
+};
+
 //обновление проекта
 export const UpdateProject = data => async (
   dispatch,
@@ -383,20 +328,17 @@ export const UpdateProject = data => async (
   try {
     if (data.document) {
       //сначала получить коллекцию чтобы вставить в url
+      //let snap = await fetchBefore(data.idMission);
       let snap = await firestore
         .collection("Mission")
-        .where("idMission", "==", data.idMission)
+        .where("idMission", "==", data.id)
         .get();
 
       snap.forEach(doc => {
         let project = doc.data();
         //удаляю файл босса
-        firebase
-          .storage()
-          .refFromURL(
-            `gs://nospace-92826.appspot.com/Mission/${project.idMission}/${project.NameDoc}`
-          )
-          .delete();
+
+        DeleteFile(project.NameDoc, firebase, data.id, null);
       });
 
       //загружаю документ в storage
@@ -410,10 +352,8 @@ export const UpdateProject = data => async (
     //удаляю массив документа тк он не поддерживается firestore
     delete data.document;
     //потом обновить
-    await firestore
-      .collection("Mission")
-      .doc(data.idMission)
-      .update({ ...data });
+
+    Update(firestore, data.idMission, data);
   } catch (err) {
     dispatch({ type: ErrorProc, payload: err.message });
   }
@@ -429,6 +369,7 @@ export const DeleteProject = data => async (
   const firebase = getFirebase();
   dispatch({ type: Start });
   try {
+    // let snap = await fetchBefore(data.id);
     let snap = await firestore
       .collection("Mission")
       .where("idMission", "==", data.id)
@@ -446,25 +387,13 @@ export const DeleteProject = data => async (
             //деструктуризацией я выношу все вложенные объекты наверх и забавляюсь от propject
             ...project
           });
+      } else {
+        DeleteFile(project.NameDoc, firebase, data.id, project.NameDocDone);
       }
-      //удаление файлов проекта только при неправильной отправке задания(ошибка начальника)
+      //Если начальник ошибся с отправкой то удаляются файлы
       if (project.NotMy === true) {
-        //удаляю файл босса
-        firebase
-          .storage()
-          .refFromURL(
-            `gs://nospace-92826.appspot.com/Mission/${project.idMission}/${project.NameDoc}`
-          )
-          .delete();
-        //удаляю файл сотрудника
-        if (project.NameDocDone) {
-          firebase
-            .storage()
-            .refFromURL(
-              `gs://nospace-92826.appspot.com/Mission/${project.idMission}/otvet/${project.NameDocDone}`
-            )
-            .delete();
-        }
+        //удаляю файл начальника и сотрудника
+        DeleteFile(project.NameDoc, firebase, data.id, project.NameDocDone);
       }
     });
 
@@ -490,16 +419,8 @@ export const SendBackTask = data => async (
   dispatch({ type: Start });
   try {
     if (data.NotMy === true) {
-      await firestore
-        .collection("Mission")
-        .doc(data.idMission)
-        .update({ ...data });
+      Update(firestore, data.idMission, data);
     } else {
-      /*await firestore
-        .collection("Mission")
-        .doc(data.idMission)
-        .get();
-*/
       await firebase
         .storage()
         .ref(`Mission/${data.idMission}/otvet/` + data.document.name)
@@ -511,11 +432,8 @@ export const SendBackTask = data => async (
 
       //потом обновить
 
-      await firestore
-        .collection("Mission")
-        .doc(data.idMission)
-        .update({ ...data });
-
+      Update(firestore, data.idMission, data);
+      //  let snap = await fetchBefore(data);
       let snap = await firestore
         .collection("Mission")
         .where("idMission", "==", data)

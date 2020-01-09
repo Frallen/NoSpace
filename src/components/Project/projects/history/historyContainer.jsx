@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { GetHistory } from "./../../../../redux/projectReducer";
+import { GetHistory, Clean } from "./../../../../redux/projectReducer";
 import classes from "./../Projects.module.scss";
 import face from "./../../../../media/sadface.svg";
 import { Fade } from "react-reveal";
@@ -10,6 +10,10 @@ import HistoryPanel from "./history";
 class dashBox extends React.Component {
   componentDidMount() {
     this.props.GetHistory();
+  }
+  //Чистка контейнеа для проектов
+  componentWillUnmount() {
+    this.props.Clean();
   }
 
   render() {
@@ -36,4 +40,6 @@ let mapStateToProps = state => {
   };
 };
 
-export default compose(connect(mapStateToProps, { GetHistory }))(dashBox);
+export default compose(connect(mapStateToProps, { GetHistory, Clean }))(
+  dashBox
+);

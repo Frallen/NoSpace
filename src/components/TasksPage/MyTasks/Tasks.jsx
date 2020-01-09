@@ -20,7 +20,6 @@ import { Fade } from "react-reveal";
 import { useSnackbar } from "notistack";
 import CheckIcon from "@material-ui/icons/Check";
 
-
 const TaskBox = props => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -51,7 +50,11 @@ const TaskBox = props => {
       </div>
       <button
         className={classes.creabtn}
-        disabled={props.loading || props.Task.isDone === true||props.Task.NotMy===true}
+        disabled={
+          props.loading ||
+          props.Task.isDone === true ||
+          props.Task.NotMy === true
+        }
       >
         Отправить на проверку
       </button>
@@ -73,11 +76,10 @@ const Task = props => {
 
   const handleClose = () => {
     setOpen(false);
-  }; 
+  };
   //
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
-  
     let data = {
       //обязательный айди задания для where
       idMission: props.Task.idMission,
@@ -85,6 +87,7 @@ const Task = props => {
       NotMy: true
     };
     props.SendTask(data);
+    setOpen(false);
   };
   let onSubmit = FormData => {
     FormData.isDone = true;
@@ -97,21 +100,28 @@ const Task = props => {
       autoHideDuration: 4000
     });
   };
-  
+
   return (
-    <Fade>
-      <div>
-        {props.Task.isDone && (
+    <div>
+      {props.Task.isDone && (
+        <Fade>
           <div className={classes.BoxIsDone}>
             <CheckIcon />
             <p className={classes.BoxIsDoneText}> Задание на проверке</p>
           </div>
-        )}
-          {props.Task.NotMy && (
+        </Fade>
+      )}
+      {props.Task.NotMy && (
+        <Fade>
           <div className={classes.BoxWrongCheck}>
-            <h3 className={classes.BoxWrongCheckText}> Вы уведомили начальнство, о ошибочной отправке</h3>
+            <h3 className={classes.BoxWrongCheckText}>
+              Вы уведомили начальнство, о ошибочной отправке
+            </h3>
           </div>
-        )}
+        </Fade>
+      )}
+
+      <Fade>
         <div className={classes.create}>
           <div className={classes.createbox}>
             <div className={classes.boxcenter}>
@@ -169,7 +179,14 @@ const Task = props => {
                   <Button autoFocus onClick={handleClose} color="primary">
                     Отмена
                   </Button>
-                  <Button onClick={NotMY} color="primary" autoFocus disabled={props.Task.isDone===true}>
+                  <Button
+                    onClick={() => {
+                      NotMY();
+                    }}
+                    color="primary"
+                    autoFocus
+                    disabled={props.Task.isDone === true}
+                  >
                     Подтвердить
                   </Button>
                 </DialogActions>
@@ -177,8 +194,8 @@ const Task = props => {
             </div>
           </div>
         </div>
-      </div>
-    </Fade>
+      </Fade>
+    </div>
   );
 };
 

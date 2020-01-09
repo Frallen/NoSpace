@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./navigation.module.scss";
 import { NavLink } from "react-router-dom";
-class Navigation extends React.Component {
+class Navigation extends React.PureComponent {
   state = {
     isActive: false
   };

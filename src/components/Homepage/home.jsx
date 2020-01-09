@@ -6,12 +6,7 @@ import react from "./../../media/react.svg";
 import firebase from "./../../media/firebase.svg";
 import fire from "./../../media/fire.svg";
 import { Fade } from "react-reveal";
-class WelcomePage extends React.Component {
-  componentDidMount() {
-    //из-за редиректа удаления проекта главная страница скроллица вниз
-    //делаю автоматический скролл вверх при монтировании
-    window.scrollTo(0, 0);
-  }
+class WelcomePage extends React.PureComponent {
   render() {
     return (
       <div className={classes.landing}>
