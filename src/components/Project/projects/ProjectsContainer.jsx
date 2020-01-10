@@ -12,8 +12,10 @@ class dashBox extends React.Component {
     this.props.GetAllProjects();
   }
   //нужен для обновления списка проектов, тк я делаю редирект на эту страницу после удаления проекта
-  componentDidUpdate() {
-    this.props.GetAllProjects();
+  componentDidUpdate(prevProps) {
+    if (prevProps.projects.length !==this.props.projects.length ) {
+      this.props.GetAllProjects();
+    }
   }
   //Чистка контейнеа для проектов
   componentWillUnmount() {

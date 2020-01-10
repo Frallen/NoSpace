@@ -6,14 +6,8 @@ import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { Preloader } from "../../../untils/preloader/preloader";
 import { SendBackTask } from "./../../../redux/projectReducer";
-import { Clean } from "./../../../redux/projectReducer";
 class TaksBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.ReqData();
-  }
-
-  componentDidUpdate() {
+  componentDidMount() {
     this.ReqData();
   }
 
@@ -24,6 +18,7 @@ class TaksBox extends React.Component {
 
   SendTask = data => {
     this.props.SendBackTask(data);
+    this.ReqData();
   };
 
   render() {
@@ -45,6 +40,6 @@ let mapStateToProps = state => {
 };
 
 export default compose(
-  connect(mapStateToProps, { GetProjData, SendBackTask, Clean }),
+  connect(mapStateToProps, { GetProjData, SendBackTask }),
   withRouter
 )(TaksBox);

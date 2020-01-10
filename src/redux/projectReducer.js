@@ -124,11 +124,11 @@ export const CreateNewproject = data => async (
     //создается новый проект,от проекта берется айди
     //и записывается в коллекцию
     const comm = firestore.collection("Mission").doc();
-    //загружаю документ в storage
-    firebase
-      .storage()
-      .ref(`Mission/${comm.id}/` + data.document.name)
-      .put(data.document);
+
+    //загружаю документ в storage с таким же айди как у коллекции
+    let idMission = comm.id;
+    putFile(firebase, idMission, data.document, null);
+
     //добавляю в firestore имя добавляемого документа чтобы потом получить его
     data.NameDoc = data.document.name;
     //удаляю массив документа тк он не поддерживается firestore
@@ -181,6 +181,18 @@ export const GetAllProjects = () => async (
   const { uid: userId } = getState().firebase.auth;
   GetProjects(toCollec, dispatch, firestore, to, userId);
 };
+//Отрисовка заданий для личного выполнения(как подчиненный)
+export const GetAllTasks = data => async (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  let toCollec = "Mission";
+  let to = "SendTo";
+  const firestore = getFirestore();
+  const { uid: userId } = getState().firebase.auth;
+  GetProjects(toCollec, dispatch, firestore, to, userId);
+};
 //взятие истории
 export const GetHistory = () => async (
   dispatch,
@@ -194,18 +206,6 @@ export const GetHistory = () => async (
   GetProjects(toCollec, dispatch, firestore, to, userId);
 };
 
-//Отрисовка заданий для личного выполнения(как подчиненный)
-export const GetAllTasks = data => async (
-  dispatch,
-  getState,
-  { getFirestore }
-) => {
-  let toCollec = "Mission";
-  let to = "SendTo";
-  const firestore = getFirestore();
-  const { uid: userId } = getState().firebase.auth;
-  GetProjects(toCollec, dispatch, firestore, to, userId);
-};
 //Взятие ссылки для скачивания
 const GetUrl = async (
   dispatch,
@@ -227,6 +227,19 @@ const GetUrl = async (
       .ref("Mission/" + idMission + "/otvet/" + NameDocDone)
       .getDownloadURL();
     dispatch({ type: DownLinkWorker, url });
+  }
+};
+
+const putFile = async (firebase, idMission, document, otvet) => {
+  await firebase
+    .storage()
+    .ref(`Mission/${idMission}/` + document.name)
+    .put(document);
+  if (otvet === true) {
+    await firebase
+      .storage()
+      .ref(`Mission/${idMission}/otvet/` + document.name)
+      .put(document);
   }
 };
 
@@ -299,7 +312,6 @@ const DeleteFile = async (NameDoc, firebase, id, NameDocDone) => {
   }
 
   if (NameDocDone) {
-    debugger;
     await firebase
       .storage()
       .refFromURL(
@@ -328,7 +340,7 @@ export const UpdateProject = data => async (
   try {
     if (data.document) {
       //сначала получить коллекцию чтобы вставить в url
-      //let snap = await fetchBefore(data.idMission);
+
       let snap = await firestore
         .collection("Mission")
         .where("idMission", "==", data.id)
@@ -342,13 +354,13 @@ export const UpdateProject = data => async (
       });
 
       //загружаю документ в storage
-      await firebase
-        .storage()
-        .ref(`Mission/${data.idMission}/` + data.document.name)
-        .put(data.document);
+      putFile(firebase, data.idMission, data.document, null);
+
       //добавляю в firestore имя добавляемого документа чтобы потом получить его
       data.NameDoc = data.document.name;
     }
+    //
+    delete data.id;
     //удаляю массив документа тк он не поддерживается firestore
     delete data.document;
     //потом обновить
@@ -421,10 +433,9 @@ export const SendBackTask = data => async (
     if (data.NotMy === true) {
       Update(firestore, data.idMission, data);
     } else {
-      await firebase
-        .storage()
-        .ref(`Mission/${data.idMission}/otvet/` + data.document.name)
-        .put(data.document);
+      let otvet = true;
+      putFile(firebase, data.idMission, data.document, otvet);
+
       //добавляю в firestore имя добавляемого документа чтобы потом получить его
       data.NameDocDone = data.document.name;
       //удаляю массив документа тк он не поддерживается firestore
@@ -433,7 +444,7 @@ export const SendBackTask = data => async (
       //потом обновить
 
       Update(firestore, data.idMission, data);
-      //  let snap = await fetchBefore(data);
+
       let snap = await firestore
         .collection("Mission")
         .where("idMission", "==", data)
