@@ -7,7 +7,7 @@ import face from "./../../../../media/sadface.svg";
 import { Fade } from "react-reveal";
 import HistoryPanel from "./history";
 
-class dashBox extends React.Component {
+class dashBox extends React.PureComponent {
   componentDidMount() {
     this.props.GetHistory();
   }

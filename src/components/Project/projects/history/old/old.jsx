@@ -41,9 +41,9 @@ const OneOld = props => {
         color="default" href={props.LinkBoss} className={classes.donwload}>Скачать</Button>
            </div>
             <div className={classes.datebox}>
-              <p className={classes.datespace}> Начать c {moment(props.HistoryItem.startdate).format("MM-DD-YYYY")}
+              <p className={classes.datespace}> Начать c {moment(props.HistoryItem.startdate).format("DD-MM-YYYY")}
               </p>
-              <p className={classes.datespace}>Закончить {moment(props.HistoryItem.enddate).format("MM-DD-YYYY")}</p>
+              <p className={classes.datespace}>Закончить {moment(props.HistoryItem.enddate).format("DD-MM-YYYY")}</p>
             </div>
           </div>
       

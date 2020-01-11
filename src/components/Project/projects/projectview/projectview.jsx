@@ -350,11 +350,11 @@ const ProjView = props => {
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
                   Начать c
-                  {moment(props.initialValues.startdate).format("MM-DD-YYYY")}
+                  {moment(props.initialValues.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
                   Закончить
-                  {moment(props.initialValues.enddate).format("MM-DD-YYYY")}
+                  {moment(props.initialValues.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>
             </div>

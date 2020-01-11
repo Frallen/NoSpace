@@ -12,10 +12,10 @@ const HistoryPanel = props => {
         <h3 className={classes.title}>{p.NameMission}</h3>
         <div className={classes.datebox}>
           <p className={classes.date}>
-            Начинается с {moment(p.startdate).format("MM-DD-YYYY")}
+            Начинается с {moment(p.startdate).format("DD-MM-YYYY")}
           </p>
           <p className={classes.date}>
-            Закачивается {moment(p.enddate).format("MM-DD-YYYY")}
+            Закачивается {moment(p.enddate).format("DD-MM-YYYY")}
           </p>
         </div>
 

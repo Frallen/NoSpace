@@ -150,10 +150,10 @@ const Task = props => {
               </div>
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Начать с {moment(props.Task.startdate).format("MM-DD-YYYY")}
+                  Начать с {moment(props.Task.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Закончить {moment(props.Task.enddate).format("MM-DD-YYYY")}
+                  Закончить {moment(props.Task.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>
             </div>

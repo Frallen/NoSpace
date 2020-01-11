@@ -52,7 +52,6 @@ export const ProjectDate = ({ input, meta, ...props }) => {
       <TextField
         {...input}
         {...props}
-        id="date"
         type="date"
         InputLabelProps={{
           shrink: true

@@ -11,10 +11,10 @@
 
   .projects {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-    grid-auto-rows: 352px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 230px));
+    grid-auto-rows: 331px;
     justify-content: center;
-    grid-gap: 30px 37px;
+    grid-gap: 25px 24px;
     @media (max-width: 260px) {
       grid-auto-rows: max-content;
     }

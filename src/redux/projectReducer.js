@@ -104,9 +104,9 @@ const dashboardReducer = (state = initialState, action) => {
       return state;
   }
 };
-
+//очистка 
 export const Clean = () => ({ type: CleanUp });
-
+//создание проекта
 export const CreateNewproject = data => async (
   dispatch,
   getState,
@@ -229,7 +229,7 @@ const GetUrl = async (
     dispatch({ type: DownLinkWorker, url });
   }
 };
-
+//загрузка файлов
 const putFile = async (firebase, idMission, document, otvet) => {
   await firebase
     .storage()
@@ -302,7 +302,7 @@ export const AllUsers = data => async (
     dispatch({ type: GetallUsers, users });
   } catch (err) {}
 };
-
+//удаление файлов
 const DeleteFile = async (NameDoc, firebase, id, NameDocDone) => {
   if (NameDoc) {
     await firebase
@@ -381,7 +381,7 @@ export const DeleteProject = data => async (
   const firebase = getFirebase();
   dispatch({ type: Start });
   try {
-    // let snap = await fetchBefore(data.id);
+    
     let snap = await firestore
       .collection("Mission")
       .where("idMission", "==", data.id)
