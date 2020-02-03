@@ -7,48 +7,37 @@ import {
 } from "../../commons/formsControls/formsControls";
 import classes from "./Tasks.module.scss";
 import { required } from "../../../untils/validators/validators";
-import moment from "moment";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions
-} from "@material-ui/core";
 import { Fade } from "react-reveal";
-import { useSnackbar } from "notistack";
-import CheckIcon from "@material-ui/icons/Check";
+import { Form, Button, Message, Alert, Modal } from "rsuite";
+import moment from "moment";
 
 const TaskBox = props => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          component={ProjectInput}
-          label="Заголовок ответа"
-          type="text"
-          name="MissionDoneTitle"
-          validate={[required]}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          component={ProjectTextArea}
-          label="Дополнение"
-          name="TextDone"
-          validate={[required]}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          type="file"
-          component={Upload}
-          name="document"
-          validate={[required]}
-        ></Field>
-      </div>
-      <button
+    <Form onSubmit={props.handleSubmit} fluid>
+      <Field
+        component={ProjectInput}
+        text="Заголовок ответа"
+        type="text"
+        name="MissionDoneTitle"
+        validate={[required]}
+      />
+
+      <Field
+        component={ProjectTextArea}
+        text="Дополнение"
+        name="TextDone"
+        validate={[required]}
+      />
+
+      <Field
+        type="file"
+        component={Upload}
+        name="document"
+        validate={[required]}
+      ></Field>
+
+      <Button
+        type="submit"
         className={classes.creabtn}
         disabled={
           props.loading ||
@@ -57,8 +46,8 @@ const TaskBox = props => {
         }
       >
         Отправить на проверку
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 
@@ -67,17 +56,15 @@ const TaskForm = reduxForm({
 })(TaskBox);
 
 const Task = props => {
-  const { enqueueSnackbar } = useSnackbar();
-  //dialog
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [show, setShow] = useState(false);
+
+  let close = () => {
+    setShow(false);
+  };
+  let open = () => {
+    setShow(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  //
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
     let data = {
@@ -87,36 +74,40 @@ const Task = props => {
       NotMy: true
     };
     props.SendTask(data);
-    setOpen(false);
+    close();
   };
   let onSubmit = FormData => {
     FormData.isDone = true;
     FormData.idMission = props.Task.idMission;
     props.SendTask(FormData);
-    let message = "Отчет отправлен";
-    enqueueSnackbar(message, {
-      variant: "success",
-      preventDuplicate: true,
-      autoHideDuration: 4000
-    });
+
+    Alert.success("Отчет отправлен");
   };
+
+  if (props.error) {
+    Alert.error("Произошла непредвиденная ошибка");
+  }
 
   return (
     <div>
       {props.Task.isDone && (
         <Fade>
           <div className={classes.BoxIsDone}>
-            <CheckIcon />
-            <p className={classes.BoxIsDoneText}> Задание на проверке</p>
+            <Message
+              showIcon
+              type="success"
+              description="Задание на проверке"
+            />
           </div>
         </Fade>
       )}
       {props.Task.NotMy && (
         <Fade>
-          <div className={classes.BoxWrongCheck}>
-            <h3 className={classes.BoxWrongCheckText}>
-              Вы уведомили начальнство, о ошибочной отправке
-            </h3>
+          <div className={classes.BoxIsDone}>
+            <Message
+              type="warning"
+              description="Вы уведомили начальнство, о ошибочной отправке"
+            />
           </div>
         </Fade>
       )}
@@ -139,12 +130,7 @@ const Task = props => {
                   ))}
               </div>
               <div className={classes.donwloadbox}>
-                <Button
-                  variant="contained"
-                  color="default"
-                  href={props.LinkBoss}
-                  className={classes.donwload}
-                >
+                <Button href={props.LinkBoss} className={classes.donwload}>
                   Скачать
                 </Button>
               </div>
@@ -153,44 +139,38 @@ const Task = props => {
                   Начать с {moment(props.Task.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Закончить {moment(props.Task.enddate).format("DD-MM-YYYY")}
+                  Завершение {moment(props.Task.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>
             </div>
             <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
             <div className={classes.wrongblock}>
-              <button className={classes.wrong} onClick={handleClickOpen}>
+              <Button color="red" className={classes.wrong} onClick={open}>
                 Это не ваше задание?
-              </button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-              >
-                <DialogTitle id="responsive-dialog-title">
-                  {"Ошибка начальства"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Вы уверенны что это задание предназначено не вам?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus onClick={handleClose} color="primary">
-                    Отмена
-                  </Button>
+              </Button>
+
+              <Modal backdrop="static" show={show} onHide={close} size="xs">
+                <Modal.Header>
+                  <Modal.Title>Ошибка начальства</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Вы уверенны что это задание предназначено не вам?
+                </Modal.Body>
+                <Modal.Footer>
                   <Button
                     onClick={() => {
                       NotMY();
                     }}
-                    color="primary"
-                    autoFocus
+                    appearance="primary"
                     disabled={props.Task.isDone === true}
                   >
                     Подтвердить
                   </Button>
-                </DialogActions>
-              </Dialog>
+                  <Button onClick={close} appearance="subtle">
+                    Отмена
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
         </div>

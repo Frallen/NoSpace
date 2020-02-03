@@ -1,51 +1,18 @@
 .formbox {
   display: flex;
   justify-content: center;
-  margin: 4rem 0;
+  align-items: center;
+  height: 78vh;
   .form {
-    padding: 4vmin;
-    box-shadow: 2px 3px 6px 1px #333;
-    border-radius: 6px;
-    display: grid;
-    grid-template-columns: minmax(14rem, 1fr);
-    grid-gap: 1rem;
-    grid-auto-rows: max-content;
-    justify-content: center;
-    .dangerbutton {
-      border-radius: 23px;
-      background: red;
-      color: #fff;
-      display: inline-block;
-      width: 100%;
-      border: none;
-      outline: none;
-      padding: 0.8rem 2rem;
-      cursor: pointer;
-      transition: 0.2s ease-in-out;
-    }
-    .dangerbutton:active {
-      background: #c70707;
-      transition: 0.2s ease-in-out;
-      color: #fff;
-    }
-    .flexspace {
-      padding-top: 2rem;
-    }
-    .submited {
-      border-radius: 23px;
-      display: inline-block;
-      width: 100%;
-      border: none;
-      outline: none;
-      margin: 1.1rem 0;
-      padding: 0.8rem 5rem;
-      color: #fff;
-      background: #4b4950;
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
-    }
-   .submited:active{
-    background: #000;
+    padding: 2rem;
+    box-shadow: 0 2px 8px 1px #7b7b7b;
+    border-radius: 3px;
+   @media (max-width:400px) {
+     padding: 0;
+     box-shadow: none;
    }
+  }
+  .dangerButton{
+    margin-top: 2rem ;
   }
 }

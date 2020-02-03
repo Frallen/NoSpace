@@ -1,21 +1,14 @@
 .create {
-  display: flex;
-  justify-content: center;
   position: relative;
-  margin: 2rem 0 1rem;
-  background: #fff;
-  box-shadow: 0 2px 5px 2px #2b2828;
-  border-radius: 5px;
+  margin: 2rem;
   .Regactive {
     position: absolute;
-    top: 1rem;
+    top: -1rem;
     right: 0.5rem;
-    @media (max-width: 675px) {
-      top: -3rem;
-      color: #333;
-    }
-    @media (max-width: 250px) {
+
+    @media (max-width: 800px) {
       right: 0;
+      top: -2rem;
     }
   }
   .adaptRegactive {
@@ -24,15 +17,11 @@
     }
   }
   .createbox {
-    flex-basis: 100%;
-    margin: 2.5rem 1.5rem 1rem 1.5rem;
   }
   .boxcenter {
-    text-align: center;
   }
   .NameMission {
-    font-size: 1.5rem;
-    word-wrap: break-all;
+    font-size: 1.3rem;
   }
   .Text {
     padding: 1rem 0;
@@ -46,15 +35,9 @@
   .targetsbox {
     padding: 1rem 0;
     .targetstitle {
-      font-size: 1.6rem;
-      text-transform: uppercase;
-      background: #ffa69e;
-      border-radius: 21px;
+      font-size: 1.2rem;
     }
     .targets {
-      padding: 0.5rem 0;
-      font-size: 1.3rem;
-      font-weight: 600;
     }
   }
   .flexspace {
@@ -63,40 +46,17 @@
   .datebox {
     padding: 1rem 0;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+    .datespace {
+      margin: 0;
+    }
     @media (max-width: 600px) {
       flex-direction: column;
     }
-    .datespace {
-      @media (max-width: 600px) {
-        margin: 0.5rem 0;
-      }
-      padding: 0.4rem;
-      background: #ffa69e;
-    }
-  }
-  .creabtn {
-    margin: 27px auto 20px;
-    display: block;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border-radius: 55px;
-    background: #ffa69e;
-    color: #333;
-    transition: 0.2s ease-in-out;
-  }
-  .creabtn:hover {
-    background: #333;
-    color: #fff;
-    transition: 0.2s ease-in-out;
   }
 }
 .boxbutton {
-  text-align: center;
   .addtarget {
     margin: 15px auto;
     display: block;
@@ -116,78 +76,42 @@
     transition: 0.2s ease-in-out;
   }
 }
-.deletetarget {
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  margin: 0.5rem 0;
-}
 
 .dangerbutton {
-  background: red;
-  color: #fff;
-  border-radius: 40px;
-  margin: 0px auto;
-  display: block;
-  border: none;
-  outline: none;
-  padding: 0.7rem 1.2rem;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-}
-.dangerbutton:hover {
-  background: #c90606;
-  box-shadow: none;
-  transition: 0.2s ease-in-out;
-  color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  @media (max-width:450px) {
+    display: block;
+    margin: 1rem 0;
+  }
 }
 
 .targetSpace {
   padding: 1rem 0;
 }
 .donwloadbox {
-  text-align: center;
-  padding: 10px 0;
-  .donwload{
+  padding: 1rem 0;
+  .donwload {
     text-transform: none;
   }
 }
 //блок отчета сотрудника
 .done {
-  margin: 2rem 0 3rem;
+  margin: 1rem 0 2rem;
+  padding: 1rem;
   display: flex;
-  justify-content: center;
   color: #fff;
-background: #443e3e;
-  border-radius: 5px;
+  background: #443e3e;
   .createbox {
-    flex-basis: 100%;
-    margin: 1.5rem 1.5rem 1rem 1.5rem;
   }
   .boxcenter {
-    text-align: center;
   }
   .NameMission {
-    font-size: 1.5rem;
-    padding: 0.8rem;
+    font-size: 1.2rem;
+    padding: 0.8rem 0;
   }
-  .succbutton {
-    text-decoration: none;
-    outline: none;
-    border: none;
-    color: #fff;
-    background: #10cf9f;
-    cursor: pointer;
-    margin: 1rem 0;
-    padding: 0.8rem 1.5rem;
-    transition: 0.2s ease-in-out;
-  }
-  .succbutton:hover {
-    background: #ffbc7ce6;
-    color: #fff;
-    transition: 0.2s ease-in-out;
-  }
+}
+
+.BoxIsDone{
+  margin: 0.6rem;
 }

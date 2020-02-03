@@ -2,17 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import Login from "./login";
 import { LogInUser, Clean } from "./../../../redux/registrationReducer";
-class AuthBox extends React.Component {
-  Userlogin = data => {
-    this.props.LogInUser(data);
+import { useEffect } from "react";
+
+const AuthBox = props => {
+  useEffect(() => {
+    props.Clean();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+
+  let Userlogin = data => {
+   props.LogInUser(data);
   };
-  componentDidMount() {
-    this.props.Clean();
-  }
-  render() {
-    return <Login {...this.props} Userlogin={this.Userlogin}></Login>;
-  }
-}
+
+  return <Login {...props} Userlogin={Userlogin}></Login>;
+};
 
 let mapStateToProps = state => {
   return {

@@ -2,22 +2,24 @@ import React from "react";
 import { connect } from "react-redux";
 import { RecoverPass, Clean } from "./../../../redux/registrationReducer";
 import ChangePass from "./changePass";
-class RecBox extends React.Component {
-  componentDidMount() {
-    this.props.Clean();
-  }
-  NewPass = data => {
-    this.props.RecoverPass(data);
+import { useEffect } from "react";
+const RecBox = props => {
+  useEffect(() => {
+    props.Clean();
+  },[props]);
+  
+  let NewPass = data => {
+    props.RecoverPass(data);
   };
-  render() {
-    return <ChangePass {...this.props} NewPass={this.NewPass}></ChangePass>;
-  }
-}
+
+
+  return <ChangePass {...props} NewPass={NewPass}></ChangePass>;
+};
 
 let mapStateToProps = state => {
   return {
-    error: state.Regis.recoverpass.error,
-    loading: state.Regis.recoverpass.loading
+    error: state.Regis.error,
+    loading: state.Regis.loading
   };
 };
 

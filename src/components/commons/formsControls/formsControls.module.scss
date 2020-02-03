@@ -3,61 +3,16 @@
   box-sizing: border-box;
 }
 
-.textarea {
-  width: 100%;
-  outline: none;
-  box-sizing: border-box;
-  resize: none;
-  background: transparent;
-}
-
-.reqError {
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 1px 6px 3px #ff686b;
-  color: #333;
-  animation: showError 0.5s ease-in-out;
-}
-.reqErrorProj {
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 1px 6px 3px #ff686b;
-  color: #333;
-  animation: showError 0.5s ease-in-out;
-}
-
-.combobox {
-  padding: 1rem 0;
-}
-.combo {
-  padding-top: 0.3rem;
-  width: 100%;
-}
 .InputFile {
   display: none;
 }
 .boxUload {
   text-align: center;
 }
-//animation
-
-@keyframes showError {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  80% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+.Rules{
+  display: flex;
+  align-items: center;
+   .RulesText{
+padding-left: 10px;
+   }
+ }

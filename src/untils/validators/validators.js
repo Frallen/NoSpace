@@ -4,12 +4,12 @@ export const required = value => {
 };
 
 export const OnlyLetters = value => {
-  if (!/^[a-zA-Zа-яА-Я\s]*$/.test(value)) return `ФИО должен состоять только из букв`;
+  if (!/^[a-zA-Zа-яА-Я\s]*$/.test(value))
+    return `ФИО должен состоять только из букв`;
   return undefined;
 };
 
 export const PasswordCheck = MinValue => value => {
-  if (value.length < MinValue)
-    return `Не менее ${MinValue} символов`;
+  if (value.length < MinValue) return `Не менее ${MinValue} символов`;
   return undefined;
 };

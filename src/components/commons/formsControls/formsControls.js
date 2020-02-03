@@ -1,80 +1,117 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import classes from "./formsControls.module.scss";
-import { Select, Button } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-//кастомный инпут аутификации
-export const authInput = ({ input, meta, ...props }) => {
-  const HasError = meta.touched && meta.error;
+import {
+  FormGroup,
+  SelectPicker,
+  FormControl,
+  DatePicker,
+  Uploader,
+  ControlLabel,
+  Toggle
+} from "rsuite";
+import { Button } from "@material-ui/core";
+
+//согласие на обработку данных
+export const Checker = ({ input, meta, ...props }) => {
   return (
-    <div>
-      <TextField {...input} {...props} className={classes.Input}></TextField>
-      {HasError && (
-        <div className={classes.reqError}>{HasError && meta.error}</div>
-      )}
-    </div>
+    <FormGroup>
+      <ControlLabel>Соглашение</ControlLabel>
+      <div className={classes.Rules}>
+        <FormControl
+          accepter={Toggle}
+          {...props}
+          {...input}
+          errorMessage={input.value===false ? "Это обязательное поле" : null}
+        ></FormControl>
+        <p className={classes.RulesText}>Я согласен на обработку данных</p>
+      </div>
+    </FormGroup>
+  );
+};
+
+//кастомный инпут аутификации
+export const authInput = ({ input, meta, text, ...props }) => {
+  const HasError = meta.touched && meta.error;
+
+  return (
+    <FormGroup>
+      <ControlLabel>{text}</ControlLabel>
+      <FormControl
+        errorMessage={HasError ? meta.error : null}
+        {...input}
+        {...props}
+        className={classes.Input}
+      />
+    </FormGroup>
   );
 };
 //кастомный инпут для проектов
-export const ProjectInput = ({ input, meta, ...props }) => {
+export const ProjectInput = ({ input, meta, text, ...props }) => {
   const HasError = meta.touched && meta.error;
   return (
-    <div>
-      <TextField {...input} {...props} className={classes.Input}></TextField>
-      {HasError && (
-        <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
-      )}
-    </div>
+    <FormGroup>
+      <ControlLabel>{text}</ControlLabel>
+      <FormControl
+        errorMessage={HasError ? meta.error : null}
+        {...input}
+        {...props}
+        className={classes.Input}
+      />
+    </FormGroup>
   );
 };
 //кастомная текстареа
-export const ProjectTextArea = ({ input, meta, ...props }) => {
+export const ProjectTextArea = ({ input, meta, text, ...props }) => {
   const HasError = meta.touched && meta.error;
   return (
-    <div>
-      <TextField
-        multiline={true}
+    <FormGroup>
+      <ControlLabel>{text}</ControlLabel>
+      <FormControl
+        errorMessage={HasError && meta.error}
         {...input}
         {...props}
-        className={classes.textarea}
-      ></TextField>
-      {HasError && (
-        <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
-      )}
-    </div>
+        rows={5}
+        name="textarea"
+        componentClass="textarea"
+      ></FormControl>
+    </FormGroup>
   );
 };
 //кастомная дата
-export const ProjectDate = ({ input, meta, ...props }) => {
+export const ProjectDate = ({ input, meta, text, ...props }) => {
   const HasError = meta.touched && meta.error;
   return (
-    <div>
-      <TextField
+    <FormGroup>
+      <ControlLabel>{text}</ControlLabel>
+      <FormControl
+        name="datePicker"
+        oneTap
+        block
+        format="DD-MM-YYYY"
+        accepter={DatePicker}
+        errorMessage={HasError && meta.error}
         {...input}
         {...props}
-        type="date"
-        InputLabelProps={{
-          shrink: true
-        }}
-      ></TextField>
-      {HasError && (
-        <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
-      )}
-    </div>
+      ></FormControl>
+    </FormGroup>
   );
 };
-//кастомный вобор пользователей
-export const SelectUser = ({ input, meta, children, ...props }) => {
+//кастомный выбор пользователей
+export const SelectUser = ({ input, meta, data, text, ...props }) => {
   const HasError = meta.touched && meta.error;
   return (
-    <div className={classes.combobox}>
-      <Select native {...input} className={classes.combo}>
-        {children}
-      </Select>
-      {HasError && (
-        <div className={classes.reqErrorProj}>{HasError && meta.error}</div>
-      )}
-    </div>
+    <FormGroup>
+      <ControlLabel>{text}</ControlLabel>
+      <FormControl
+        className={classes.combo}
+        name="selectPicker"
+        errorMessage={HasError ? meta.error : null}
+        accepter={SelectPicker}
+        {...input}
+        {...props}
+        data={data}
+      ></FormControl>
+    </FormGroup>
   );
 };
 
@@ -87,7 +124,9 @@ export const Upload = ({ input, meta }) => {
   const handleChange = e => {
     input.onChange(e.target.files[0]);
   };
-
+  /*<Uploader {...inputProps}
+  key={resetKey} action={handleChange}></Uploader>
+*/
   return (
     <div className={classes.boxUload}>
       <input
@@ -100,12 +139,7 @@ export const Upload = ({ input, meta }) => {
         onBlur={() => {}}
       />
       <label htmlFor="contained-button-file">
-        <Button
-          variant="contained"
-          color="default"
-          component="span"
-          startIcon={<CloudUploadIcon />}
-        >
+        <Button variant="contained" color="default" component="span">
           Загрузить
         </Button>
       </label>

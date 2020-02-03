@@ -1,9 +1,12 @@
 @import "normalize.css";
+@import "../node_modules/rsuite/dist/styles/rsuite-default.min.css";
 h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+ul,
+p {
   padding: 0;
   margin: 0;
 }
@@ -11,22 +14,7 @@ h5 {
 body {
   font-family: "Nunito", sans-serif;
 }
-ul {
-  padding: 0;
-  margin: 0;
-}
 
 li {
   list-style-type: none;
-}
-
-p {
-  padding: 0;
-  margin: 0;
-}
-
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 0 10px;
 }

@@ -8,14 +8,17 @@ const HistoryPanel = props => {
 
   if (props.history) {
     hist = props.history.map(p => (
-      <div className={classes.projectsBox+" "+classes.projectsBoxOld} key={p.idMission}>
+      <div
+        className={classes.projectsBox + " " + classes.projectsBoxOld}
+        key={p.idMission}
+      >
         <h3 className={classes.title}>{p.NameMission}</h3>
         <div className={classes.datebox}>
           <p className={classes.date}>
-            Начинается с {moment(p.startdate).format("DD-MM-YYYY")}
+            Старт {moment(p.startdate).format("DD-MM-YYYY")}
           </p>
           <p className={classes.date}>
-            Закачивается {moment(p.enddate).format("DD-MM-YYYY")}
+            Завершение {moment(p.enddate).format("DD-MM-YYYY")}
           </p>
         </div>
 
@@ -29,7 +32,7 @@ const HistoryPanel = props => {
   return (
     <Fade>
       <div className={classes.HistBlock}>
-        <div className={classes.Headhelp}>
+        <div className={classes.Headhelp + " " + classes.HeadhelpHist}>
           <h2 className={classes.HeadhelpTitle}>История поручений</h2>
         </div>
         <div className={classes.Panel}>

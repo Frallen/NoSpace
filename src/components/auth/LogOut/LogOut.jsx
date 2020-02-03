@@ -1,6 +1,7 @@
-import {useEffect} from "react"
-import {connect} from "react-redux"
-import { signOut } from "../../../redux/registrationReducer"
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { signOut } from "../../../redux/registrationReducer";
+
 
 const Logout=({logout})=>{
 

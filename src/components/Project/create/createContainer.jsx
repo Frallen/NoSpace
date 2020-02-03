@@ -1,5 +1,5 @@
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import React from "react";
 import Create from "./create";
 import {
   CreateNewproject,
@@ -7,40 +7,35 @@ import {
   AllUsers
 } from "../../../redux/projectReducer";
 
-class dashBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.AllUsers();
-  }
-  NewProject = formData => {
-    this.props.CreateNewproject(formData);
-  };
-  componentDidMount() {
-    this.props.Clean();
-  }
+const DashBox = props => {
+  useEffect(() => {
+    props.Clean();
+    props.AllUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    if (this.props.initialValues) {
-      return <Create {...this.props} NewProject={this.NewProject}></Create>;
-    }
+  let NewProject = formData => {
+   props.CreateNewproject(formData);
+  };
+
+  if (props.initialValues) {
+    return <Create {...props} NewProject={NewProject}></Create>;
   }
-}
+};
 
 let mapStateToProps = state => {
   return {
     initialValues: {
       users: state.project.DataUsers
     },
-    email:state.firebase.auth.email,
+    email: state.firebase.auth.email,
     error: state.project.error,
-    loading: state.project.loading,
+    loading: state.project.loading
   };
 };
 
-const CreateContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   CreateNewproject,
   Clean,
   AllUsers
-})(dashBox);
-
-export default CreateContainer;
+})(DashBox);

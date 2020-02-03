@@ -8,20 +8,12 @@ import {
   Upload
 } from "../../../commons/formsControls/formsControls";
 import classes from "./projectView.module.scss";
-import { useSnackbar } from "notistack";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button
-} from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import moment from "moment";
 import { Fade } from "react-reveal";
 import { useHistory } from "react-router-dom";
+import { Form, Alert, Modal, Button, Message } from "rsuite";
 
 //для вставки массива целей
 const AddSubTargets = ({ fields, meta: { error } }) => (
@@ -32,27 +24,23 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
           name={hobby}
           type="text"
           component={ProjectTextArea}
-          label={`Цель #${index + 1}`}
+          text={`Цель #${index + 1}`}
           validate={[required]}
         />
-        <button
+        <Button
           type="button"
-          title="Удалить цель"
+          text="Удалить цель"
           className={classes.deletetarget}
           onClick={() => fields.remove(index)}
         >
           Удалить цель
-        </button>
+        </Button>
       </li>
     ))}
     <li className={classes.boxbutton}>
-      <button
-        type="button"
-        className={classes.addtarget}
-        onClick={() => fields.push()}
-      >
+      <Button type="button" onClick={() => fields.push()}>
         Добавить цель
-      </button>
+      </Button>
     </li>
     {error && <li className="error">{error}</li>}
   </ul>
@@ -60,7 +48,8 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
 
 const ProjBox = props => {
   return (
-    <form
+    <Form
+      fluid
       onSubmit={props.handleSubmit}
       initialvalues={{
         NameMission: props.initialValues.NameMission,
@@ -70,52 +59,47 @@ const ProjBox = props => {
         enddate: props.initialValues.enddate
       }}
     >
-      <div>
-        <Field
-          component={ProjectInput}
-          label="Название поручения"
-          type="text"
-          name="NameMission"
-          validate={[required]}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          component={ProjectTextArea}
-          label="Описание"
-          name="Text"
-          validate={[required]}
-        />
-      </div>
+      <Field
+        component={ProjectInput}
+        type="text"
+        name="NameMission"
+        text="Название поручения"
+        validate={[required]}
+      />
+
+      <Field
+        component={ProjectTextArea}
+        text="Описание"
+        name="Text"
+        validate={[required]}
+      />
+
       <FieldArray name="SubTargets" component={AddSubTargets} />
-      <div className={classes.flexspace}>
-        <Field type="file" component={Upload} name="document"></Field>
-      </div>
+
+      <Field type="file" component={Upload} name="document"></Field>
+
       <div className={classes.datebox}>
-        <div className={classes.datespace}>
-          <Field
-            component={ProjectDate}
-            label="Начать с"
-            name="startdate"
-            validate={[required]}
-          />
-        </div>
-        <div className={classes.datespace}>
-          <Field
-            component={ProjectDate}
-            label="Сдать до"
-            name="enddate"
-            validate={[required]}
-          />
-        </div>
+        <Field
+          component={ProjectDate}
+          text="Начать с"
+          name="startdate"
+          validate={[required]}
+        />
+
+        <Field
+          component={ProjectDate}
+          text="Сдать до"
+          name="enddate"
+          validate={[required]}
+        />
       </div>
-      <button
-        className={classes.creabtn}
+      <Button
+        type="submit"
         disabled={props.loading || props.initialValues.NotMy === true}
       >
         Сохранить данные
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 
@@ -124,20 +108,9 @@ const ChangeForm = reduxForm({
 })(ProjBox);
 
 const ProjView = props => {
-  const { enqueueSnackbar } = useSnackbar();
-  /// Dialog material ui
-  //удаление проекта
-  const [open, setOpen, show] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   //чекбокс
   //Состояние чекбоскса чекед/нечекед
-  const [state, setState] = React.useState({
+  const [state, setState, showForm] = useState({
     checkedA: false
   });
 
@@ -157,18 +130,27 @@ const ProjView = props => {
     props.Delete(get);
     //после передачи данных для удаления возращаюсь на предыдущую страницу (missions)
     history.goBack();
+    close()
   };
 
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
 
+  const [show, setShow] = useState(false);
+
+  let close = () => {
+    setShow(false);
+  };
+  let open = () => {
+    setShow(true);
+  };
+
   if (props.error) {
-    enqueueSnackbar(props.error, {
-      variant: "error",
-      preventDuplicate: true,
-      autoHideDuration: 3000
-    });
+    Alert.error(props.error);
   }
+
   let onSubmitMain = FormData => {
+    FormData.startdate = moment(FormData.startdate).format();
+    FormData.enddate = moment(FormData.enddate).format();
     //добавляю айди проекта и айди создателя
     FormData.id = props.initialValues.idMission;
     FormData.idOwner = props.initialValues.idOwner;
@@ -193,71 +175,68 @@ const ProjView = props => {
     <div>
       {props.initialValues.NotMy === true && (
         <Fade>
-          <div className={classes.done}>
-            <div className={classes.createbox}>
-              <div className={classes.boxcenter}>
-                <h2>
-                  Вы отправили задание не тому сотруднику,перепроверьте данные,
-                  удалите данное задание и создайте новое
-                </h2>
-              </div>
-            </div>
+          <div className={classes.BoxIsDone}>
+            <Message
+              showIcon
+              type="error"
+              description="   Вы отправили задание не тому сотруднику,перепроверьте данные,
+              удалите данное задание и создайте новое."
+            />
           </div>
         </Fade>
       )}
       {props.initialValues.isDone === true && (
         <Fade>
+          <div className={classes.BoxIsDone}>
+            <Message
+              showIcon
+              type="success"
+              description="Задание выполненно, проверьте отчет."
+            />
+          </div>
           <div className={classes.done}>
             <div className={classes.createbox}>
               <div className={classes.boxcenter}>
-                <h2>Задание выполненно, проверьте отчет !</h2>
                 <h3 className={classes.NameMission}>
-                  {props.initialValues.MissionDoneTitle}
+                  Заголовок отчета: {props.initialValues.MissionDoneTitle}
                 </h3>
-                <p className={classes.Text}>{props.initialValues.TextDone}</p>
+                <p className={classes.Text}>
+                  Текст отчета:{" "}
+                  {props.initialValues.TextDone && props.initialValues.TextDone}
+                </p>
                 <div className={classes.donwloadbox}>
-                  <Button
-                    variant="contained"
-                    href={props.initialValues.LinkWorker}
-                    className={classes.donwload}
-                  >
+                  <Button href={props.initialValues.LinkWorker}>
                     Скачать отчет
                   </Button>
                 </div>
-                <button
+                <Button
+                  color="green"
                   className={classes.succbutton}
-                  onClick={handleClickOpen}
+                  onClick={open}
                 >
                   Подтвердить выполнение
-                </button>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="responsive-dialog-title"
-                >
-                  <DialogTitle id="responsive-dialog-title">
-                    {"Удаление поручения"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Вы уверенны в правильности выполненного задания?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                      Отмена
-                    </Button>
+                </Button>
+                <Modal backdrop="static" show={show} onHide={close} size="xs">
+                  <Modal.Header>
+                    <Modal.Title>Валидация задания</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    Вы уверенны в правильности выполненного задания?
+                  </Modal.Body>
+                  <Modal.Footer>
                     <Button
                       onClick={() => {
                         tryDelete(true);
                       }}
-                      color="primary"
-                      autoFocus
+                      appearance="primary"
                     >
                       Подтвердить
                     </Button>
-                  </DialogActions>
-                </Dialog>
+                    <Button onClick={close} appearance="subtle">
+                      Отмена
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </div>
             </div>
           </div>
@@ -279,50 +258,42 @@ const ProjView = props => {
           />
           {state.checkedA ? (
             <div className={classes.createbox}>
-              <Fade when={show}>
+              <Fade when={showForm}>
                 <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
               </Fade>
-              <button
-                className={classes.dangerbutton}
-                onClick={handleClickOpen}
-              >
-                Удалить поручение
-              </button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
-              >
-                <DialogTitle id="responsive-dialog-title">
-                  {"Завершить выполнение"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Ваш проект будет удален, вы действительно хотите удалить
-                    поручение?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus onClick={handleClose} color="primary">
-                    Отмена
-                  </Button>
+              <div className={classes.dangerbutton}>
+                <Button color="red" onClick={open}>
+                  Удалить поручение
+                </Button>
+              </div>
+              <Modal backdrop="static" show={show} onHide={close} size="xs">
+                <Modal.Header>
+                  <Modal.Title>Удаление поручения</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Ваш проект будет удален, вы действительно хотите удалить
+                  поручение?
+                </Modal.Body>
+                <Modal.Footer>
                   <Button
                     onClick={() => {
                       tryDelete(false);
                     }}
-                    color="primary"
-                    autoFocus
+                    appearance="primary"
                   >
                     Подтвердить
                   </Button>
-                </DialogActions>
-              </Dialog>
+                  <Button onClick={close} appearance="subtle">
+                    Отмена
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           ) : (
             <div className={classes.createbox}>
               <div className={classes.boxcenter}>
                 <h3 className={classes.NameMission}>
-                  {props.initialValues.NameMission}
+                  Название поручения: {props.initialValues.NameMission}
                 </h3>
                 <p className={classes.Text}>{props.initialValues.Text}</p>
                 <div className={classes.targetsbox}>
@@ -337,25 +308,25 @@ const ProjView = props => {
                     ))}
                 </div>
               </div>
-              <div className={classes.donwloadbox}>
-                <Button
-                  variant="contained"
-                  color="default"
-                  href={props.initialValues.LinkBoss}
-                  className={classes.donwload}
-                >
-                  Скачать
-                </Button>
-              </div>
+
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Начать c
+                  Старт{" "}
                   {moment(props.initialValues.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Закончить
+                  Завершение{" "}
                   {moment(props.initialValues.enddate).format("DD-MM-YYYY")}
                 </p>
+              </div>
+
+              <div className={classes.donwloadbox}>
+                <Button
+                  href={props.initialValues.LinkBoss}
+                  className={classes.donwload}
+                >
+                  Скачать поручение
+                </Button>
               </div>
             </div>
           )}

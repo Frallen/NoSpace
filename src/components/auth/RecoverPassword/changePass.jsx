@@ -1,39 +1,26 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import classes from "./../auth.module.scss";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import EmailIcon from "@material-ui/icons/Email";
 import { authInput } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
-import { useSnackbar } from "notistack";
 import { Fade } from "react-reveal";
+import { Form, Button, Alert } from "rsuite";
 
 const Recover = props => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div className={classes.flexspace}>
-        <Field
-          component={authInput}
-          type="email"
-          label="Почта"
-          name="email"
-          validate={[required]}
-          //иконки
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-      </div>
-      <div>
-        <button className={classes.submited} disabled={props.loading}>
-          Продолжить
-        </button>
-      </div>
-    </form>
+    <Form onSubmit={props.handleSubmit}>
+      <Field
+        component={authInput}
+        type="email"
+        text="Почта"
+        name="email"
+        validate={[required]}
+      />
+
+      <Button type="submit" appearance="primary" block disabled={props.loading}>
+        Продолжить
+      </Button>
+    </Form>
   );
 };
 
@@ -42,16 +29,7 @@ let RecoverForm = reduxForm({
 })(Recover);
 
 let ChangePass = props => {
-  const { enqueueSnackbar } = useSnackbar();
-  let messageErr = "Не существует такого емейла";
-
-  if (props.error) {
-    enqueueSnackbar(messageErr, {
-      variant: "error",
-      preventDuplicate: true,
-      autoHideDuration: 3000
-    });
-  }
+  props.error&& Alert.error("Такого емейла не существует.", 4000);
 
   let onSubmit = fromdata => {
     props.NewPass(fromdata);

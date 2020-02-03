@@ -1,80 +1,81 @@
 .Headhelp {
   display: flex;
   justify-content: center;
+  padding: 0 1rem;
+  background: #555;
+
   .HeadhelpTitle {
-    color: #333;
-    margin-top: 1rem;
+    color: #fff;
+    font-size: 1.2rem;
   }
 }
+.HeadhelpHist {
+  background: #8c8c8c;
+}
 .Panel {
-  padding:2vmax 0;
+  padding: 1rem;
 
   .projects {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 230px));
-    grid-auto-rows: 331px;
+    grid-auto-rows: max-content;
     justify-content: center;
-    grid-gap: 25px 24px;
+    gap: 25px 24px;
     @media (max-width: 260px) {
       grid-auto-rows: max-content;
     }
     .projectsBox {
-      background: linear-gradient(to bottom right, #B0DB7D 40%, #99DBB4 100%);
-      box-shadow: 3px 3px 10px 0px #908f8f;
-      border-radius: 6px;
-      text-align: center;
-      text-decoration: none;
-      color: #fff;
+      // padding: 0.5rem;
       position: relative;
+      border-radius: 0.5rem;
+      background: #555;
+      text-align: center;
+      color: #efadad;
       .title {
-        margin: 1rem 0;
-        font-size: 1.5rem;
+        font-size: 1rem;
         word-break: break-all;
-        display: block;
       }
-      .text {
-        overflow: hidden;
-        padding: 2rem 0.5rem;
+
+      .CheckIcon {
+        position: absolute;
+        bottom: 0;
+        right: 0.5rem;
+      }
+      .TimerOffIcon {
+        position: absolute;
+        bottom: 0;
+        right: 2.5rem;
+      }
+      .DeleteOutlineOutlinedIcon {
+        position: absolute;
+        bottom: 0;
+        left: 0.5rem;
       }
       .datebox {
-        padding: 0rem 0rem;
-        display: flex;
-        flex-direction: column;
-        align-self: center;
         .date {
-          padding: 0.5rem 0.3rem;
+          .textdate {
+            font-size: 1rem;
+            font-weight: 900;
+          }
         }
       }
-      .SendToBox{
-        span{
-          display: block;
-        }
-      }
-      .personeDone {
-        padding: 1rem;
-        color: #5d5d5d;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
+
       .openbutton {
         text-decoration: none;
-        color: #333;
-        background: #fff;
-        padding: 0.8rem 3.4rem;
-        box-shadow: 1px 3px 5px 0px #333;
-        border-radius: 45px;
+        color: #000;
         display: inline-block;
-        margin: 2rem 0 1rem 0;
+        margin: 2rem 0;
+        padding: 0.5rem 0;
         transition: 0.3s ease-in-out;
+        font-size: 1rem;
+        background: #fff;
+        width: 100%;
       }
+
       .openbutton:hover {
-        background: #333;
+        background: #bbbbbb;
         color: #fff;
-        transition: 0.3s ease-in-out;
       }
-    }
-    .projectsBoxOld{
-      background-image: linear-gradient(to right bottom, #7e7e7e, #727174, #676569, #5c595f, #514d55);
     }
   }
 }

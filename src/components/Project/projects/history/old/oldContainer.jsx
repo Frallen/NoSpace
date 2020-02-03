@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
@@ -6,25 +6,25 @@ import { Preloader } from "../../../../../untils/preloader/preloader";
 import { GetProjData } from "./../../../../../redux/projectReducer";
 import OneOld from "./old";
 
-class View extends React.Component {
+const View = props => {
+  //беру айди из пропсов
+  let id = props.match.params.id;
+  //отправляю его в стейт
+  let to = "History";
+  useEffect(() => {
+    props.GetProjData(id, to);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   //как данные будут готовы то они вмонтируются в функцию
-  componentDidMount(){
-     //беру айди из пропсов
-    let id = this.props.match.params.id;
-    //отправляю его в стейт
-    let to = "History";
-    this.props.GetProjData(id,to);
-  }
 
-  render() {
-    //потом копонента дожидается пропсов,а не отрисовывает сразу
-    //если не сделать условие то компонента при первом ренеде окажется без пропсов
-    if (this.props.HistoryItem && this.props.LinkBoss && this.props.LinkWorker) {
-      return <OneOld {...this.props} />;
-    }
-    return <Preloader></Preloader>; // or loading graphic
+  //потом копонента дожидается пропсов,а не отрисовывает сразу
+  //если не сделать условие то компонента при первом ренеде окажется без пропсов
+  if (props.HistoryItem.length !==0) {
+    return <OneOld {...props} />;
+  } else {
+    return <Preloader></Preloader>;
   }
-}
+};
 
 let mapStateToProps = state => {
   return {

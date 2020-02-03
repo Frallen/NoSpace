@@ -17,8 +17,8 @@ class Emailbox extends React.Component {
 
 let mapStateToProps = state => {
   return {
-    email: state.Regis.verifyemail.error,
-    loading: state.Regis.verifyemail.loading
+    email: state.Regis.error,
+    loading: state.Regis.loading
   };
 };
 

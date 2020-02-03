@@ -1,41 +1,15 @@
-const NewUserEror = "NewUserEror";
-const RegSucces = "RegSucces";
 const RegStart = "RegStart";
 const RegEnd = "RegEnd";
+const FoundError = "FoundError";
 const CleanUp = "CleanUp";
-const VeryfiStart = "VeryfiStart";
-const VeryfiSucsess = "VeryfiStart";
-const VeryfiFail = "VeryfiStart";
-const RecoverStart = "RecoverStart";
-const RecoverSucsess = "RecoverSucsess";
-const RecvoerFail = "RecvoerFail";
 
 let initialState = {
   error: null,
-  loading: false,
-  verifyemail: {
-    error: null,
-    loading: false
-  },
-  recoverpass: {
-    error: null,
-    loading: false
-  }
+  loading: false
 };
 
 const registrationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case RegSucces:
-      return {
-        ...state,
-        error: false
-      };
-    case NewUserEror:
-      return {
-        ...state,
-        error: action.payload
-      };
-
     case RegStart:
       return {
         ...state,
@@ -45,47 +19,19 @@ const registrationReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error:null,
+        error: null
+      };
+    case FoundError:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false
       };
     case CleanUp:
       return {
         ...state,
         error: null,
-        verifyemail: { ...state.verifyemail, loading: false, error: null }
-      };
-    case VeryfiStart:
-      return {
-        ...state,
-        verifyemail: { ...state.verifyemail, loading: true }
-      };
-    case VeryfiSucsess: {
-      return {
-        ...state,
-        verifyemail: { ...state.verifyemail, loading: false, error: false }
-      };
-    }
-    case VeryfiFail:
-      return {
-        ...state,
-        verifyemail: { ...state.verifyemail, error: action.payload }
-      };
-
-    case RecoverStart:
-      return {
-        ...state,
-        loading: true
-      };
-    case RecoverSucsess:
-      return {
-        ...state,
-        loading: false,
-        error: null
-      };
-
-    case RecvoerFail:
-      return {
-        ...state,
-        error: action.payload
+        loading: false
       };
 
     default:
@@ -119,13 +65,13 @@ export const SignUpUsers = data => async (
       .doc(res.user.uid)
       .set({
         FIO: data.FIO,
-        Email:data.email,
-        ID:res.user.uid,
-        Otdel:data.Otdel,
+        Email: data.email,
+        ID: res.user.uid,
+        Otdel: data.Otdel
       });
-    dispatch({ type: RegSucces });
+    dispatch({ type: RegEnd });
   } catch (err) {
-    dispatch({ type: NewUserEror, payload: err.message });
+    dispatch({ type: FoundError, payload: err.message });
   }
   dispatch({ type: RegEnd });
 };
@@ -147,11 +93,10 @@ export const LogInUser = data => async (
   dispatch({ type: RegStart });
   try {
     await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
-    dispatch({ type: RegSucces });
+    dispatch({ type: RegEnd });
   } catch (err) {
-    dispatch({ type: NewUserEror, payload: err.message });
+    dispatch({ type: FoundError, payload: err.message });
   }
-  dispatch({ type: RegEnd });
 };
 
 //чистка ошибок
@@ -165,12 +110,12 @@ export const verifyEmail = () => async (
 ) => {
   const firebase = getFirebase();
   try {
-    dispatch({ type: VeryfiStart });
+    dispatch({ type: RegStart });
     const user = firebase.auth().currentUser;
     await user.sendEmailVerification();
-    dispatch({ type: VeryfiSucsess });
+    dispatch({ type: RegEnd });
   } catch (err) {
-    dispatch({ type: VeryfiFail, payload: err.message });
+    dispatch({ type: FoundError, payload: err.message });
   }
 };
 
@@ -180,11 +125,11 @@ export const RecoverPass = data => async (
   { getFirebase }
 ) => {
   const firebase = getFirebase();
-  dispatch({ type: RecoverStart });
+  dispatch({ type: RegStart });
   try {
     await firebase.auth().sendPasswordResetEmail(data.email);
-    dispatch({ type: RecoverSucsess });
+    dispatch({ type: RegEnd });
   } catch (err) {
-    dispatch({ type: RecvoerFail, payload: err.message });
+    dispatch({ type: FoundError, payload: err.message });
   }
 };

@@ -9,9 +9,9 @@ import {
   Upload
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
-import { useSnackbar } from "notistack";
 import { Fade } from "react-reveal";
-import { InputLabel } from "@material-ui/core";
+import { Button, Form, Alert } from "rsuite";
+import moment from "moment";
 
 const AddSubTargets = ({ fields, meta: { error } }) => (
   <ul>
@@ -20,96 +20,87 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
         <Field
           name={hobby}
           type="text"
-          component={ProjectTextArea}
-          label={`Цель #${index + 1}`}
+          component={ProjectInput}
+          text={`Цель #${index + 1}`}
           validate={[required]}
         />
-        <button
+        <Button
           type="button"
-          title="Удалить цель"
-          className={classes.deletetarget}
+          text="Удалить цель"
           onClick={() => fields.remove(index)}
         >
           Удалить цель
-        </button>
+        </Button>
       </li>
     ))}
-    <li className={classes.boxbutton}>
-      <button
-        type="button"
-        className={classes.addtarget}
-        onClick={() => fields.push()}
-      >
-        Добавить цель
-      </button>
-    </li>
+
+    <Button type="button" onClick={() => fields.push()}>
+      Добавить цель
+    </Button>
+
     {error && <li className="error">{error}</li>}
   </ul>
 );
 
 const CreateBox = props => {
+  let data = [];
+  props.initialValues.users.map(p =>
+    data.push({
+      label: `${p.FIO + " " + p.Otdel + " " + p.Email}`,
+      value: p.ID
+    })
+  );
+
   return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field
-          component={ProjectInput}
-          label="Название поручения"
-          type="text"
-          name="NameMission"
-          validate={[required]}
-        />
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          component={ProjectTextArea}
-          label="Описание"
-          name="Text"
-          validate={[required]}
-        />
-      </div>
+    <Form onSubmit={props.handleSubmit} fluid>
+      <Field
+        component={ProjectInput}
+        text="Название поручения"
+  
+        name="NameMission"
+        validate={[required]}
+      />
+      <Field
+        component={ProjectTextArea}
+        text="Описание"
+        name="Text"
+        validate={[required]}
+      />
       <FieldArray name="SubTargets" component={AddSubTargets} />
-      <div className={classes.flexspace}>
-      <InputLabel htmlFor="age-native-simple">Выберите сотрудника</InputLabel>
-        <Field component={SelectUser} name="SendTo" validate={[required]} id="age-native-simple">
-          <option value="" />
-          {//расчехляю массив юзеров в опции выбора (типо комбобокса)
-          props.initialValues.users.map((p, index) => (
-            //Когда нет заданных ID для списка можно использовать индекс элемента как ключ
-            //value беру только айди
-<option key={index} value={p.ID}>{p.FIO+" "+p.Email+" "+p.Otdel}</option>
-          ))}
-        </Field>
-      </div>
-      <div className={classes.flexspace}>
-        <Field
-          type="file"
-          component={Upload}
-          name="document"
-          validate={[required]}
-        ></Field>
-      </div>
+
+      <Field
+      text="Кому отправить"
+        component={SelectUser}
+        name="SendTo"
+        validate={[required]}
+        data={data}
+      ></Field>
       <div className={classes.datebox}>
-        <div>
-          <Field
-            component={ProjectDate}
-            label="Начать с"
-            name="startdate"
-            validate={[required]}
-          />
-        </div>
-        <div>
-          <Field
-            component={ProjectDate}
-            label="Сдать до"
-            name="enddate"
-            validate={[required]}
-          />
-        </div>
+        <Field
+          component={ProjectDate}
+          text="Старт"
+          name="startdate"
+          validate={[required]}
+        />
+
+        <Field
+          component={ProjectDate}
+          text="Завершение"
+          name="enddate"
+          validate={[required]}
+        />
       </div>
-      <button className={classes.creabtn} disabled={props.loading}>
+      <Field
+        type="file"
+        component={Upload}
+        name="document"
+        validate={[required]}
+      ></Field>
+
+      <Button type="submit" appearance="primary"  disabled={props.loading}>
         Создать поручение
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 
@@ -117,19 +108,12 @@ const CreateForm = reduxForm({
   form: "createForm"
 })(CreateBox);
 
-const Create = (props) => {
-  
-  const { enqueueSnackbar } = useSnackbar();
+const Create = props => {
   if (props.error) {
-    enqueueSnackbar(props.error, {
-      variant: "error",
-      preventDuplicate: true,
-      autoHideDuration: 3000
-    });
+    Alert.error(props.error);
   }
   let onSubmit = formData => {
-
-  /*  if(props.email===formData.SendTo){
+    /*  if(props.email===formData.SendTo){
       let message = "Вы не можете отправить поручение самому себе";
     enqueueSnackbar(message, {
       variant: "error",
@@ -137,14 +121,14 @@ const Create = (props) => {
       autoHideDuration: 4000
     });
     }else{*/
+
+    formData.startdate = moment(formData.startdate).format();
+    formData.enddate = moment(formData.enddate).format();
+
     props.NewProject(formData);
-   let message = "Поручение успешно созданно";
-    enqueueSnackbar(message, {
-      variant: "success",
-      preventDuplicate: true,
-      autoHideDuration: 4000
-    });
-//}
+    Alert.success("Поручение успешно созданно");
+
+    //}
   };
   return (
     <Fade>
@@ -155,10 +139,7 @@ const Create = (props) => {
             Здесь вы можете создать поручение введя название,текст и сроки
             исполнения
           </p>
-          <CreateForm
-            onSubmit={onSubmit}
-            {...props}
-          ></CreateForm>
+          <CreateForm onSubmit={onSubmit} {...props}></CreateForm>
         </div>
       </div>
     </Fade>

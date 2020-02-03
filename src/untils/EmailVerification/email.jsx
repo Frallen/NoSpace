@@ -1,28 +1,15 @@
 import React from "react";
 import classes from "./email.module.scss";
 import EmailAnim from "./../../media/EmailAnim.svg";
-import { useSnackbar } from "notistack";
+import { Alert } from "rsuite";
 let EmailVer = props => {
- 
-
-  const { enqueueSnackbar } = useSnackbar();
   //Отправка письма на почту и сообщения (снебкары)
   let Email = () => {
     props.EmailSend();
     if (props.error) {
-      let message = props.error;
-      enqueueSnackbar(message, {
-        variant: "error",
-        preventDuplicate: true,
-        autoHideDuration: 3000
-      });
+      Alert.error(props.error);
     } else {
-      let message = "Письмо успешно отправленно";
-      enqueueSnackbar(message, {
-        variant: "success",
-        preventDuplicate: true,
-        autoHideDuration: 3000
-      });
+      Alert.success("Письмо успешно отправленно");
     }
   };
   return (
