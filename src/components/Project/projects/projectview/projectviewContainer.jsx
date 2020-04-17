@@ -16,7 +16,7 @@ let View = (props) => {
   //до того как компонента примонтирована закидываю айди в функцию
   useEffect(() => {
     //беру айди из пропсов
-    let id = this.props.match.params.id;
+    let id =props.match.params.id;
     //отправляю его в стейт
     props.GetProjData(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
