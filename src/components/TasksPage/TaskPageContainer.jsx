@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import TaskPage from "./TaskPage";
 import { GetAllTasks, Clean } from "./../../redux/projectReducer";
-import classes from "./TaskPage.module.scss";
+import classes from "./../ProjectsStyle/Projects.module.scss";
 import face from "./../../media/sadface.svg";
 import { Fade } from "react-reveal";
 
@@ -14,7 +14,7 @@ const TaskBox = props => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
-  if (props.Tasks.length !== 0) {
+  if (props.projects.length !== 0) {
     return <TaskPage {...props}></TaskPage>;
   } else {
     return (
@@ -32,7 +32,7 @@ const TaskBox = props => {
 
 let mapStateToProps = state => {
   return {
-    Tasks: state.project.DataProjects
+    projects: state.project.DataProjects
   };
 };
 

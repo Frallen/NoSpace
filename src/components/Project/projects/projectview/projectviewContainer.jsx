@@ -7,51 +7,44 @@ import {
   GetProjData,
   Clean,
   UpdateProject,
-  DeleteProject
+  DeleteProject,
 } from "./../../../../redux/projectReducer";
 import { Preloader } from "../../../../untils/preloader/preloader";
+import { useEffect } from "react";
 
-class View extends React.Component {
+let View = (props) => {
   //до того как компонента примонтирована закидываю айди в функцию
-  constructor(props) {
-    super(props);
-    this.ReqData();
-  }
-
-  ReqData = () => {
+  useEffect(() => {
     //беру айди из пропсов
     let id = this.props.match.params.id;
     //отправляю его в стейт
-    this.props.GetProjData(id);
-  };
+    props.GetProjData(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   //обновление полей проекта
-  Update = data => {
-    this.props.UpdateProject(data);
-    this.ReqData();
+  let Update = (data) => {
+    props.UpdateProject(data);
   };
   //удаление проекта
-  Delete = data => {
-    this.props.DeleteProject(data);
+  let Delete = (data) => {
+    props.DeleteProject(data);
     //простой редирект после удаления
   };
 
-  render() {
-    //потом копонента дожидается пропсов,а не отрисовывает сразу
-    //если не сделать условие то компонента при первом ренеде окажется без пропсов
-    if (
-      this.props.initialValues &&
-      this.props.initialValues.NameMission &&
-      this.props.initialValues.LinkBoss
-    ) {
-      return (
-        <ProjView {...this.props} Update={this.Update} Delete={this.Delete} />
-      );
-    }
-    return <Preloader></Preloader>; // or loading graphic
+  //потом копонента дожидается пропсов,а не отрисовывает сразу
+  //если не сделать условие то компонента при первом ренеде окажется без пропсов
+  if (
+    props.initialValues &&
+    props.initialValues.NameMission &&
+    props.initialValues.LinkBoss
+  ) {
+    return <ProjView {...props} Update={Update} Delete={Delete}></ProjView>;
   }
-}
+  return <Preloader></Preloader>; // or loading graphic
+};
 
-let mapStateToProps = state => {
+let mapStateToProps = (state) => {
   return {
     // initialValues это специальный конейнер для reduxForms чтобы подставить в поля
     initialValues: {
@@ -74,11 +67,11 @@ let mapStateToProps = state => {
       TextDone: state.project.OneProject.TextDone,
       //
       //Если отправили не тому сотруднику
-      NotMy: state.project.OneProject.NotMy
+      NotMy: state.project.OneProject.NotMy,
       //
     },
     error: state.settings.error,
-    loading: state.settings.loading
+    loading: state.settings.loading,
   };
 };
 
@@ -87,7 +80,7 @@ export default compose(
     GetProjData,
     Clean,
     UpdateProject,
-    DeleteProject
+    DeleteProject,
   }),
   withRouter
 )(View);

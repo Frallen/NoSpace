@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./../Projects.module.scss";
+import classes from "./../../../ProjectsStyle/Projects.module.scss";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 import { Fade } from "react-reveal";

@@ -14,7 +14,7 @@ import RecoverContainer from "./components/auth/RecoverPassword/recoverContainer
 import SettingsContainer from "./components/Settings/settingsContainer";
 import ProjViewCont from "./components/Project/projects/projectview/projectviewContainer";
 import { compose } from "redux";
-import TasksContainer from "./components/TasksPage/MyTasks/TasksContainer";
+import TasksContainer from "./components/TasksPage/DoTask/TasksContainer";
 import TaskPageContainer from "./components/TasksPage/TaskPageContainer";
 import { withRouter } from "react-router-dom";
 import HistoryContainer from "./components/Project/projects/history/historyContainer";
@@ -25,9 +25,13 @@ const App = ({ loggedIn, emailVerified, location }) => {
   if (loggedIn && !emailVerified) {
     routes = (
       <Switch>
-        <Route path={"/verification"} render={() => <Email></Email>}></Route>
-        <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
-        <Redirect to={"/verification"}></Redirect>
+        <Route path="/verification">
+          <Email></Email>
+        </Route>
+        <Route path="/logout">
+          <LogOut></LogOut>
+        </Route>
+        <Redirect to="/verification"></Redirect>
       </Switch>
     );
   }
@@ -35,65 +39,58 @@ const App = ({ loggedIn, emailVerified, location }) => {
   else if (loggedIn && emailVerified) {
     routes = (
       <Switch>
-        <Route
-          path={"/missions"}
-          render={() => <ProjectsContainer></ProjectsContainer>}
-        ></Route>
-        <Route
-          path={"/create"}
-          render={() => <CreateContainer></CreateContainer>}
-        ></Route>
-        <Route
-          path={"/mission/:id"}
-          render={() => <ProjViewCont></ProjViewCont>}
-        ></Route>
-        <Route path={"/logout"} render={() => <LogOut></LogOut>}></Route>
-        <Route
-          path={"/settings"}
-          render={() => <SettingsContainer></SettingsContainer>}
-        ></Route>
-        <Route
-          path={"/Tasks"}
-          render={() => <TaskPageContainer></TaskPageContainer>}
-        ></Route>
-        <Route
-          path={"/Task/:id"}
-          render={() => <TasksContainer></TasksContainer>}
-        ></Route>
-        <Route
-          path={"/history/"}
-          render={() => <HistoryContainer></HistoryContainer>}
-        ></Route>
-        <Route
-          path={"/old/:id"}
-          render={() => <OldContainer></OldContainer>}
-        ></Route>
-        <Redirect to={"/"}></Redirect>
+        <Route path="/create">
+          <CreateContainer></CreateContainer>
+        </Route>
+        <Route path="/missions">
+          <ProjectsContainer></ProjectsContainer>
+        </Route>
+        <Route path="/mission/:id">
+          <ProjViewCont></ProjViewCont>>
+        </Route>
+        <Route path="/logout">
+          <LogOut></LogOut>
+        </Route>
+        <Route path="/settings">
+          <SettingsContainer></SettingsContainer>
+        </Route>
+        <Route path="/Tasks">
+          <TaskPageContainer></TaskPageContainer>
+        </Route>
+        <Route path="/Task/:id">
+          <TasksContainer></TasksContainer>
+        </Route>
+        <Route path="/history/">
+          <HistoryContainer></HistoryContainer>
+        </Route>
+        <Route path="/old/:id">
+          <OldContainer></OldContainer>
+        </Route>
+        <Redirect to="/"></Redirect>
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route
-          path={"/login"}
-          render={() => <LoginContainer></LoginContainer>}
-        ></Route>
-        <Route
-          path={"/signup"}
-          render={() => <SignupContainer></SignupContainer>}
-        ></Route>
-        <Route
-          path={"/recover-password"}
-          render={() => <RecoverContainer></RecoverContainer>}
-        ></Route>
-        <Redirect to={"/"}></Redirect>
+        <Route path="/login">
+          <LoginContainer></LoginContainer>
+        </Route>
+        <Route path="/signup">
+          <SignupContainer></SignupContainer>
+        </Route>
+        <Route path="/recover-password">
+          <RecoverContainer></RecoverContainer>
+        </Route>
+        <Redirect to="/"></Redirect>
       </Switch>
     );
   }
   return (
     <div className="main">
       <NavigationContainer></NavigationContainer>
-      <Route exact path="/" render={() => <HomePage></HomePage>}></Route>
+      <Route exact path="/">
+        <HomePage></HomePage>
+      </Route>
       <div className="container">{routes}</div>
     </div>
   );
@@ -102,7 +99,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
 let mapStateToProps = ({ firebase }) => {
   return {
     loggedIn: firebase.auth.uid,
-    emailVerified: firebase.auth.emailVerified
+    emailVerified: firebase.auth.emailVerified,
   };
 };
 

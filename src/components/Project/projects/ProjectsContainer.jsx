@@ -3,7 +3,7 @@ import Projects from "./Projects";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { GetAllProjects, Clean } from "./../../../redux/projectReducer";
-import classes from "./Projects.module.scss";
+import classes from "./../../ProjectsStyle/Projects.module.scss";
 import face from "./../../../media/sadface.svg";
 import { Fade } from "react-reveal";
 

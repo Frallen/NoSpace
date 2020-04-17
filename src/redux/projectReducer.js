@@ -43,7 +43,7 @@ let initialState = {
   LinkBoss: null,
 
   //ссылка на скачивание документа сотрудника
-  LinkWorker: null
+  LinkWorker: null,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -51,63 +51,62 @@ const dashboardReducer = (state = initialState, action) => {
     case Start:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case End:
       return {
         ...state,
         loading: false,
-        error: null
+        error: null,
       };
     case ErrorProc:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
     case CleanUp:
       return {
         ...state,
         error: null,
         loading: false,
-        DataProjects: []
       };
 
     case getOne:
       return {
         ...state,
-        OneProject: action.project
+        OneProject: action.project,
       };
     case GetallUsers:
       return {
         ...state,
-        DataUsers: action.users
+        DataUsers: action.users,
       };
     case GetAllTask:
       return {
         ...state,
-        DataProjects: action.data
+        DataProjects: action.data,
       };
     case DownLinkBoss:
       return {
         ...state,
-        LinkBoss: action.url
+        LinkBoss: action.url,
       };
     case DownLinkWorker:
       return {
         ...state,
-        LinkWorker: action.url
+        LinkWorker: action.url,
       };
 
     default:
       return state;
   }
 };
-//очистка 
+//очистка
 export const Clean = () => ({ type: CleanUp });
 //создание проекта
-export const CreateNewproject = data => async (
+export const CreateNewproject = (data) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -142,7 +141,7 @@ export const CreateNewproject = data => async (
     delete data.users;
     ///////////////
     comm.set({
-      ...data
+      ...data,
     });
 
     //тестовый вывод всей пользовательской коллекции
@@ -160,12 +159,18 @@ export const CreateNewproject = data => async (
 
 const GetProjects = async (toCollec, dispatch, firestore, to, userId) => {
   try {
-    let snap = await firestore
+    await firestore
       .collection(toCollec)
       .where(to, "==", userId)
-      .get();
-    let data = snap.docs.map(d => d.data());
-    dispatch({ type: GetAllTask, data });
+      .onSnapshot(function (snap) {
+        let arr = [];
+
+        snap.forEach(function (doc) {
+          arr.push(doc.data());
+        });
+        dispatch({ type: GetAllTask, data: arr });
+      });
+    // snap.docs.map(d => d.data());
   } catch (err) {}
 };
 
@@ -182,7 +187,7 @@ export const GetAllProjects = () => async (
   GetProjects(toCollec, dispatch, firestore, to, userId);
 };
 //Отрисовка заданий для личного выполнения(как подчиненный)
-export const GetAllTasks = data => async (
+export const GetAllTasks = (data) => async (
   dispatch,
   getState,
   { getFirestore }
@@ -257,7 +262,7 @@ export const GetProjData = (data, to) => async (
       .where("idMission", "==", data)
       .get();
 
-    snap.forEach(doc => {
+    snap.forEach((doc) => {
       let project = doc.data();
 
       //взятие ссылки босса
@@ -287,7 +292,7 @@ export const GetProjData = (data, to) => async (
 };
 
 // Получение всех юзеров
-export const AllUsers = data => async (
+export const AllUsers = (data) => async (
   dispatch,
   getState,
   { getFirestore }
@@ -297,7 +302,7 @@ export const AllUsers = data => async (
     let snap = await firestore.collection("users").get();
 
     //беру всех юзеров
-    let users = snap.docs.map(doc => doc.data());
+    let users = snap.docs.map((doc) => doc.data());
     // и отправляю их
     dispatch({ type: GetallUsers, users });
   } catch (err) {}
@@ -329,7 +334,7 @@ const Update = async (firestore, id, data) => {
 };
 
 //обновление проекта
-export const UpdateProject = data => async (
+export const UpdateProject = (data) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -346,7 +351,7 @@ export const UpdateProject = data => async (
         .where("idMission", "==", data.id)
         .get();
 
-      snap.forEach(doc => {
+      snap.forEach((doc) => {
         let project = doc.data();
         //удаляю файл босса
 
@@ -372,7 +377,7 @@ export const UpdateProject = data => async (
   dispatch({ type: End });
 };
 //удаления проекта
-export const DeleteProject = data => async (
+export const DeleteProject = (data) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -381,13 +386,12 @@ export const DeleteProject = data => async (
   const firebase = getFirebase();
   dispatch({ type: Start });
   try {
-    
     let snap = await firestore
       .collection("Mission")
       .where("idMission", "==", data.id)
       .get();
 
-    snap.forEach(doc => {
+    snap.forEach((doc) => {
       let project = doc.data();
       //если проект сдан то создать копию в историю поручений
       if (data.tohistory) {
@@ -397,7 +401,7 @@ export const DeleteProject = data => async (
           .set({
             //изначально получается вложенный массив project(в нем все данные)
             //деструктуризацией я выношу все вложенные объекты наверх и забавляюсь от propject
-            ...project
+            ...project,
           });
       } else {
         DeleteFile(project.NameDoc, firebase, data.id, project.NameDocDone);
@@ -410,10 +414,7 @@ export const DeleteProject = data => async (
     });
 
     //потом удалить
-    await firestore
-      .collection("Mission")
-      .doc(data.id)
-      .delete();
+    await firestore.collection("Mission").doc(data.id).delete();
   } catch (err) {
     dispatch({ type: ErrorProc, payload: err.message });
   }
@@ -421,7 +422,7 @@ export const DeleteProject = data => async (
 };
 
 //отправка отчета сотрудника
-export const SendBackTask = data => async (
+export const SendBackTask = (data) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -450,7 +451,7 @@ export const SendBackTask = data => async (
         .where("idMission", "==", data)
         .get();
 
-      snap.forEach(doc => {
+      snap.forEach((doc) => {
         let task = doc.data();
 
         GetUrl(dispatch, firebase, task.idMission, task.NameDoc);

@@ -1,6 +1,6 @@
 .landing {
   position: relative;
-  .landingNav {
+ /* .landingNav {
     position: fixed;
     z-index: 111;
     right: 20px;
@@ -30,85 +30,114 @@
         display: none;
       }
     }
-  }
-}
-.home {
-  height: 100vh;
-  padding: 0 20px;
+  }*/
 
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  .title {
-    font-size: 3rem;
-  }
-  .subtext {
-    font-size: 2rem;
-  }
-  .fire {
-    flex-basis: 33%;
-  }
-}
-.advantages {
-  background: #4a60ff;
-  .headingTitlebox {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    .headingTitle {
-      position: absolute;
-      top: 8rem;
-      font-size: 1.8rem;
-    }
-  }
-  .advantagesbox {
+  .home {
     height: 100vh;
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-    grid-auto-rows: max-content;
-    gap: 30px;
-    justify-content: center;
+    padding: 0 20px;
 
-    align-content: center;
-  }
-}
-.tehnologes {
-  background: #161a21;
-  .headingTitlebox {
     display: flex;
-    justify-content: center;
-    position: relative;
-    .headingTitle {
-      position: absolute;
-      top: 7rem;
-      font-size: 1.8rem;
-      color: #fff;
-      @media (max-width: 460px) {
-        top: 1.5rem;
+    align-items: center;
+    justify-content: space-around;
+    @media (max-width: 800px) {
+      flex-direction: column-reverse;
+      justify-content: space-evenly;
+    }
+    .text {
+      flex-basis: 33%;
+      .title {
+        font-size: 3rem;
+        background: #fed05d;
+        padding: 1rem;
+        color: #fff;
+        @media (max-width: 375px) {
+          font-size: 2rem;
+        }
+      }
+      .subtext {
+        margin-top: 0.5rem;
+        font-size: 2rem;
+        border-bottom: 3px solid #f3715b;
+        @media (max-width: 375px) {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    .fire {
+      flex-basis: 33%;
+      @media (max-width: 800px) {
+        flex-basis: 41%;
       }
     }
   }
-  .tehnologesbox {
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-    @media screen {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 167px));
-    }
-    grid-auto-rows: max-content;
-    gap: 40px;
-    justify-content: center;
-    text-align: center;
-    align-content: center;
-    @media (max-width: 320px) {
-      padding: 60px 0;
-    }
-    .item {
-      .box {
-        object-fit: cover;
+  .advantages {
+    background: #4a60ff;
+
+    .headingTitlebox {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      .headingTitle {
+        position: absolute;
+        top: 8rem;
+        font-size: 1.8rem;
       }
+    }
+    .advantagesbox {
+      height: 100vh;
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+      grid-auto-rows: max-content;
+      gap: 30px;
+      justify-content: center;
+
+      align-content: center;
+    }
+  }
+  .tehnologes {
+    background: #161a21;
+    .headingTitlebox {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      .headingTitle {
+        position: absolute;
+        top: 7rem;
+        font-size: 1.8rem;
+        color: #fff;
+        @media (max-width: 460px) {
+          top: 1.5rem;
+        }
+      }
+    }
+    .tehnologesbox {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+      @media screen {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 167px));
+      }
+      grid-auto-rows: max-content;
+      gap: 40px;
+      justify-content: center;
+      text-align: center;
+      align-content: center;
+      @media (max-width: 320px) {
+        padding: 60px 0;
+      }
+      .item {
+        border-bottom: 4px solid #fff;
+        transition: 0.3s ease-in;
+        .box {
+          object-fit: cover;
+        }
+      }
+      .item:hover{
+        border-bottom: 4px solid #fed05f;
+        transition: 0.3s ease-in;
+      }
+      
     }
   }
 }

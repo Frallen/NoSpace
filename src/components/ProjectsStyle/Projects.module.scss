@@ -30,32 +30,33 @@
       border-radius: 0.5rem;
       background: #555;
       text-align: center;
-      color: #efadad;
+      color: #fff;
       .title {
         font-size: 1rem;
         word-break: break-all;
       }
-
-      .CheckIcon {
+      .iconBox {
         position: absolute;
         bottom: 0;
-        right: 0.5rem;
-      }
-      .TimerOffIcon {
-        position: absolute;
-        bottom: 0;
-        right: 2.5rem;
-      }
-      .DeleteOutlineOutlinedIcon {
-        position: absolute;
-        bottom: 0;
-        left: 0.5rem;
+        right: 0.7rem;
+        display: flex;
+        .CheckIcon {
+         // right: 0.5rem;
+        }
+        .TimerOffIcon {
+         padding-right:0.5rem;
+        }
+        .DeleteOutlineOutlinedIcon {
+         // left: 0.5rem;
+        }
+        .HourglassEmptyOutlinedIcon {
+        }
       }
       .datebox {
         .date {
           .textdate {
             font-size: 1rem;
-            font-weight: 900;
+            font-weight: 700;
           }
         }
       }

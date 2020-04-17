@@ -5,7 +5,6 @@ import {
   SelectPicker,
   FormControl,
   DatePicker,
-  Uploader,
   ControlLabel,
   Toggle
 } from "rsuite";

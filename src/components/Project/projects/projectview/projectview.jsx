@@ -201,7 +201,7 @@ const ProjView = props => {
                   Заголовок отчета: {props.initialValues.MissionDoneTitle}
                 </h3>
                 <p className={classes.Text}>
-                  Текст отчета:{" "}
+                  Текст отчета:
                   {props.initialValues.TextDone && props.initialValues.TextDone}
                 </p>
                 <div className={classes.donwloadbox}>
@@ -311,11 +311,11 @@ const ProjView = props => {
 
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Старт{" "}
+                  Старт
                   {moment(props.initialValues.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Завершение{" "}
+                  Завершение
                   {moment(props.initialValues.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>
@@ -323,8 +323,7 @@ const ProjView = props => {
               <div className={classes.donwloadbox}>
                 <Button
                   href={props.initialValues.LinkBoss}
-                  className={classes.donwload}
-                >
+                  className={classes.donwload}>
                   Скачать поручение
                 </Button>
               </div>

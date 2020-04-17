@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { GetHistory, Clean } from "./../../../../redux/projectReducer";
-import classes from "./../Projects.module.scss";
+import classes from "./../../../ProjectsStyle/Projects.module.scss";
 import face from "./../../../../media/sadface.svg";
 import { Fade } from "react-reveal";
 import HistoryPanel from "./history";
