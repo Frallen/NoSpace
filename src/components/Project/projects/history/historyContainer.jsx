@@ -7,10 +7,12 @@ import face from "./../../../../media/sadface.svg";
 import { Fade } from "react-reveal";
 import HistoryPanel from "./history";
 
-const DashBox = props => {
+const DashBox = (props) => {
   useEffect(() => {
-    props.GetHistory(); //Чистка контейнеа для проектов
+    //Чистка контейнеа для проектов
     props.Clean();
+
+    props.GetHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -30,9 +32,9 @@ const DashBox = props => {
   }
 };
 
-let mapStateToProps = state => {
+let mapStateToProps = (state) => {
   return {
-    history: state.project.DataProjects
+    history: state.project.DataProjects,
   };
 };
 

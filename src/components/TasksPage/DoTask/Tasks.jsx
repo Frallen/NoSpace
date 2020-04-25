@@ -40,7 +40,7 @@ const TaskBox = (props) => {
         type="submit"
         className={classes.creabtn}
         disabled={
-          props.loading || props.Task.isDone || props.Task.NotMy || props.err
+          props.loading || props.Task.isDone || props.Task.NotMy 
         }
       >
         Отправить на проверку
@@ -55,7 +55,7 @@ const TaskForm = reduxForm({
 
 const Task = (props) => {
   const [show, setShow] = useState(false);
-  const [err, setErr] = useState(false);
+//  const [err, setErr] = useState(false);
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
     let data = {
@@ -66,7 +66,7 @@ const Task = (props) => {
     };
     props.SendTask(data);
     setShow(false);
-    setErr(true);
+    //setErr(true);
     Alert.warning("Уведомление отправлено");
   };
   let onSubmit = (FormData) => {
@@ -136,7 +136,7 @@ const Task = (props) => {
                 </p>
               </div>
             </div>
-            <TaskForm {...props} onSubmit={onSubmit} err={err}></TaskForm>
+            <TaskForm {...props} onSubmit={onSubmit} ></TaskForm>
             <div className={classes.wrongblock}>
               <Button
                 color="red"

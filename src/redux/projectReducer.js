@@ -71,13 +71,13 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: false,
-        OneProject:[]
+        OneProject: [],
       };
 
     case getOne:
       return {
         ...state,
-        OneProject: action.project,
+        OneProject: action.arr,
       };
     case GetallUsers:
       return {
@@ -257,39 +257,33 @@ export const GetProjData = (data, to) => async (
 ) => {
   const firestore = getFirestore();
   const firebase = getFirebase();
-  try {
-    let snap = await firestore
-      .collection(to ? to : "Mission")
-      .where("idMission", "==", data)
-      .get();
 
-    snap.forEach((doc) => {
-      let project = doc.data();
+  await firestore
+    .collection(to ? to : "Mission")
+    .where("idMission", "==", data)
+    .onSnapshot(function (snap) {
+      // let arr = [];
 
-      //взятие ссылки босса
-      //переадю небходимые данные
-      GetUrl(
-        dispatch,
-        firebase,
-        project.idMission,
-        project.NameDoc,
-        project.NameDocDone
-      );
-      //взятие ссылки сотрудника
-      if (project.NameDocDone) {
-        let otvet = true;
-        GetUrl(
-          dispatch,
-          firebase,
-          project.idMission,
-          project.NameDoc,
-          project.NameDocDone,
-          otvet
-        );
-      }
-      dispatch({ type: getOne, project });
+      snap.forEach(function (doc) {
+        let arr = doc.data();
+        //взятие ссылки босса
+        //переадю небходимые данные
+        GetUrl(dispatch, firebase, arr.idMission, arr.NameDoc, arr.NameDocDone);
+        //взятие ссылки сотрудника
+        if (arr.NameDocDone) {
+          let otvet = true;
+          GetUrl(
+            dispatch,
+            firebase,
+            arr.idMission,
+            arr.NameDoc,
+            arr.NameDocDone,
+            otvet
+          );
+        }
+        dispatch({ type: getOne, arr: arr });
+      });
     });
-  } catch (err) {}
 };
 
 // Получение всех юзеров
@@ -458,6 +452,7 @@ export const SendBackTask = (data) => async (
         GetUrl(dispatch, firebase, task.idMission, task.NameDoc);
 
         dispatch({ type: GetMyTask, task });
+        dispatch(reset("MyTasks"));
       });
     }
   } catch (err) {

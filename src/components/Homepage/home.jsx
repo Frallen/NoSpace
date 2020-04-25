@@ -14,11 +14,7 @@ const WelcomePage = () => {
           <div className={classes.text}>
             <h2 className={classes.title}>NOSPACE</h2>
 
-            <p className={classes.subtext}>
-              <span className={classes.ex}>Управляй</span>
-              <span className={classes.ex}>Координируй</span>
-              <span className={classes.ex}>Помогай</span>
-            </p>
+            <p className={classes.subtext}>Планируем будущее вместе</p>
           </div>
         </Fade>
         <Fade delay={800}>
@@ -29,12 +25,15 @@ const WelcomePage = () => {
       <div className={classes.tehnologes} id="tehnologes">
         <Fade delay={100}>
           <div className={classes.headingTitlebox}>
+            <div>
             <h2 className={classes.headingTitle}>Технологии</h2>
+            <p className={classes.headingText}>NoSpace использует передовые веб-тенологии</p></div>
           </div>
         </Fade>
         <div className={classes.tehnologesbox}>
           <Fade delay={300}>
             <div className={classes.item}>
+              <h3 className={classes.itemTitle}>React</h3>
               <div className={classes.box}>
                 <img src={react} alt="react" />
               </div>
@@ -42,6 +41,7 @@ const WelcomePage = () => {
           </Fade>
           <Fade delay={700}>
             <div className={classes.item}>
+              <h3 className={classes.itemTitle}>Firebase</h3>
               <div className={classes.box}>
                 <img src={firebase} alt="firebase" />
               </div>
@@ -49,6 +49,7 @@ const WelcomePage = () => {
           </Fade>
           <Fade delay={1000}>
             <div className={classes.item}>
+              <h3 className={classes.itemTitle}>Redux</h3>
               <div className={classes.box}>
                 <img src={redux} alt="redux" />
               </div>

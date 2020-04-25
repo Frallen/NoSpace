@@ -31,7 +31,6 @@
         @media (max-width: 375px) {
           font-size: 1.5rem;
         }
-       
       }
     }
     .fire {
@@ -71,19 +70,20 @@
     .headingTitlebox {
       display: flex;
       justify-content: center;
-      position: relative;
+      padding-top: 2rem;
+      text-align: center;
       .headingTitle {
-        position: absolute;
-        top: 7rem;
         font-size: 1.8rem;
         color: #fff;
-        @media (max-width: 460px) {
-          top: 1.5rem;
-        }
+        
+      }
+      .headingText{
+        font-size: 1rem;
+        color: #fff;
       }
     }
     .tehnologesbox {
-      height: 100vh;
+      height: 70vh;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
       @media screen {
@@ -100,6 +100,11 @@
       .item {
         border-bottom: 4px solid #fff;
         transition: 0.3s ease-in;
+        .itemTitle{
+          color: #fff;
+          font-size: 1.2rem;
+          letter-spacing: 3px;
+        }
         .box {
           object-fit: cover;
         }
