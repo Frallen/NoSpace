@@ -4,16 +4,14 @@ import { required } from "../../../../untils/validators/validators";
 import {
   ProjectDate,
   ProjectTextArea,
-  ProjectInput,
-  Upload
+  AllInput,
+  Upload,
 } from "../../../commons/formsControls/formsControls";
 import classes from "./projectView.module.scss";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import moment from "moment";
 import { Fade } from "react-reveal";
 import { useHistory } from "react-router-dom";
-import { Form, Alert, Modal, Button, Message } from "rsuite";
+import { Form, Alert, Modal, Button, Message, Checkbox } from "rsuite";
 
 //для вставки массива целей
 const AddSubTargets = ({ fields, meta: { error } }) => (
@@ -46,7 +44,7 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
   </ul>
 );
 
-const ProjBox = props => {
+const ProjBox = (props) => {
   return (
     <Form
       fluid
@@ -56,11 +54,11 @@ const ProjBox = props => {
         Text: props.initialValues.Text,
         SubTargets: props.initialValues.SubTargets,
         startdate: props.initialValues.startdate,
-        enddate: props.initialValues.enddate
+        enddate: props.initialValues.enddate,
       }}
     >
       <Field
-        component={ProjectInput}
+        component={AllInput}
         type="text"
         name="NameMission"
         text="Название поручения"
@@ -104,51 +102,42 @@ const ProjBox = props => {
 };
 
 const ChangeForm = reduxForm({
-  form: "ChangeForm"
+  form: "ChangeForm",
 })(ProjBox);
 
-const ProjView = props => {
+const ProjView = (props) => {
   //чекбокс
   //Состояние чекбоскса чекед/нечекед
-  const [state, setState, showForm] = useState({
-    checkedA: false
-  });
+  const [checked, setChecked] = useState(false);
 
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+  let setShowForm = () => {
+    checked ? setChecked(false) : setChecked(true);
   };
   ////////////////
 
   //вызываю историю роутинка из react-router дом
   const history = useHistory();
   //удаление поручения
-  let tryDelete = data => {
+  let tryDelete = (data) => {
     let get = {
       id: props.initialValues.idMission,
-      tohistory: data
+      tohistory: data,
     };
     props.Delete(get);
     //после передачи данных для удаления возращаюсь на предыдущую страницу (missions)
     history.goBack();
-    close()
+    setShow(false);
   };
 
   // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
 
   const [show, setShow] = useState(false);
 
-  let close = () => {
-    setShow(false);
-  };
-  let open = () => {
-    setShow(true);
-  };
-
   if (props.error) {
     Alert.error(props.error);
   }
 
-  let onSubmitMain = FormData => {
+  let onSubmitMain = (FormData) => {
     FormData.startdate = moment(FormData.startdate).format();
     FormData.enddate = moment(FormData.enddate).format();
     //добавляю айди проекта и айди создателя
@@ -179,7 +168,7 @@ const ProjView = props => {
             <Message
               showIcon
               type="error"
-              description="   Вы отправили задание не тому сотруднику,перепроверьте данные,
+              description="Вы отправили задание не тому сотруднику,перепроверьте данные,
               удалите данное задание и создайте новое."
             />
           </div>
@@ -212,11 +201,16 @@ const ProjView = props => {
                 <Button
                   color="green"
                   className={classes.succbutton}
-                  onClick={open}
+                  onClick={() => setShow(true)}
                 >
                   Подтвердить выполнение
                 </Button>
-                <Modal backdrop="static" show={show} onHide={close} size="xs">
+                <Modal
+                  backdrop="static"
+                  show={show}
+                  onHide={() => setShow(false)}
+                  size="xs"
+                >
                   <Modal.Header>
                     <Modal.Title>Валидация задания</Modal.Title>
                   </Modal.Header>
@@ -232,7 +226,7 @@ const ProjView = props => {
                     >
                       Подтвердить
                     </Button>
-                    <Button onClick={close} appearance="subtle">
+                    <Button onClick={() => setShow(false)} appearance="subtle">
                       Отмена
                     </Button>
                   </Modal.Footer>
@@ -244,29 +238,23 @@ const ProjView = props => {
       )}
       <Fade>
         <div className={classes.create}>
-          <FormControlLabel
-            className={classes.Regactive}
-            control={
-              <Checkbox
-                className={classes.adaptRegactive}
-                checked={state.checkedA}
-                onChange={handleChange("checkedA")}
-                value="checkedA"
-              />
-            }
-            label="Режим редактирования"
-          />
-          {state.checkedA ? (
+          <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
+          {checked ? (
             <div className={classes.createbox}>
-              <Fade when={showForm}>
+              <Fade when={checked}>
                 <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
               </Fade>
               <div className={classes.dangerbutton}>
-                <Button color="red" onClick={open}>
+                <Button color="red" onClick={() => setShow(true)}>
                   Удалить поручение
                 </Button>
               </div>
-              <Modal backdrop="static" show={show} onHide={close} size="xs">
+              <Modal
+                backdrop="static"
+                show={show}
+                onHide={() => setShow(false)}
+                size="xs"
+              >
                 <Modal.Header>
                   <Modal.Title>Удаление поручения</Modal.Title>
                 </Modal.Header>
@@ -283,7 +271,7 @@ const ProjView = props => {
                   >
                     Подтвердить
                   </Button>
-                  <Button onClick={close} appearance="subtle">
+                  <Button onClick={() => setShow(false)} appearance="subtle">
                     Отмена
                   </Button>
                 </Modal.Footer>
@@ -323,7 +311,8 @@ const ProjView = props => {
               <div className={classes.donwloadbox}>
                 <Button
                   href={props.initialValues.LinkBoss}
-                  className={classes.donwload}>
+                  className={classes.donwload}
+                >
                   Скачать поручение
                 </Button>
               </div>

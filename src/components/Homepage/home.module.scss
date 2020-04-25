@@ -1,40 +1,8 @@
 .landing {
   position: relative;
- /* .landingNav {
-    position: fixed;
-    z-index: 111;
-    right: 20px;
-    top: 50%;
-    margin-top: -26px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    .action {
-      display: block;
-      height: 12px;
-      width: 12px;
-      border-radius: 100%;
-      background: #000000;
-      margin-top: 15px;
-      @media (max-width: 380px) {
-        display: none;
-      }
-    }
-    .active {
-      display: block;
-      height: 12px;
-      width: 12px;
-      border-radius: 100%;
-      background: #ffa69e;
-      @media (max-width: 380px) {
-        display: none;
-      }
-    }
-  }*/
-
   .home {
     height: 100vh;
-    padding: 0 20px;
+    padding: 0 1rem;
 
     display: flex;
     align-items: center;
@@ -55,12 +23,15 @@
         }
       }
       .subtext {
-        margin-top: 0.5rem;
+        display: inline-flex;
+        flex-direction: column;
+        margin-top: 0.8rem;
         font-size: 2rem;
-        border-bottom: 3px solid #f3715b;
+
         @media (max-width: 375px) {
           font-size: 1.5rem;
         }
+       
       }
     }
     .fire {
@@ -133,11 +104,10 @@
           object-fit: cover;
         }
       }
-      .item:hover{
+      .item:hover {
         border-bottom: 4px solid #fed05f;
         transition: 0.3s ease-in;
       }
-      
     }
   }
 }

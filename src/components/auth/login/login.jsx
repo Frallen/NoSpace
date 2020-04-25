@@ -3,7 +3,7 @@ import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import { NavLink } from "react-router-dom";
 import { required, PasswordCheck } from "../../../untils/validators/validators";
-import { authInput } from "../../../components/commons/formsControls/formsControls";
+import { AllInput } from "../../../components/commons/formsControls/formsControls";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert } from "rsuite";
 const MinValue = PasswordCheck(8);
@@ -11,7 +11,7 @@ const FormBox = props => {
   return (
     <Form onSubmit={props.handleSubmit}>
       <Field
-        component={authInput}
+        component={AllInput}
         type="email"
         name="email"
         text="Почта"
@@ -19,7 +19,7 @@ const FormBox = props => {
       />
 
       <Field
-        component={authInput}
+        component={AllInput}
         type="password"
         name="password"
         text="Пароль"

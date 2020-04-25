@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./../auth.module.scss";
 import { Field, reduxForm } from "redux-form";
 import {
-  authInput,
+  AllInput,
   SelectUser,
   Checker
 } from "../../../components/commons/formsControls/formsControls";
@@ -36,7 +36,7 @@ const SignUpBox = props => {
   return (
     <Form onSubmit={props.handleSubmit}>
       <Field
-        component={authInput}
+        component={AllInput}
         type="text"
         name="FIO"
         text="ФИО"
@@ -50,14 +50,14 @@ const SignUpBox = props => {
         validate={[required]}
       ></Field>
       <Field
-        component={authInput}
+        component={AllInput}
         type="email"
         name="email"
         text="Почта"
         validate={[required]}
       />
       <Field
-        component={authInput}
+        component={AllInput}
         type="password"
         name="password"
         text="Пароль"

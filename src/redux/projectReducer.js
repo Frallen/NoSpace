@@ -71,6 +71,7 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         error: null,
         loading: false,
+        OneProject:[]
       };
 
     case getOne:

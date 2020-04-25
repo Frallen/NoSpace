@@ -10,7 +10,7 @@ let TaksBox = (props) => {
   useEffect(() => {
     let id = props.match.params.id;
     props.GetProjData(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let SendTask = (data) => {
@@ -18,10 +18,12 @@ let TaksBox = (props) => {
   };
 
   if (props.Task.length !== 0) {
-    return <Task {...props} SendTask={SendTask}></Task>;
-  } else {
-    return <Preloader></Preloader>;
+    if (props.Task.SendTo === props.sec) {
+      return <Task {...props} SendTask={SendTask}></Task>;
+    }
   }
+
+  return <Preloader></Preloader>;
 };
 
 let mapStateToProps = (state) => {
@@ -30,6 +32,7 @@ let mapStateToProps = (state) => {
     LinkBoss: state.project.LinkBoss,
     error: state.project.error,
     loading: state.project.loading,
+    sec: state.firebase.auth.uid,
   };
 };
 

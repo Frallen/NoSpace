@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import {
   ProjectTextArea,
-  ProjectInput,
-  Upload
+  AllInput,
+  Upload,
 } from "../../commons/formsControls/formsControls";
 import classes from "./Tasks.module.scss";
 import { required } from "../../../untils/validators/validators";
@@ -11,11 +11,11 @@ import { Fade } from "react-reveal";
 import { Form, Button, Message, Alert, Modal } from "rsuite";
 import moment from "moment";
 
-const TaskBox = props => {
+const TaskBox = (props) => {
   return (
     <Form onSubmit={props.handleSubmit} fluid>
       <Field
-        component={ProjectInput}
+        component={AllInput}
         text="Заголовок ответа"
         type="text"
         name="MissionDoneTitle"
@@ -40,9 +40,7 @@ const TaskBox = props => {
         type="submit"
         className={classes.creabtn}
         disabled={
-          props.loading ||
-          props.Task.isDone === true ||
-          props.Task.NotMy === true
+          props.loading || props.Task.isDone || props.Task.NotMy || props.err
         }
       >
         Отправить на проверку
@@ -52,31 +50,26 @@ const TaskBox = props => {
 };
 
 const TaskForm = reduxForm({
-  form: "MyTasks"
+  form: "MyTasks",
 })(TaskBox);
 
-const Task = props => {
+const Task = (props) => {
   const [show, setShow] = useState(false);
-
-  let close = () => {
-    setShow(false);
-  };
-  let open = () => {
-    setShow(true);
-  };
-
+  const [err, setErr] = useState(false);
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
     let data = {
       //обязательный айди задания для where
       idMission: props.Task.idMission,
       //для определния не выполненности
-      NotMy: true
+      NotMy: true,
     };
     props.SendTask(data);
-    close();
+    setShow(false);
+    setErr(true);
+    Alert.warning("Уведомление отправлено");
   };
-  let onSubmit = FormData => {
+  let onSubmit = (FormData) => {
     FormData.isDone = true;
     FormData.idMission = props.Task.idMission;
     props.SendTask(FormData);
@@ -143,13 +136,22 @@ const Task = props => {
                 </p>
               </div>
             </div>
-            <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
+            <TaskForm {...props} onSubmit={onSubmit} err={err}></TaskForm>
             <div className={classes.wrongblock}>
-              <Button color="red" className={classes.wrong} onClick={open}>
+              <Button
+                color="red"
+                className={classes.wrong}
+                onClick={() => setShow(true)}
+              >
                 Это не ваше задание?
               </Button>
 
-              <Modal backdrop="static" show={show} onHide={close} size="xs">
+              <Modal
+                backdrop="static"
+                show={show}
+                onHide={() => setShow(false)}
+                size="xs"
+              >
                 <Modal.Header>
                   <Modal.Title>Ошибка начальства</Modal.Title>
                 </Modal.Header>
@@ -166,7 +168,7 @@ const Task = props => {
                   >
                     Подтвердить
                   </Button>
-                  <Button onClick={close} appearance="subtle">
+                  <Button onClick={() => setShow(false)} appearance="subtle">
                     Отмена
                   </Button>
                 </Modal.Footer>

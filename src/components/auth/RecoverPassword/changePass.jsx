@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import classes from "./../auth.module.scss";
-import { authInput } from "../../commons/formsControls/formsControls";
+import { AllInput } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert } from "rsuite";
@@ -10,7 +10,7 @@ const Recover = props => {
   return (
     <Form onSubmit={props.handleSubmit}>
       <Field
-        component={authInput}
+        component={AllInput}
         type="email"
         text="Почта"
         name="email"

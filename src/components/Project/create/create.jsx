@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./create.module.scss";
 import { Field, reduxForm, FieldArray } from "redux-form";
 import {
-  ProjectInput,
+  AllInput,
   ProjectTextArea,
   ProjectDate,
   SelectUser,
@@ -20,7 +20,7 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
         <Field
           name={hobby}
           type="text"
-          component={ProjectInput}
+          component={AllInput}
           text={`Цель #${index + 1}`}
           validate={[required]}
         />
@@ -28,6 +28,7 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
           type="button"
           text="Удалить цель"
           onClick={() => fields.remove(index)}
+          className={classes.delbtn}
         >
           Удалить цель
         </Button>
@@ -54,7 +55,7 @@ const CreateBox = props => {
   return (
     <Form onSubmit={props.handleSubmit} fluid>
       <Field
-        component={ProjectInput}
+        component={AllInput}
         text="Название поручения"
   
         name="NameMission"
@@ -67,7 +68,7 @@ const CreateBox = props => {
         validate={[required]}
       />
       <FieldArray name="SubTargets" component={AddSubTargets} />
-
+<div className={classes.boxSpace}>
       <Field
       text="Кому отправить"
         component={SelectUser}
@@ -78,17 +79,18 @@ const CreateBox = props => {
       <div className={classes.datebox}>
         <Field
           component={ProjectDate}
-          text="Старт"
+          text="Начать с"
           name="startdate"
           validate={[required]}
         />
 
         <Field
           component={ProjectDate}
-          text="Завершение"
+          text="Сдать до"
           name="enddate"
           validate={[required]}
         />
+      </div>
       </div>
       <Field
         type="file"

@@ -10,18 +10,19 @@
     color: #fff;
     padding-bottom: 10px;
   }
-  .flexspace {
-    padding-top: 1rem;
-  }
-  .datebox {
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-    max-width: 300px;
-    @media (max-width: 600px) {
-      flex-direction: column;
+
+  .boxSpace {
+    .datebox {
+   
+      display: flex;
+      justify-content: space-between;
+      max-width: 300px;
+      @media (max-width: 600px) {
+        flex-direction: column;
+      }
     }
   }
+  .delbtn {
+    margin-bottom: 1rem;
+  }
 }
-
-

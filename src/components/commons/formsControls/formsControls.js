@@ -28,8 +28,8 @@ export const Checker = ({ input, meta, ...props }) => {
   );
 };
 
-//кастомный инпут аутификации
-export const authInput = ({ input, meta, text, ...props }) => {
+//общий инпут для всех
+export const AllInput = ({ input, meta, text, ...props }) => {
   const HasError = meta.touched && meta.error;
 
   return (
@@ -44,21 +44,7 @@ export const authInput = ({ input, meta, text, ...props }) => {
     </FormGroup>
   );
 };
-//кастомный инпут для проектов
-export const ProjectInput = ({ input, meta, text, ...props }) => {
-  const HasError = meta.touched && meta.error;
-  return (
-    <FormGroup>
-      <ControlLabel>{text}</ControlLabel>
-      <FormControl
-        errorMessage={HasError ? meta.error : null}
-        {...input}
-        {...props}
-        className={classes.Input}
-      />
-    </FormGroup>
-  );
-};
+
 //кастомная текстареа
 export const ProjectTextArea = ({ input, meta, text, ...props }) => {
   const HasError = meta.touched && meta.error;

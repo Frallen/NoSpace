@@ -15,11 +15,12 @@ import { useEffect } from "react";
 let View = (props) => {
   //до того как компонента примонтирована закидываю айди в функцию
   useEffect(() => {
+    props.Clean();
     //беру айди из пропсов
-    let id =props.match.params.id;
+    let id = props.match.params.id;
     //отправляю его в стейт
     props.GetProjData(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //обновление полей проекта
@@ -34,14 +35,15 @@ let View = (props) => {
 
   //потом копонента дожидается пропсов,а не отрисовывает сразу
   //если не сделать условие то компонента при первом ренеде окажется без пропсов
-  if (
-    props.initialValues &&
-    props.initialValues.NameMission &&
-    props.initialValues.LinkBoss
-  ) {
-    return <ProjView {...props} Update={Update} Delete={Delete}></ProjView>;
+
+  if (props.initialValues.length !== 0) {
+    if (props.initialValues.idOwner === props.sec) {
+      return <ProjView {...props} Update={Update} Delete={Delete}></ProjView>;
+    }
   }
-  return <Preloader></Preloader>; // or loading graphic
+
+  // or loading graphic
+  return <Preloader></Preloader>;
 };
 
 let mapStateToProps = (state) => {
@@ -70,6 +72,7 @@ let mapStateToProps = (state) => {
       NotMy: state.project.OneProject.NotMy,
       //
     },
+    sec: state.firebase.auth.uid,
     error: state.settings.error,
     loading: state.settings.loading,
   };

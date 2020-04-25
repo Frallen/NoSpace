@@ -44,7 +44,6 @@
     padding-top: 1rem;
   }
   .datebox {
-    padding: 1rem 0;
     display: flex;
     justify-content: space-between;
     max-width: 300px;
@@ -80,7 +79,7 @@
 .dangerbutton {
   display: flex;
   justify-content: flex-end;
-  @media (max-width:450px) {
+  @media (max-width: 450px) {
     display: block;
     margin: 1rem 0;
   }
@@ -112,6 +111,6 @@
   }
 }
 
-.BoxIsDone{
+.BoxIsDone {
   margin: 0.6rem;
 }

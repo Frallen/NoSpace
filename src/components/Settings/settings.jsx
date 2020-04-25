@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import classes from "./settings.module.scss";
 import { OnlyLetters } from "../../untils/validators/validators";
-import { authInput } from "../commons/formsControls/formsControls";
+import { AllInput } from "../commons/formsControls/formsControls";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert, Modal } from "rsuite";
 
@@ -18,7 +18,7 @@ let Sett = props => {
       }}
     >
       <Field
-        component={authInput}
+        component={AllInput}
         type="text"
         placeholder="ФИО"
         name="FIO"
@@ -26,14 +26,14 @@ let Sett = props => {
       />
 
       <Field
-        component={authInput}
+        component={AllInput}
         type="email"
         placeholder="Почта"
         name="email"
       ></Field>
 
       <Field
-        component={authInput}
+        component={AllInput}
         type="password"
         placeholder="Пароль"
         name="password"

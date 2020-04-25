@@ -14,7 +14,11 @@ const WelcomePage = () => {
           <div className={classes.text}>
             <h2 className={classes.title}>NOSPACE</h2>
 
-            <p className={classes.subtext}>То что нужно вашему бизнесу</p>
+            <p className={classes.subtext}>
+              <span className={classes.ex}>Управляй</span>
+              <span className={classes.ex}>Координируй</span>
+              <span className={classes.ex}>Помогай</span>
+            </p>
           </div>
         </Fade>
         <Fade delay={800}>

@@ -46,7 +46,7 @@ const App = ({ loggedIn, emailVerified, location }) => {
           <ProjectsContainer></ProjectsContainer>
         </Route>
         <Route path="/mission/:id">
-          <ProjViewCont></ProjViewCont>>
+          <ProjViewCont></ProjViewCont>
         </Route>
         <Route path="/logout">
           <LogOut></LogOut>
