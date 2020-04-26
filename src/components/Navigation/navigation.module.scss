@@ -13,8 +13,9 @@
       flex-direction: column;
     }
     .logo {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       letter-spacing: 2px;
+      text-transform: uppercase;
       cursor: pointer;
       font-weight: 700;
       @media (max-width: 800px) {

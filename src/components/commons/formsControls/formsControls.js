@@ -6,7 +6,7 @@ import {
   FormControl,
   DatePicker,
   ControlLabel,
-  Toggle
+  Checkbox
 } from "rsuite";
 import { Button } from "@material-ui/core";
 
@@ -17,7 +17,7 @@ export const Checker = ({ input, meta, ...props }) => {
       <ControlLabel>Соглашение</ControlLabel>
       <div className={classes.Rules}>
         <FormControl
-          accepter={Toggle}
+          accepter={Checkbox}
           {...props}
           {...input}
           errorMessage={input.value===false ? "Это обязательное поле" : null}

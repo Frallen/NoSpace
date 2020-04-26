@@ -2,10 +2,12 @@ const RegStart = "RegStart";
 const RegEnd = "RegEnd";
 const FoundError = "FoundError";
 const CleanUp = "CleanUp";
+const SuccMess = "SuccMess";
 
 let initialState = {
   error: null,
-  loading: false
+  loading: false,
+  succ: false,
 };
 
 const registrationReducer = (state = initialState, action) => {
@@ -13,25 +15,31 @@ const registrationReducer = (state = initialState, action) => {
     case RegStart:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case RegEnd:
       return {
         ...state,
         loading: false,
-        error: null
+        error: null,
       };
     case FoundError:
       return {
         ...state,
         error: action.payload,
-        loading: false
+        loading: false,
       };
     case CleanUp:
       return {
         ...state,
         error: null,
-        loading: false
+        loading: false,
+        succ: false,
+      };
+    case SuccMess:
+      return {
+        ...state,
+        succ: action.succ,
       };
 
     default:
@@ -42,7 +50,7 @@ const registrationReducer = (state = initialState, action) => {
 export default registrationReducer;
 
 //регистрация
-export const SignUpUsers = data => async (
+export const SignUpUsers = (data) => async (
   dispatch,
   getState,
   { getFirestore, getFirebase }
@@ -67,7 +75,7 @@ export const SignUpUsers = data => async (
         FIO: data.FIO,
         Email: data.email,
         ID: res.user.uid,
-        Otdel: data.Otdel
+        Otdel: data.Otdel,
       });
     dispatch({ type: RegEnd });
   } catch (err) {
@@ -80,11 +88,12 @@ export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   try {
     await firebase.auth().signOut();
+    await firebase.logout();
   } catch (err) {}
 };
 
 //логин
-export const LogInUser = data => async (
+export const LogInUser = (data) => async (
   dispatch,
   getState,
   { getFirebase }
@@ -119,17 +128,21 @@ export const verifyEmail = () => async (
   }
 };
 
-export const RecoverPass = data => async (
+export const RecoverPass = (data) => async (
   dispatch,
   getState,
   { getFirebase }
 ) => {
   const firebase = getFirebase();
   dispatch({ type: RegStart });
-  try {
+
+  let sn = await firebase.auth().fetchSignInMethodsForEmail(data.email);
+  if (sn.length === 0) {
+    dispatch({ type: FoundError, payload: true });
+  } else {
     await firebase.auth().sendPasswordResetEmail(data.email);
-    dispatch({ type: RegEnd });
-  } catch (err) {
-    dispatch({ type: FoundError, payload: err.message });
+    dispatch({ type: SuccMess, succ: true });
   }
+  //
+  dispatch({ type: RegEnd });
 };

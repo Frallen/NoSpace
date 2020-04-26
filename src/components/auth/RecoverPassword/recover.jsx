@@ -6,7 +6,7 @@ import { required } from "../../../untils/validators/validators";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert } from "rsuite";
 
-const Recover = props => {
+const Recover = (props) => {
   return (
     <Form onSubmit={props.handleSubmit}>
       <Field
@@ -25,13 +25,23 @@ const Recover = props => {
 };
 
 let RecoverForm = reduxForm({
-  form: "reecoverPass"
+  form: "reecoverPass",
 })(Recover);
 
-let ChangePass = props => {
-  props.error&& Alert.error("Такого емейла не существует.", 4000);
-
-  let onSubmit = fromdata => {
+let ChangePass = (props) => {
+  if (props.error) {
+    Alert.error("Такого емейла не существует.", 4000);
+    props.Clean()
+  }
+  if (props.succ) {
+    
+    Alert.success(
+      "На вашу потчу были высланы инструкции по восстановлению пароля",
+      5000
+    );
+    props.Clean();
+  }
+  let onSubmit = (fromdata) => {
     props.NewPass(fromdata);
   };
 

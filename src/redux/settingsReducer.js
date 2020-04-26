@@ -31,6 +31,7 @@ let settingsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        loading:false,
         suc: null
       };
     default:
@@ -62,6 +63,7 @@ export const ChangeProfile = data => async (
     if (data.email !== userEmail && data.email) {
       await user.updateEmail(data.email);
       await firebase.auth().signOut();
+      await firebase.logout();
     }
     if (data.FIO !== profile.FIO && data.FIO) {
       await firestore
@@ -75,6 +77,7 @@ export const ChangeProfile = data => async (
     if (data.password) {
       await user.updatePassword(data.password);
       await firebase.auth().signOut();
+      await firebase.logout();   
     }
 
     dispatch({ type: ChangeSucc });

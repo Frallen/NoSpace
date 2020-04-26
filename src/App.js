@@ -96,10 +96,10 @@ const App = ({ loggedIn, emailVerified, location }) => {
   );
 };
 
-let mapStateToProps = ({ firebase }) => {
+let mapStateToProps = (state) => {
   return {
-    loggedIn: firebase.auth.uid,
-    emailVerified: firebase.auth.emailVerified,
+    loggedIn: state.firebase.auth.uid,
+    emailVerified: state.firebase.auth.emailVerified,
   };
 };
 

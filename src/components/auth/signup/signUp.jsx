@@ -86,7 +86,7 @@ const SignUp = props => {
   if (
     props.error === "The email address is already in use by another account."
   ) {
-    Alert.error("Этот адрес почты уже кем-то используется",4000);
+    Alert.error("Этот адрес почты уже кем-то используется",5000);
   }
   return (
     <Fade>

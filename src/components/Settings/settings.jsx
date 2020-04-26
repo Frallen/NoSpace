@@ -5,22 +5,22 @@ import { OnlyLetters } from "../../untils/validators/validators";
 import { AllInput } from "../commons/formsControls/formsControls";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert, Modal } from "rsuite";
+import Password from "./password";
 
-let Sett = props => {
+let Sett = (props) => {
   return (
     <Form
       fluid
       onSubmit={props.handleSubmit}
       initialvalues={{
         FIO: props.initialValues.FIO,
-        username: props.initialValues.username,
-        email: props.initialValues.email
+        email: props.initialValues.email,
       }}
     >
       <Field
         component={AllInput}
         type="text"
-        placeholder="ФИО"
+        text="ФИО"
         name="FIO"
         validate={[OnlyLetters]}
       />
@@ -28,15 +28,8 @@ let Sett = props => {
       <Field
         component={AllInput}
         type="email"
-        placeholder="Почта"
+        text="Почта"
         name="email"
-      ></Field>
-
-      <Field
-        component={AllInput}
-        type="password"
-        placeholder="Пароль"
-        name="password"
       ></Field>
 
       <Button type="submit" block appearance="primary" disabled={props.loading}>
@@ -48,41 +41,34 @@ let Sett = props => {
 
 //форма смены емейла
 const SettForm = reduxForm({
-  form: "SettForm"
+  form: "SettForm",
 })(Sett);
 
-const Settings = props => {
+const Settings = (props) => {
   if (
     props.error ===
     "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
   ) {
     let message =
       "Для выполнения этой операции нужно выполнить повторный вход в систему";
-    Alert.warning(message);
+    Alert.warning(message, 5000);
   }
 
-  if (props.suc === true) {
+  if (props.suc) {
     props.CleanAfter();
     Alert.success("Операция выполнена успешно");
   }
   const [show, setShow] = useState(false);
 
-  let open = () => {
-    setShow(true);
-  };
-  let close = () => {
-    setShow(false);
-  };
-
   if (!props.initialValues) return null;
   //отправка данных с формы
-  let Submit = formdata => {
+  let Submit = (formdata) => {
     props.NewSett(formdata);
   };
   // удалить аккаунт
   let tryDelete = () => {
     props.Delete();
-    close();
+    setShow(false);
   };
   return (
     <Fade>
@@ -91,18 +77,19 @@ const Settings = props => {
           <div>
             <h3>Обновление профиля</h3>
             <SettForm onSubmit={Submit} {...props}></SettForm>
+            <Password onSubmit={Submit} {...props}></Password>
           </div>
           <div>
             <Button
               type="button"
               color="red"
               block
-              onClick={open}
+              onClick={() => setShow(true)}
               className={classes.dangerButton}
             >
               Удалить аккаунт
             </Button>
-            <Modal backdrop="static" show={show} onHide={close}>
+            <Modal backdrop="static" show={show} onHide={() => setShow(false)}>
               <Modal.Header>
                 <Modal.Title>Удаление аккаунта</Modal.Title>
               </Modal.Header>
@@ -119,7 +106,7 @@ const Settings = props => {
                 >
                   Я подтвержаю удаление
                 </Button>
-                <Button onClick={close} appearance="subtle">
+                <Button onClick={() => setShow(false)} appearance="subtle">
                   Отмена
                 </Button>
               </Modal.Footer>

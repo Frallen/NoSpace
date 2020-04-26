@@ -2,23 +2,25 @@ import { connect } from "react-redux";
 import React from "react";
 import EmailVer from "./email";
 import { verifyEmail, Clean } from "./../../redux/registrationReducer";
+import { useEffect } from "react";
 
-class Emailbox extends React.Component {
-  EmailSend = () => {
-    this.props.verifyEmail();
+let Emailbox = (props) => {
+  useEffect(() => {
+    props.Clean();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let EmailSend = () => {
+    props.verifyEmail();
   };
-  componentDidMount() {
-    this.props.Clean();
-  }
-  render() {
-    return <EmailVer {...this.props} EmailSend={this.EmailSend}></EmailVer>;
-  }
-}
 
-let mapStateToProps = state => {
+  return <EmailVer {...props} EmailSend={EmailSend}></EmailVer>;
+};
+
+let mapStateToProps = (state) => {
   return {
     email: state.Regis.error,
-    loading: state.Regis.loading
+    loading: state.Regis.loading,
   };
 };
 
