@@ -5,12 +5,9 @@
   .createbox {
     position: relative;
   }
-  .boxcenter {
-  }
-  .createbox {
-  }
-  .boxcenter {
-  }
+
+ 
+
   .NameMission {
     font-size: 1.3rem;
   }
@@ -28,8 +25,7 @@
     .targetstitle {
       font-size: 1.2rem;
     }
-    .targets {
-    }
+  
   }
   .flexspace {
     padding-top: 1rem;
@@ -69,10 +65,14 @@
   }
 }
 
+.donwbtn{
+  margin-bottom: 1rem;
+}
+
 .wrongblock {
   display: flex;
   justify-content: flex-end;
-  @media (max-width:450px) {
+  @media (max-width: 450px) {
     display: block;
     margin: 1rem 0;
   }

@@ -28,20 +28,20 @@ const TaskBox = (props) => {
         name="TextDone"
         validate={[required]}
       />
-
-      <Field
-        type="file"
-        component={Upload}
-        name="document"
-        validate={[required]}
-      ></Field>
-
+      <div className={classes.donwbtn}>
+        <Field
+          type="file"
+          component={Upload}
+          name="document"
+          validate={[required]}
+        ></Field>
+      </div>
       <Button
         type="submit"
         className={classes.creabtn}
-        disabled={
-          props.loading || props.Task.isDone || props.Task.NotMy 
-        }
+        block
+        appearance="primary"
+        disabled={props.loading || props.Task.isDone || props.Task.NotMy}
       >
         Отправить на проверку
       </Button>
@@ -55,7 +55,7 @@ const TaskForm = reduxForm({
 
 const Task = (props) => {
   const [show, setShow] = useState(false);
-//  const [err, setErr] = useState(false);
+  //  const [err, setErr] = useState(false);
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
     let data = {
@@ -108,35 +108,6 @@ const Task = (props) => {
       <Fade>
         <div className={classes.create}>
           <div className={classes.createbox}>
-            <div className={classes.boxcenter}>
-              <h3>{props.Task.NameMission}</h3>
-              <p>{props.Task.Text}</p>
-              <div className={classes.targetsbox}>
-                {props.Task.SubTargets && (
-                  <h4 className={classes.targetstitle}>Цели:</h4>
-                )}
-                {props.Task.SubTargets &&
-                  props.Task.SubTargets.map((p, index) => (
-                    <div key={index} className={classes.targets}>
-                      {p}
-                    </div>
-                  ))}
-              </div>
-              <div className={classes.donwloadbox}>
-                <Button href={props.LinkBoss} className={classes.donwload}>
-                  Скачать
-                </Button>
-              </div>
-              <div className={classes.datebox}>
-                <p className={classes.datespace}>
-                  Начать с {moment(props.Task.startdate).format("DD-MM-YYYY")}
-                </p>
-                <p className={classes.datespace}>
-                  Завершение {moment(props.Task.enddate).format("DD-MM-YYYY")}
-                </p>
-              </div>
-            </div>
-            <TaskForm {...props} onSubmit={onSubmit} ></TaskForm>
             <div className={classes.wrongblock}>
               <Button
                 color="red"
@@ -174,6 +145,35 @@ const Task = (props) => {
                 </Modal.Footer>
               </Modal>
             </div>
+            <div className={classes.boxcenter}>
+              <h3>{props.Task.NameMission}</h3>
+              <p>{props.Task.Text}</p>
+              <div className={classes.targetsbox}>
+                {props.Task.SubTargets && (
+                  <h4 className={classes.targetstitle}>Цели:</h4>
+                )}
+                {props.Task.SubTargets &&
+                  props.Task.SubTargets.map((p, index) => (
+                    <div key={index} className={classes.targets}>
+                      {p}
+                    </div>
+                  ))}
+              </div>
+              <div className={classes.donwloadbox}>
+                <Button href={props.LinkBoss} className={classes.donwload}>
+                  Скачать
+                </Button>
+              </div>
+              <div className={classes.datebox}>
+                <p className={classes.datespace}>
+                  Начать с {moment(props.Task.startdate).format("DD-MM-YYYY")}
+                </p>
+                <p className={classes.datespace}>
+                  Завершение {moment(props.Task.enddate).format("DD-MM-YYYY")}
+                </p>
+              </div>
+            </div>
+            <TaskForm {...props} onSubmit={onSubmit}></TaskForm>
           </div>
         </div>
       </Fade>

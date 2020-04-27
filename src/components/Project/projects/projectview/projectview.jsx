@@ -21,14 +21,14 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
         <Field
           name={hobby}
           type="text"
-          component={ProjectTextArea}
+          component={AllInput}
           text={`Цель #${index + 1}`}
           validate={[required]}
         />
         <Button
           type="button"
           text="Удалить цель"
-          className={classes.deletetarget}
+          className={classes.delbtn}
           onClick={() => fields.remove(index)}
         >
           Удалить цель
@@ -36,7 +36,11 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
       </li>
     ))}
     <li className={classes.boxbutton}>
-      <Button type="button" onClick={() => fields.push()}>
+      <Button
+        type="button"
+        onClick={() => fields.push()}
+        className={classes.addbtn}
+      >
         Добавить цель
       </Button>
     </li>
@@ -56,47 +60,55 @@ const ProjBox = (props) => {
         startdate: props.initialValues.startdate,
         enddate: props.initialValues.enddate,
       }}
+      className={classes.formGrid}
     >
-      <Field
-        component={AllInput}
-        type="text"
-        name="NameMission"
-        text="Название поручения"
-        validate={[required]}
-      />
+      <div className={classes.a}>
+        <Field
+          component={AllInput}
+          text="Название поручения :"
+          name="NameMission"
+          validate={[required]}
+        />
 
-      <Field
-        component={ProjectTextArea}
-        text="Описание"
-        name="Text"
-        validate={[required]}
-      />
-
-      <FieldArray name="SubTargets" component={AddSubTargets} />
-
-      <Field type="file" component={Upload} name="document"></Field>
-
-      <div className={classes.datebox}>
         <Field
           component={ProjectDate}
-          text="Начать с"
+          text="Начать с :"
           name="startdate"
           validate={[required]}
         />
 
         <Field
           component={ProjectDate}
-          text="Сдать до"
+          text="Сдать до :"
           name="enddate"
           validate={[required]}
         />
       </div>
-      <Button
-        type="submit"
-        disabled={props.loading || props.initialValues.NotMy === true}
-      >
-        Сохранить данные
-      </Button>
+      <div className={classes.b}>
+        <FieldArray name="SubTargets" component={AddSubTargets} />
+        <Field
+          type="file"
+          component={Upload}
+          name="document"
+          validate={[required]}
+        ></Field>
+      </div>
+      <div className={classes.c}>
+        <Field
+          component={ProjectTextArea}
+          text="Описание :"
+          name="Text"
+          validate={[required]}
+        />
+        <Button
+          type="submit"
+          block
+          appearance="primary"
+          disabled={props.loading || props.initialValues.NotMy === true}
+        >
+          Сохранить данные
+        </Button>
+      </div>
     </Form>
   );
 };
@@ -238,17 +250,18 @@ const ProjView = (props) => {
       )}
       <Fade>
         <div className={classes.create}>
-          <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
+          <div className={classes.buttons}>
+            <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
+            <Button color="red" onClick={() => setShow(true)} className={classes.dangerbtn}>
+              Удалить поручение
+            </Button>
+          </div>
           {checked ? (
             <div className={classes.createbox}>
               <Fade when={checked}>
                 <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
               </Fade>
-              <div className={classes.dangerbutton}>
-                <Button color="red" onClick={() => setShow(true)}>
-                  Удалить поручение
-                </Button>
-              </div>
+
               <Modal
                 backdrop="static"
                 show={show}
@@ -284,6 +297,14 @@ const ProjView = (props) => {
                   Название поручения: {props.initialValues.NameMission}
                 </h3>
                 <p className={classes.Text}>{props.initialValues.Text}</p>
+                <div className={classes.donwloadbox}>
+                  <Button
+                    href={props.initialValues.LinkBoss}
+                    className={classes.donwload}
+                  >
+                    Скачать поручение
+                  </Button>
+                </div>
                 <div className={classes.targetsbox}>
                   {props.initialValues.SubTargets && (
                     <h4 className={classes.targetstitle}>Цели:</h4>
@@ -299,22 +320,13 @@ const ProjView = (props) => {
 
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Старт
+                  Старт :
                   {moment(props.initialValues.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Завершение
+                  Завершение :
                   {moment(props.initialValues.enddate).format("DD-MM-YYYY")}
                 </p>
-              </div>
-
-              <div className={classes.donwloadbox}>
-                <Button
-                  href={props.initialValues.LinkBoss}
-                  className={classes.donwload}
-                >
-                  Скачать поручение
-                </Button>
               </div>
             </div>
           )}

@@ -6,7 +6,7 @@ import {
   FormControl,
   DatePicker,
   ControlLabel,
-  Checkbox
+  Checkbox,
 } from "rsuite";
 import { Button } from "@material-ui/core";
 
@@ -20,7 +20,7 @@ export const Checker = ({ input, meta, ...props }) => {
           accepter={Checkbox}
           {...props}
           {...input}
-          errorMessage={input.value===false ? "Это обязательное поле" : null}
+          errorMessage={input.value === false ? "Это обязательное поле" : null}
         ></FormControl>
         <p className={classes.RulesText}>Я согласен на обработку данных</p>
       </div>
@@ -57,6 +57,7 @@ export const ProjectTextArea = ({ input, meta, text, ...props }) => {
         {...props}
         rows={5}
         name="textarea"
+        style={{ resize: "auto",minWidth:"auto" }}
         componentClass="textarea"
       ></FormControl>
     </FormGroup>
@@ -95,6 +96,7 @@ export const SelectUser = ({ input, meta, data, text, ...props }) => {
         {...input}
         {...props}
         data={data}
+        style={{ width: "100%" }}
       ></FormControl>
     </FormGroup>
   );
@@ -106,7 +108,7 @@ export const Upload = ({ input, meta }) => {
   const resetKey = input.value && delete input.value;
   const { value, ...inputProps } = input;
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     input.onChange(e.target.files[0]);
   };
   /*<Uploader {...inputProps}

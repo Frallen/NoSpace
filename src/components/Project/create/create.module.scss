@@ -2,27 +2,42 @@
   padding: 2rem;
 
   .createbox {
+    padding-bottom: 1rem;
   }
-
-  .title {
-    display: block;
-    font-size: 1rem;
-    color: #fff;
-    padding-bottom: 10px;
-  }
-
-  .boxSpace {
-    .datebox {
-   
-      display: flex;
-      justify-content: space-between;
-      max-width: 300px;
-      @media (max-width: 600px) {
-        flex-direction: column;
+  .formGrid {
+    display: grid;
+    grid-template-areas: "a b" "a b" "c c";
+    gap: 3rem 2rem;
+    grid-template-columns: 1fr 1fr;
+    @media (max-width: 425px) {
+      grid-template-columns: 1fr;
+      grid-template-areas: "a a" "b b" "c c";
+    }
+    .a {
+      grid-area: a;
+      .datebox {
+        display: flex;
+        justify-content: space-between;
+        max-width: 300px;
+        @media (max-width: 600px) {
+          flex-direction: column;
+        }
       }
     }
-  }
-  .delbtn {
-    margin-bottom: 1rem;
+    .b {
+      grid-area: b;
+      .donwbtn {
+        margin: 1rem 0;
+      }
+      .delbtn {
+        margin-bottom: 1rem;
+      }
+      .addbtn {
+        margin-bottom: 1rem;
+      }
+    }
+    .c {
+      grid-area: c;
+    }
   }
 }

@@ -6,13 +6,11 @@
 .InputFile {
   display: none;
 }
-.boxUload {
-  text-align: center;
-}
-.Rules{
+
+.Rules {
   display: flex;
   align-items: center;
-   .RulesText{
-padding-left: 10px;
-   }
- }
+  .RulesText {
+    padding-left: 10px;
+  }
+}

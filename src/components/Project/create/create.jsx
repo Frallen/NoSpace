@@ -6,7 +6,7 @@ import {
   ProjectTextArea,
   ProjectDate,
   SelectUser,
-  Upload
+  Upload,
 } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { Fade } from "react-reveal";
@@ -35,7 +35,7 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
       </li>
     ))}
 
-    <Button type="button" onClick={() => fields.push()}>
+    <Button type="button" onClick={() => fields.push()} className={classes.addbtn}>
       Добавить цель
     </Button>
 
@@ -43,78 +43,87 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
   </ul>
 );
 
-const CreateBox = props => {
+const CreateBox = (props) => {
   let data = [];
-  props.initialValues.users.map(p =>
+  props.initialValues.users.map((p) =>
     data.push({
       label: `${p.FIO + " " + p.Otdel + " " + p.Email}`,
-      value: p.ID
+      value: p.ID,
     })
   );
 
   return (
-    <Form onSubmit={props.handleSubmit} fluid>
-      <Field
-        component={AllInput}
-        text="Название поручения"
-  
-        name="NameMission"
-        validate={[required]}
-      />
-      <Field
-        component={ProjectTextArea}
-        text="Описание"
-        name="Text"
-        validate={[required]}
-      />
-      <FieldArray name="SubTargets" component={AddSubTargets} />
-<div className={classes.boxSpace}>
-      <Field
-      text="Кому отправить"
-        component={SelectUser}
-        name="SendTo"
-        validate={[required]}
-        data={data}
-      ></Field>
-      <div className={classes.datebox}>
+    <Form onSubmit={props.handleSubmit} fluid className={classes.formGrid}>
+      <div className={classes.a}>
         <Field
-          component={ProjectDate}
-          text="Начать с"
-          name="startdate"
+          component={AllInput}
+          text="Название поручения :"
+          name="NameMission"
+          validate={[required]}
+        />
+      
+          <Field
+            component={ProjectDate}
+            text="Начать с :"
+            name="startdate"
+            validate={[required]}
+          />
+
+          <Field
+            component={ProjectDate}
+            text="Сдать до :"
+            name="enddate"
+            validate={[required]}
+          />
+        
+      </div>
+      <div className={classes.b}>
+        <Field
+          text="Кому отправить :"
+          component={SelectUser}
+          name="SendTo"
+          validate={[required]}
+          data={data}
+        ></Field>
+        <FieldArray name="SubTargets" component={AddSubTargets} />
+        <Field
+       
+          type="file"
+          component={Upload}
+          name="document"
+          validate={[required]}
+        ></Field>
+      </div>
+      <div className={classes.c}>
+        <Field
+          component={ProjectTextArea}
+          text="Описание :"
+          name="Text"
           validate={[required]}
         />
 
-        <Field
-          component={ProjectDate}
-          text="Сдать до"
-          name="enddate"
-          validate={[required]}
-        />
+        <Button
+          type="submit"
+          appearance="primary"
+          block
+          disabled={props.loading}
+        >
+          Создать поручение
+        </Button>
       </div>
-      </div>
-      <Field
-        type="file"
-        component={Upload}
-        name="document"
-        validate={[required]}
-      ></Field>
-
-      <Button type="submit" appearance="primary"  disabled={props.loading}>
-        Создать поручение
-      </Button>
     </Form>
   );
 };
 
 const CreateForm = reduxForm({
-  form: "createForm"
+  form: "createForm",
 })(CreateBox);
 
-const Create = props => {
+const Create = (props) => {
   if (props.error) {
     Alert.error(props.error);
   }
-  let onSubmit = formData => {
+  let onSubmit = (formData) => {
     /*  if(props.email===formData.SendTo){
       let message = "Вы не можете отправить поручение самому себе";
     enqueueSnackbar(message, {
@@ -139,10 +148,10 @@ const Create = props => {
           <h3>Создание поручения</h3>
           <p>
             Здесь вы можете создать поручение введя название,текст и сроки
-            исполнения
+            исполнения.
           </p>
-          <CreateForm onSubmit={onSubmit} {...props}></CreateForm>
         </div>
+        <CreateForm onSubmit={onSubmit} {...props}></CreateForm>
       </div>
     </Fade>
   );

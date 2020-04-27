@@ -13,7 +13,6 @@ const WelcomePage = () => {
         <Fade delay={300}>
           <div className={classes.text}>
             <h2 className={classes.title}>NOSPACE</h2>
-
             <p className={classes.subtext}>Планируем будущее вместе</p>
           </div>
         </Fade>
@@ -26,8 +25,11 @@ const WelcomePage = () => {
         <Fade delay={100}>
           <div className={classes.headingTitlebox}>
             <div>
-            <h2 className={classes.headingTitle}>Технологии</h2>
-            <p className={classes.headingText}>NoSpace использует передовые веб-тенологии</p></div>
+              <h2 className={classes.headingTitle}>Технологии</h2>
+              <p className={classes.headingText}>
+                NoSpace использует передовые веб-тенологии
+              </p>
+            </div>
           </div>
         </Fade>
         <div className={classes.tehnologesbox}>
