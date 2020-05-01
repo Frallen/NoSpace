@@ -27,7 +27,7 @@ const WelcomePage = () => {
             <div>
               <h2 className={classes.headingTitle}>Технологии</h2>
               <p className={classes.headingText}>
-                NoSpace использует передовые веб-тенологии
+                NoSpace использует передовые веб-технологии такие как:
               </p>
             </div>
           </div>

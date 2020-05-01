@@ -171,7 +171,6 @@ const GetProjects = async (toCollec, dispatch, firestore, to, userId) => {
         });
         dispatch({ type: GetAllTask, data: arr });
       });
-    // snap.docs.map(d => d.data());
   } catch (err) {}
 };
 
@@ -262,8 +261,6 @@ export const GetProjData = (data, to) => async (
     .collection(to ? to : "Mission")
     .where("idMission", "==", data)
     .onSnapshot(function (snap) {
-      // let arr = [];
-
       snap.forEach(function (doc) {
         let arr = doc.data();
         //взятие ссылки босса

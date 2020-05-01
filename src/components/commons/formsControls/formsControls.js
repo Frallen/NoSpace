@@ -57,7 +57,7 @@ export const ProjectTextArea = ({ input, meta, text, ...props }) => {
         {...props}
         rows={5}
         name="textarea"
-        style={{ resize: "auto",minWidth:"auto" }}
+        style={{ resize: "auto", minWidth: "auto" }}
         componentClass="textarea"
       ></FormControl>
     </FormGroup>
@@ -89,14 +89,14 @@ export const SelectUser = ({ input, meta, data, text, ...props }) => {
     <FormGroup>
       <ControlLabel>{text}</ControlLabel>
       <FormControl
-        className={classes.combo}
         name="selectPicker"
         errorMessage={HasError ? meta.error : null}
         accepter={SelectPicker}
         {...input}
         {...props}
         data={data}
-        style={{ width: "100%" }}
+        style={{ width: "100%",
+        display: "block" }}
       ></FormControl>
     </FormGroup>
   );

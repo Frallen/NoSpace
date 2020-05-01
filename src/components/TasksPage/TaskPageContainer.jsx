@@ -32,7 +32,8 @@ const TaskBox = props => {
 
 let mapStateToProps = state => {
   return {
-    projects: state.project.DataProjects
+    projects: state.project.DataProjects,
+    users:state.project.DataUsers
   };
 };
 

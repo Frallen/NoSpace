@@ -9,6 +9,7 @@ import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined"
 import { Whisper, Tooltip } from "rsuite";
 
 const Projects = (props) => {
+ //let SendTo= props.users.find(p=>props.projects.includes(p.ID))
   //беру текущюю полную дату
   let date = moment();
   const tooltip1 = <Tooltip>Задание выполнено.</Tooltip>;
@@ -19,6 +20,7 @@ const Projects = (props) => {
     content = props.projects.map((p) => (
       <div className={classes.projectsBox} key={p.idMission}>
         <h3 className={classes.title}>{p.NameMission}</h3>
+   
         <div className={classes.datebox}>
           <p className={classes.date}>
             Старт:
@@ -37,22 +39,22 @@ const Projects = (props) => {
               </Whisper>
             </div>
           )}
-      
-        {moment(date).isAfter(p.enddate) && (
-          <div className={classes.TimerOffIcon}>
-            <Whisper placement="bottom" trigger="hover" speaker={tooltip2}>
-              <TimerOffIcon></TimerOffIcon>
-            </Whisper>
-          </div>
-        )}
-        {p.isDone && (
-          <div className={classes.CheckIcon}>
-            <Whisper placement="bottom" trigger="hover" speaker={tooltip1}>
-              <CheckIcon></CheckIcon>
-            </Whisper>
-          </div>
-        )}
-  </div>
+
+          {moment(date).isAfter(p.enddate) && (
+            <div className={classes.TimerOffIcon}>
+              <Whisper placement="bottom" trigger="hover" speaker={tooltip2}>
+                <TimerOffIcon></TimerOffIcon>
+              </Whisper>
+            </div>
+          )}
+          {p.isDone && (
+            <div className={classes.CheckIcon}>
+              <Whisper placement="bottom" trigger="hover" speaker={tooltip1}>
+                <CheckIcon></CheckIcon>
+              </Whisper>
+            </div>
+          )}
+        </div>
         <NavLink to={"/mission/" + p.idMission} className={classes.openbutton}>
           Открыть
         </NavLink>

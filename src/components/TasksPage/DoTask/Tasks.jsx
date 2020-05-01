@@ -55,7 +55,7 @@ const TaskForm = reduxForm({
 
 const Task = (props) => {
   const [show, setShow] = useState(false);
-  //  const [err, setErr] = useState(false);
+
   //если начальник послал задание не тому сотруднику
   let NotMY = () => {
     let data = {

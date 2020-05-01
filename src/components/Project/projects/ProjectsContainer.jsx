@@ -34,9 +34,10 @@ const DashBox = props => {
   }
 };
 
-let mapStateToProps = state => {
+let mapStateToProps = (state) => {
   return {
-    projects: state.project.DataProjects
+    projects: state.project.DataProjects,
+    users: state.project.DataUsers,
   };
 };
 

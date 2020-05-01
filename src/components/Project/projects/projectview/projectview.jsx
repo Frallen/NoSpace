@@ -141,9 +141,10 @@ const ProjView = (props) => {
     setShow(false);
   };
 
-  // let message = "Для выполнения этой операции нужно выполнить повторный вход в систему";
-
+  //Окно подтверждения удаления
   const [show, setShow] = useState(false);
+  //Окно подтверждения о выполненном задании
+  const [show2, setShow2] = useState(false);
 
   if (props.error) {
     Alert.error(props.error);
@@ -174,7 +175,7 @@ const ProjView = (props) => {
 
   return (
     <div>
-      {props.initialValues.NotMy === true && (
+      {props.initialValues.NotMy && (
         <Fade>
           <div className={classes.BoxIsDone}>
             <Message
@@ -182,6 +183,17 @@ const ProjView = (props) => {
               type="error"
               description="Вы отправили задание не тому сотруднику,перепроверьте данные,
               удалите данное задание и создайте новое."
+            />
+          </div>
+        </Fade>
+      )}
+      {props.initialValues.SendToDeleted && (
+        <Fade>
+          <div className={classes.BoxIsDone}>
+            <Message
+              showIcon
+              type="error"
+              description="Аккаунт работника выполняющего задание был удален, удалите данное поручение."
             />
           </div>
         </Fade>
@@ -213,14 +225,14 @@ const ProjView = (props) => {
                 <Button
                   color="green"
                   className={classes.succbutton}
-                  onClick={() => setShow(true)}
+                  onClick={() => setShow2(true)}
                 >
                   Подтвердить выполнение
                 </Button>
                 <Modal
                   backdrop="static"
-                  show={show}
-                  onHide={() => setShow(false)}
+                  show={show2}
+                  onHide={() => setShow2(false)}
                   size="xs"
                 >
                   <Modal.Header>
@@ -238,7 +250,7 @@ const ProjView = (props) => {
                     >
                       Подтвердить
                     </Button>
-                    <Button onClick={() => setShow(false)} appearance="subtle">
+                    <Button onClick={() => setShow2(false)} appearance="subtle">
                       Отмена
                     </Button>
                   </Modal.Footer>
@@ -252,43 +264,46 @@ const ProjView = (props) => {
         <div className={classes.create}>
           <div className={classes.buttons}>
             <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
-            <Button color="red" onClick={() => setShow(true)} className={classes.dangerbtn}>
+            <Button
+              color="red"
+              onClick={() => setShow(true)}
+              className={classes.dangerbtn}
+            >
               Удалить поручение
             </Button>
           </div>
+          <Modal
+            backdrop="static"
+            show={show}
+            onHide={() => setShow(false)}
+            size="xs"
+          >
+            <Modal.Header>
+              <Modal.Title>Удаление поручения</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Ваш проект будет удален, вы действительно хотите удалить
+              поручение?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                onClick={() => {
+                  tryDelete(false);
+                }}
+                appearance="primary"
+              >
+                Подтвердить
+              </Button>
+              <Button onClick={() => setShow(false)} appearance="subtle">
+                Отмена
+              </Button>
+            </Modal.Footer>
+          </Modal>
           {checked ? (
             <div className={classes.createbox}>
               <Fade when={checked}>
                 <ChangeForm onSubmit={onSubmitMain} {...props}></ChangeForm>
               </Fade>
-
-              <Modal
-                backdrop="static"
-                show={show}
-                onHide={() => setShow(false)}
-                size="xs"
-              >
-                <Modal.Header>
-                  <Modal.Title>Удаление поручения</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Ваш проект будет удален, вы действительно хотите удалить
-                  поручение?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    onClick={() => {
-                      tryDelete(false);
-                    }}
-                    appearance="primary"
-                  >
-                    Подтвердить
-                  </Button>
-                  <Button onClick={() => setShow(false)} appearance="subtle">
-                    Отмена
-                  </Button>
-                </Modal.Footer>
-              </Modal>
             </div>
           ) : (
             <div className={classes.createbox}>

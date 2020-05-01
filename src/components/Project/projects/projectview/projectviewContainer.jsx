@@ -67,6 +67,7 @@ let mapStateToProps = (state) => {
       isDone: state.project.OneProject.isDone,
       MissionDoneTitle: state.project.OneProject.MissionDoneTitle,
       TextDone: state.project.OneProject.TextDone,
+      SendToDeleted: state.project.OneProject.SendToDeleted,
       //
       //Если отправили не тому сотруднику
       NotMy: state.project.OneProject.NotMy,
