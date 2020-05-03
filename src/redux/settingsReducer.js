@@ -88,9 +88,9 @@ export const Delete = () => async (
   getState,
   { getFirebase, getFirestore }
 ) => {
-  //dispatch({ type: ChangeStart });
-  const firebase = getFirebase();
+  dispatch({ type: ChangeStart });
   const firestore = getFirestore();
+  const firebase = getFirebase();
   const user = firebase.auth().currentUser;
   //Получение доступа залогиненным данным (простой рефакторинг,тупое присвоение)
   const userId = getState().firebase.auth.uid;
@@ -98,35 +98,11 @@ export const Delete = () => async (
 
   await user
     .delete()
-    .then(function () {
-      firestore.collection("users").doc(userId).delete();
+    .then(() => {
       firebase.logout();
       dispatch({ type: ChangeSucc });
     })
     .catch((error) => {
-     
-     dispatch({ type: ChangeFail, payload: error.message });
+      dispatch({ type: ChangeFail, payload: error.message });
     });
-
-  /*  let snap= await firestore.collection("Mission").where("SendTo", "==", userId).get()
-  snap.forEach(function (doc) {
-    let arr = doc.data();
-    let SendToDeleted =true
-    firestore.collection("Mission").doc(arr.idMission).set({
-    ...SendToDeleted
-    })
-  })*
-/*await firestore
-      .collection("Mission")
-      .where("SendTo", "==", userId)
-      .delete();
-    await firestore
-      .collection("Mission")
-      .where("idOwner", "==", userId)
-      .delete();*/
-
-  // 
-  /* } catch (err) {
-   
-  }*/
 };

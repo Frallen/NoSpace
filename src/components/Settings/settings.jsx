@@ -52,11 +52,12 @@ const Settings = (props) => {
     let message =
       "Для выполнения этой операции нужно выполнить повторный вход в систему";
     Alert.warning(message, 5000);
+    props.CleanAfter();
   }
 
   if (props.suc) {
     props.CleanAfter();
-    Alert.success("Операция выполнена успешно");
+    Alert.success("Операция выполнена успешно",5000);
   }
   const [show, setShow] = useState(false);
 

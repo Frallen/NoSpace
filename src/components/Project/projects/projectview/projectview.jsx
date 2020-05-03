@@ -263,7 +263,9 @@ const ProjView = (props) => {
       <Fade>
         <div className={classes.create}>
           <div className={classes.buttons}>
-            <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
+            {!props.initialValues.SendToDeleted && (
+              <Checkbox onChange={setShowForm}>Режим редактирования</Checkbox>
+            )}
             <Button
               color="red"
               onClick={() => setShow(true)}
