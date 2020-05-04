@@ -313,7 +313,8 @@ const ProjView = (props) => {
                 <h3 className={classes.NameMission}>
                   Название поручения: {props.initialValues.NameMission}
                 </h3>
-                <p className={classes.Text}>{props.initialValues.Text}</p>
+                <p>Кому - {props.initialValues.SendName}</p>
+                <p className={classes.Text}>Текст поручения: {props.initialValues.Text}</p>
                 <div className={classes.donwloadbox}>
                   <Button
                     href={props.initialValues.LinkBoss}

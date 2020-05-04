@@ -15,6 +15,7 @@ const TaskPage = (props) => {
     content = props.projects.map((p) => (
       <div className={classes.projectsBox} key={p.idMission}>
         <h3 className={classes.title}>{p.NameMission}</h3>
+        <p>От - {p.OwnName}</p>
         <div className={classes.datebox}>
           <p className={classes.date}>
             Старт: {moment(p.startdate).format("DD-MM-YYYY")}
@@ -31,14 +32,14 @@ const TaskPage = (props) => {
               </Whisper>
             </div>
           )}
-       
-        {p.isDone && (
-          <div className={classes.HourglassEmptyOutlinedIcon}>
-            <Whisper placement="bottom" trigger="hover" speaker={tooltip1}>
-              <HourglassEmptyOutlinedIcon></HourglassEmptyOutlinedIcon>
-            </Whisper>
-          </div>
-        )} 
+
+          {p.isDone && (
+            <div className={classes.HourglassEmptyOutlinedIcon}>
+              <Whisper placement="bottom" trigger="hover" speaker={tooltip1}>
+                <HourglassEmptyOutlinedIcon></HourglassEmptyOutlinedIcon>
+              </Whisper>
+            </div>
+          )}
         </div>
         <NavLink to={"/Task/" + p.idMission} className={classes.openbutton}>
           Открыть

@@ -147,7 +147,8 @@ const Task = (props) => {
             </div>
             <div className={classes.boxcenter}>
               <h3>{props.Task.NameMission}</h3>
-              <p>{props.Task.Text}</p>
+              <p>От кого - {props.Task.OwnName}</p>
+              <p>Текст поручения: {props.Task.Text}</p>
               <div className={classes.targetsbox}>
                 {props.Task.SubTargets && (
                   <h4 className={classes.targetstitle}>Цели:</h4>

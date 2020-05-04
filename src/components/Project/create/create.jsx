@@ -35,7 +35,11 @@ const AddSubTargets = ({ fields, meta: { error } }) => (
       </li>
     ))}
 
-    <Button type="button" onClick={() => fields.push()} className={classes.addbtn}>
+    <Button
+      type="button"
+      onClick={() => fields.push()}
+      className={classes.addbtn}
+    >
       Добавить цель
     </Button>
 
@@ -61,21 +65,20 @@ const CreateBox = (props) => {
           name="NameMission"
           validate={[required]}
         />
-      
-          <Field
-            component={ProjectDate}
-            text="Начать с :"
-            name="startdate"
-            validate={[required]}
-          />
 
-          <Field
-            component={ProjectDate}
-            text="Сдать до :"
-            name="enddate"
-            validate={[required]}
-          />
-        
+        <Field
+          component={ProjectDate}
+          text="Начать с :"
+          name="startdate"
+          validate={[required]}
+        />
+
+        <Field
+          component={ProjectDate}
+          text="Сдать до :"
+          name="enddate"
+          validate={[required]}
+        />
       </div>
       <div className={classes.b}>
         <Field
@@ -87,7 +90,6 @@ const CreateBox = (props) => {
         ></Field>
         <FieldArray name="SubTargets" component={AddSubTargets} />
         <Field
-       
           type="file"
           component={Upload}
           name="document"
@@ -124,18 +126,15 @@ const Create = (props) => {
     Alert.error(props.error);
   }
   let onSubmit = (formData) => {
-    /*  if(props.email===formData.SendTo){
-      let message = "Вы не можете отправить поручение самому себе";
-    enqueueSnackbar(message, {
-      variant: "error",
-      preventDuplicate: true,
-      autoHideDuration: 4000
-    });
+    /* if(props.ID===formData.SendTo){
+       Alert.success("Вы не можете отправить поручение самому себе",5000)
+  
     }else{*/
+    let snap = props.initialValues.users.find(p => (p.ID === formData.SendTo));
 
     formData.startdate = moment(formData.startdate).format();
     formData.enddate = moment(formData.enddate).format();
-
+    formData.SendName = snap.FIO;
     props.NewProject(formData);
     Alert.success("Поручение успешно созданно");
 

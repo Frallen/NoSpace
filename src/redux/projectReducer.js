@@ -115,8 +115,8 @@ export const CreateNewproject = (data) => async (
   const firestore = getFirestore();
   const firebase = getFirebase();
   //получение айди в firebase
-  const { uid: userId } = getState().firebase.auth;
-
+  const userId = getState().firebase.auth.uid;
+  const ownName = getState().firebase.profile.FIO;
   dispatch({ type: Start });
   try {
     //вариан создания своего айди let id = new Date().valueOf();
@@ -137,6 +137,7 @@ export const CreateNewproject = (data) => async (
     //добавляю в пришедшие данные айди
     data.idMission = comm.id; //уникальный айди проекта
     data.idOwner = userId;
+    data.OwnName = ownName;
     data.isDone = false;
     //не знаю почему в массиве юзеры,удаляю вручную
     delete data.users;
@@ -144,11 +145,6 @@ export const CreateNewproject = (data) => async (
     comm.set({
       ...data,
     });
-
-    //тестовый вывод всей пользовательской коллекции
-    //console.log(res.docs.map(doc => doc.data()));
-    //получение айди коммита
-    // -->    console.log(comm.id)
 
     dispatch({ type: End });
     //затираю поля формы

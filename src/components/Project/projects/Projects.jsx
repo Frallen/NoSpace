@@ -9,18 +9,18 @@ import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined"
 import { Whisper, Tooltip } from "rsuite";
 
 const Projects = (props) => {
- //let SendTo= props.users.find(p=>props.projects.includes(p.ID))
+  //let SendTo= props.users.find(p=>props.projects.includes(p.ID))
   //беру текущюю полную дату
   let date = moment();
-  const tooltip1 = <Tooltip>Задание выполнено.</Tooltip>;
-  const tooltip2 = <Tooltip>Выполено с опозданием.</Tooltip>;
-  const tooltip3 = <Tooltip>Отправлено не тому сотруднику.</Tooltip>;
+  const tooltip1 = <Tooltip>Задание выполнено</Tooltip>;
+  const tooltip2 = <Tooltip>Опоздание</Tooltip>;
+  const tooltip3 = <Tooltip>Отправлено не тому сотруднику</Tooltip>;
   let content;
   if (props.projects) {
     content = props.projects.map((p) => (
       <div className={classes.projectsBox} key={p.idMission}>
         <h3 className={classes.title}>{p.NameMission}</h3>
-   
+        <p>Кому - {p.SendName}</p>
         <div className={classes.datebox}>
           <p className={classes.date}>
             Старт:

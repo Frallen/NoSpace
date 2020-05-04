@@ -89,16 +89,30 @@ export const Delete = () => async (
   { getFirebase, getFirestore }
 ) => {
   dispatch({ type: ChangeStart });
-  const firestore = getFirestore();
+ //s const firestore = getFirestore();
   const firebase = getFirebase();
   const user = firebase.auth().currentUser;
   //Получение доступа залогиненным данным (простой рефакторинг,тупое присвоение)
-  const userId = getState().firebase.auth.uid;
+  //const userId = getState().firebase.auth.uid;
   // try {
 
   await user
     .delete()
     .then(() => {
+     /*
+         firebase
+          .storage()
+          .refFromURL(`gs://nospace-92826.appspot.com/Mission/${id}/${NameDoc}`)
+          .delete();
+
+    
+   
+       firebase
+          .storage()
+          .refFromURL(
+            `gs://nospace-92826.appspot.com/Mission/${id}/otvet/${NameDocDone}`
+          )
+          .delete();*/
       firebase.logout();
       dispatch({ type: ChangeSucc });
     })
