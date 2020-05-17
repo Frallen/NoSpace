@@ -6,6 +6,7 @@ import {
   Upload,
 } from "../../commons/formsControls/formsControls";
 import classes from "./Tasks.module.scss";
+import classesAll from "./../../Project/projects/projectview/projectView.module.scss"
 import { required } from "../../../untils/validators/validators";
 import { Fade } from "react-reveal";
 import { Form, Button, Message, Alert, Modal } from "rsuite";
@@ -147,19 +148,24 @@ const Task = (props) => {
             </div>
             <div className={classes.boxcenter}>
               <h3>{props.Task.NameMission}</h3>
-              <p>От кого - {props.Task.OwnName}</p>
-              <p>Текст поручения: {props.Task.Text}</p>
-              <div className={classes.targetsbox}>
-                {props.Task.SubTargets && (
+              <p>
+                <span className={classesAll.textStart}>От кого </span> -
+                {props.Task.OwnName}
+              </p>
+              <p>
+                <span className={classesAll.textStart}>Текст поручения</span> :
+                {props.Task.Text}
+              </p>
+              {props.Task.SubTargets && (
+                <div className={classes.targetsbox}>
                   <h4 className={classes.targetstitle}>Цели:</h4>
-                )}
-                {props.Task.SubTargets &&
-                  props.Task.SubTargets.map((p, index) => (
+                  {props.Task.SubTargets.map((p, index) => (
                     <div key={index} className={classes.targets}>
                       {p}
                     </div>
                   ))}
-              </div>
+                </div>
+              )}
               <div className={classes.donwloadbox}>
                 <Button href={props.LinkBoss} className={classes.donwload}>
                   Скачать
@@ -167,10 +173,12 @@ const Task = (props) => {
               </div>
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Начать с {moment(props.Task.startdate).format("DD-MM-YYYY")}
+                  <span className={classesAll.textStart}> Старт </span> -
+                  {moment(props.Task.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Завершение {moment(props.Task.enddate).format("DD-MM-YYYY")}
+                  <span className={classesAll.textStart}> Завершение </span> -
+                  {moment(props.Task.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>
             </div>

@@ -5,6 +5,7 @@ import { AllInput } from "../../commons/formsControls/formsControls";
 import { required } from "../../../untils/validators/validators";
 import { Fade } from "react-reveal";
 import { Form, Button, Alert } from "rsuite";
+import { useHistory } from "react-router-dom";
 
 const Recover = (props) => {
   return (
@@ -29,17 +30,19 @@ let RecoverForm = reduxForm({
 })(Recover);
 
 let ChangePass = (props) => {
+  const history = useHistory();
   if (props.error) {
     Alert.error("Такого емейла не существует.", 4000);
-    props.Clean()
+    props.Clean();
   }
   if (props.succ) {
-    
     Alert.success(
       "На вашу почту были высланы инструкции по восстановлению пароля.",
       5000
     );
     props.Clean();
+    //редирект на страницу авторизации
+    history.goBack();
   }
   let onSubmit = (fromdata) => {
     props.NewPass(fromdata);

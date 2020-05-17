@@ -147,7 +147,7 @@ const ProjView = (props) => {
   const [show2, setShow2] = useState(false);
 
   if (props.error) {
-    Alert.error(props.error);
+    Alert.error(props.error, 4000);
   }
 
   let onSubmitMain = (FormData) => {
@@ -163,6 +163,7 @@ const ProjView = (props) => {
     delete FormData.LinkWorker;
     delete FormData.TextDone;
     delete FormData.MissionDoneTitle;
+    FormData.SendToDeleted === undefined && delete FormData.SendToDeleted;
     if (!FormData.SubTargets) {
       delete FormData.SubTargets;
     }
@@ -171,6 +172,7 @@ const ProjView = (props) => {
     }
     ///
     props.Update(FormData);
+    Alert.success("Задание отправлено на доработку", 4000);
   };
 
   return (
@@ -198,7 +200,7 @@ const ProjView = (props) => {
           </div>
         </Fade>
       )}
-      {props.initialValues.isDone === true && (
+      {props.initialValues.isDone && (
         <Fade>
           <div className={classes.BoxIsDone}>
             <Message
@@ -313,8 +315,15 @@ const ProjView = (props) => {
                 <h3 className={classes.NameMission}>
                   Название поручения: {props.initialValues.NameMission}
                 </h3>
-                <p>Кому - {props.initialValues.SendName}</p>
-                <p className={classes.Text}>Текст поручения: {props.initialValues.Text}</p>
+                <p>
+                  {" "}
+                  <span className={classes.textStart}> Кому </span> -
+                  {props.initialValues.SendName}
+                </p>
+                <p className={classes.Text}>
+                  <span className={classes.textStart}> Текст поручения</span> :
+                  {props.initialValues.Text}
+                </p>
                 <div className={classes.donwloadbox}>
                   <Button
                     href={props.initialValues.LinkBoss}
@@ -323,26 +332,25 @@ const ProjView = (props) => {
                     Скачать поручение
                   </Button>
                 </div>
-                <div className={classes.targetsbox}>
-                  {props.initialValues.SubTargets && (
+                {props.initialValues.SubTargets && (
+                  <div className={classes.targetsbox}>
                     <h4 className={classes.targetstitle}>Цели:</h4>
-                  )}
-                  {props.initialValues.SubTargets &&
-                    props.initialValues.SubTargets.map((p, index) => (
+                    {props.initialValues.SubTargets.map((p, index) => (
                       <div key={index} className={classes.targets}>
                         {p}
                       </div>
                     ))}
-                </div>
+                  </div>
+                )}
               </div>
 
               <div className={classes.datebox}>
                 <p className={classes.datespace}>
-                  Старт :
+                  <span className={classes.textStart}> Старт </span>:
                   {moment(props.initialValues.startdate).format("DD-MM-YYYY")}
                 </p>
                 <p className={classes.datespace}>
-                  Завершение :
+                  <span className={classes.textStart}> Завершение </span>:
                   {moment(props.initialValues.enddate).format("DD-MM-YYYY")}
                 </p>
               </div>

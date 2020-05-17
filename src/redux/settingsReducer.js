@@ -1,3 +1,5 @@
+import { Alert } from "rsuite";
+
 const ChangeStart = "ChangeStart";
 const ChangeSucc = "ChangeSucc";
 const ChangeFail = "ChangeFail";
@@ -62,6 +64,10 @@ export const ChangeProfile = (data) => async (
     //если новый введенный емейл не равен старому то изменяем
     if (data.email !== userEmail && data.email) {
       await user.updateEmail(data.email);
+      await firestore.collection("users").doc(userId).update({
+        Email: data.email,
+      });
+      await user.sendEmailVerification();
       await firebase.auth().signOut();
       await firebase.logout();
     }
@@ -76,10 +82,18 @@ export const ChangeProfile = (data) => async (
       await firebase.auth().signOut();
       await firebase.logout();
     }
-
+    Alert.success("Операция выполнена успешно", 5000);
     dispatch({ type: ChangeSucc });
   } catch (err) {
     dispatch({ type: ChangeFail, payload: err.message });
+    if (
+      err ===
+      "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
+    ) {
+      let message =
+        "Для выполнения этой операции нужно выполнить повторный вход в систему";
+      Alert.warning(message, 5000);
+    }
   }
 };
 
@@ -89,7 +103,7 @@ export const Delete = () => async (
   { getFirebase, getFirestore }
 ) => {
   dispatch({ type: ChangeStart });
- //s const firestore = getFirestore();
+  //s const firestore = getFirestore();
   const firebase = getFirebase();
   const user = firebase.auth().currentUser;
   //Получение доступа залогиненным данным (простой рефакторинг,тупое присвоение)
@@ -99,7 +113,7 @@ export const Delete = () => async (
   await user
     .delete()
     .then(() => {
-     /*
+      /*
          firebase
           .storage()
           .refFromURL(`gs://nospace-92826.appspot.com/Mission/${id}/${NameDoc}`)

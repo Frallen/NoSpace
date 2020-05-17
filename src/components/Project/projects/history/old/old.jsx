@@ -4,7 +4,7 @@ import moment from "moment";
 import { Fade } from "react-reveal";
 import { Button } from "rsuite";
 
-const OneOld = props => {
+const OneOld = (props) => {
   return (
     <Fade>
       <div>
@@ -18,7 +18,7 @@ const OneOld = props => {
               <p className={classes.Text}>{props.HistoryItem.TextDone}</p>
               <div className={classes.donwloadbox}>
                 <Button
-                type="button"
+                  type="button"
                   variant="contained"
                   href={props.LinkWorker}
                   className={classes.donwload}
@@ -35,29 +35,44 @@ const OneOld = props => {
               <h3 className={classes.NameMission}>
                 {props.HistoryItem.NameMission}
               </h3>
-              <p className={classes.Text}>{props.HistoryItem.Text}</p>
-              <div className={classes.targetsbox}>
-                {props.HistoryItem.SubTargets && (
+              <ul className={classes.roles}>
+                <li className={classes.rolesItem}>
+                  <span className={classes.textStart}> От кого </span> -
+                  {props.HistoryItem.OwnName}
+                </li>
+                <li className={classes.rolesItem}>
+                  <span className={classes.textStart}> Кому </span> -
+                  {props.HistoryItem.SendName}
+                </li>
+              </ul>
+              <p className={classes.Text}>
+                <span className={classes.textStart}> Текст поручения </span> -
+                {props.HistoryItem.Text}
+              </p>
+              {props.HistoryItem.SubTargets && (
+                <div className={classes.targetsbox}>
                   <h4 className={classes.targetstitle}>Цели:</h4>
-                )}
-                {props.HistoryItem.SubTargets &&
-                  props.HistoryItem.SubTargets.map((p, index) => (
+
+                  {props.HistoryItem.SubTargets.map((p, index) => (
                     <div key={index} className={classes.targets}>
                       {p}
                     </div>
                   ))}
-              </div>
+                </div>
+              )}
             </div>
             <div className={classes.donwloadbox}>
-              <Button type="button" href={props.LinkBoss}>Скачать</Button>
+              <Button type="button" href={props.LinkBoss}>
+                Скачать задание
+              </Button>
             </div>
             <div className={classes.datebox}>
               <p className={classes.datespace}>
-                Старт
+                <span className={classes.textStart}> Старт </span> -
                 {moment(props.HistoryItem.startdate).format("DD-MM-YYYY")}
               </p>
               <p className={classes.datespace}>
-                Завершение
+                <span className={classes.textStart}> Завершение </span> -
                 {moment(props.HistoryItem.enddate).format("DD-MM-YYYY")}
               </p>
             </div>

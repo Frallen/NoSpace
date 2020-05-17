@@ -4,7 +4,7 @@ import classes from "./settings.module.scss";
 import { OnlyLetters } from "../../untils/validators/validators";
 import { AllInput } from "../commons/formsControls/formsControls";
 import { Fade } from "react-reveal";
-import { Form, Button, Alert, Modal } from "rsuite";
+import { Form, Button, Modal } from "rsuite";
 import Password from "./password";
 
 let Sett = (props) => {
@@ -49,15 +49,11 @@ const Settings = (props) => {
     props.error ===
     "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
   ) {
-    let message =
-      "Для выполнения этой операции нужно выполнить повторный вход в систему";
-    Alert.warning(message, 5000);
     props.CleanAfter();
   }
 
   if (props.suc) {
     props.CleanAfter();
-    Alert.success("Операция выполнена успешно",5000);
   }
   const [show, setShow] = useState(false);
 
@@ -105,7 +101,7 @@ const Settings = (props) => {
                   }}
                   appearance="primary"
                 >
-                  Я подтвержаю удаление
+                  Я подтверждаю удаление
                 </Button>
                 <Button onClick={() => setShow(false)} appearance="subtle">
                   Отмена

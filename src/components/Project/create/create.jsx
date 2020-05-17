@@ -126,19 +126,19 @@ const Create = (props) => {
     Alert.error(props.error);
   }
   let onSubmit = (formData) => {
-    /* if(props.ID===formData.SendTo){
-       Alert.success("Вы не можете отправить поручение самому себе",5000)
-  
-    }else{*/
-    let snap = props.initialValues.users.find(p => (p.ID === formData.SendTo));
+    if (props.ID === formData.SendTo) {
+      Alert.error("Вы не можете отправить поручение самому себе", 5000);
+    } else {
+      let snap = props.initialValues.users.find(
+        (p) => p.ID === formData.SendTo
+      );
 
-    formData.startdate = moment(formData.startdate).format();
-    formData.enddate = moment(formData.enddate).format();
-    formData.SendName = snap.FIO;
-    props.NewProject(formData);
-    Alert.success("Поручение успешно созданно");
-
-    //}
+      formData.startdate = moment(formData.startdate).format();
+      formData.enddate = moment(formData.enddate).format();
+      formData.SendName = snap.FIO;
+      props.NewProject(formData);
+      Alert.success("Поручение успешно созданно");
+    }
   };
   return (
     <Fade>
