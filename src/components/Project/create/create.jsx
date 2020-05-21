@@ -52,7 +52,7 @@ const CreateBox = (props) => {
   props.initialValues.users.map((p) =>
     data.push({
       label: `${p.FIO + " " + p.Otdel + " " + p.Email}`,
-      value: p.ID,
+      value: p.Email,
     })
   );
 
@@ -126,11 +126,11 @@ const Create = (props) => {
     Alert.error(props.error);
   }
   let onSubmit = (formData) => {
-    if (props.ID === formData.SendTo) {
+    if (props.Email === formData.SendTo) {
       Alert.error("Вы не можете отправить поручение самому себе", 5000);
     } else {
       let snap = props.initialValues.users.find(
-        (p) => p.ID === formData.SendTo
+        (p) => p.Email === formData.SendTo
       );
 
       formData.startdate = moment(formData.startdate).format();
