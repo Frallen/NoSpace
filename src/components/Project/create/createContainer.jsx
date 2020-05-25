@@ -29,6 +29,7 @@ let mapStateToProps = state => {
       users: state.project.DataUsers
     },
     Email: state.firebase.auth.email,
+    ID: state.firebase.auth.uid,
     error: state.project.error,
     loading: state.project.loading
   };

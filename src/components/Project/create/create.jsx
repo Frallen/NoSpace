@@ -136,6 +136,7 @@ const Create = (props) => {
       formData.startdate = moment(formData.startdate).format();
       formData.enddate = moment(formData.enddate).format();
       formData.SendName = snap.FIO;
+      formData.SendTo=snap.ID;
       props.NewProject(formData);
       Alert.success("Поручение успешно созданно");
     }
