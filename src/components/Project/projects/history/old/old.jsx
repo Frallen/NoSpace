@@ -13,9 +13,11 @@ const OneOld = (props) => {
             <div className={classes.boxcenter}>
               <h2>Отчет сотрудника</h2>
               <h3 className={classes.NameMission}>
-                {props.HistoryItem.MissionDoneTitle}
+                Заголовок отчета: {props.HistoryItem.MissionDoneTitle}
               </h3>
-              <p className={classes.Text}>{props.HistoryItem.TextDone}</p>
+              <p className={classes.Text}>
+                Текст отчета: {props.HistoryItem.TextDone}
+              </p>
               <div className={classes.donwloadbox}>
                 <Button
                   type="button"
