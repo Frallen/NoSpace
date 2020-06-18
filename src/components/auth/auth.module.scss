@@ -3,11 +3,18 @@
   justify-content: center;
   align-items: center;
   height: 85vh;
+  @media (max-height: 700px) {
+    margin: 1.5rem 0;
+  }
   .form {
     box-shadow: 0 2px 7px 0px #6f6c6c;
     padding: 2rem 1rem;
     border-radius: 6px;
-    @media (max-width:400px) {
+    @media (max-width: 400px) {
+      box-shadow: none;
+      padding: 0;
+    }
+    @media (max-height: 700px) {
       box-shadow: none;
       padding: 0;
     }
