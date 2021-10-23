@@ -35,10 +35,7 @@
       }
     }
     .fire {
-      flex-basis: 33%;
-      @media (max-width: 800px) {
-        flex-basis: 41%;
-      }
+      max-width: 500px;
     }
   }
 
