@@ -1,0 +1,84 @@
+.regForm {
+  margin-top: 48px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 112px;
+  &-title {
+    margin-bottom: 24px;
+    font-size: 1.75em;
+    font-weight: 600;
+    text-align: center;
+  }
+  &-form {
+    max-width: 520px;
+    margin: 0 auto;
+    &-box1,
+    &-box2 {
+      display: flex;
+      flex-direction: column;
+      background: #fafafa;
+      padding: 48px;
+    }
+    &-title {
+      color: @black;
+      font-size: 1.25em;
+      margin-bottom: 16px;
+    }
+    &-box2 {
+      margin-top: 24px;
+      &-title {
+        color: @black;
+        font-size: 1.25em;
+        margin-bottom: 16px;
+      }
+    }
+    &-btnSubmit {
+      text-decoration: none;
+      background: @black;
+      outline: none;
+      border: none;
+      padding: 12px 125px;
+      display: block;
+      color: #fff;
+      margin: 0 auto;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      @media (max-width: 500px) {
+        display: block;
+        padding: 12px 50px;
+      }
+      @media (max-width: 425px) {
+        display: block;
+        padding: 12px 30px;
+      }
+    }
+    &-terms {
+      text-align: center;
+      font-size: 14px;
+      line-height: 138%;
+      color: #858585;
+      &-link {
+        text-decoration: underline;
+        color: #858585;
+      }
+    }
+  }
+}
+
+.regForm-form-item {
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.select-input-items {
+  height: 46px !important;
+  padding: 12px 15px;
+}
+
+.regForm-itemsAll {
+  margin-top: 8px;
+}

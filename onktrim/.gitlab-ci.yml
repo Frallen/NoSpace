@@ -1,0 +1,18 @@
+image: node:latest
+
+cache:
+  paths:
+   - node_modules/
+
+build_app:
+  script:
+   - ls
+   - npm install -g gulp
+   - npm install
+   - gulp build
+  artifacts:
+    name: "build"
+    expire_in: 1 week
+    paths:
+    - "build/*"  
+

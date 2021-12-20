@@ -1,0 +1,150 @@
+<div class="auth-form-bg auth-form-bg-show">
+  <div class="auth-form auth-form-show">
+    <span class="auth-form-closebtn"></span>
+    <div class="authSection">
+      <h5 id="titleAuth">Вход в аккаунт</h5>
+      <p id="helptextAuth" class="auth-form-helptop">
+        Заполните поля ниже для авторизации на сайте
+      </p>
+      <form id="authform">
+        <div class="field">
+          <div class="control">
+            <input
+              name="authInput"
+              class="input"
+              type="email"
+              placeholder="Электронная почта"
+              id="AuthEmail"
+              required
+            />
+          </div>
+          <p class="authInputErr is-danger">Поле не заполнено</p>
+        </div>
+        <div class="field authform-item">
+          <div class="control">
+            <input
+              class="input"
+              type="password"
+              placeholder="Пароль"
+              id="AuthPass"
+              required
+              name="authInput"
+            />
+            <span class="icon is-small is-left">
+              <span class="auth-form-title-icon" id="showpass"></span>
+            </span>
+          </div>
+          <p class="authInputErr2 is-danger">Поле не заполнено</p>
+        </div>
+        <button type="submit" id="btnSubmit" class="auth-form-submitbtn">
+          Войти
+        </button>
+      </form>
+      <a class="auth-form-resetPassword" id="resetPassword">Не помню пароль</a>
+      <a
+        href="registration.html"
+        class="auth-form-btnRegistration"
+        id="registratonBtn"
+        >Зарегистрироваться</a
+      >
+    </div>
+    <div class="resetSection">
+      <h5>Восстановление пароля</h5>
+      <p class="auth-form-helptop">
+        Введите адрес электронной почты, которая привязана к этому аккаунту
+      </p>
+      <form action="/" id="reset">
+        <div class="field authform-item">
+          <div class="control">
+            <input
+              class="input"
+              type="email"
+              placeholder="Электронная почта"
+              id="authInputResetCode"
+              required
+            />
+          </div>
+          <p class="authInput1 is-danger">Поле не заполнено</p>
+        </div>
+        <button
+          type="submit"
+          id="btnSubmitResetCode"
+          class="auth-form-submitbtn auth-form-submitbtn-sm"
+        >
+          Отправить
+        </button>
+      </form>
+    </div>
+    <div class="resetSectionCode2">
+      <h5>Код для сброса</h5>
+      <p class="auth-form-helptop">
+        На электронную почту был отправлен код сброса пароля, введите его в поле
+        ниже
+      </p>
+      <form action="/" id="reset">
+        <div class="field authform-item">
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Электронная почта"
+              id="authInputResetCode"
+              required
+            />
+          </div>
+          <p class="authInput1 is-danger">Код</p>
+        </div>
+        <button
+          type="submit"
+          id="btnSubmitResetCode2"
+          class="auth-form-submitbtn auth-form-submitbtn-sm"
+        >
+          Продолжить
+        </button>
+      </form>
+      <a class="auth-form-resetPassword" id="resetPassword"
+        >Отправить код повторно</a
+      >
+    </div>
+
+    <div class="newPasswordSection">
+      <h5>Новый пароль</h5>
+      <p class="auth-form-helptop">
+        Придумайте новый пароль для восстановления доступа к аккаунту
+      </p>
+      <form action="/" id="reset">
+        <div class="field authform-item">
+          <div class="control">
+            <input
+              class="input"
+              type="password"
+              placeholder="Новый пароль"
+              id="authInputReset"
+              required
+            />
+          </div>
+          <p class="authInput1 is-danger">Поле не заполнено</p>
+        </div>
+        <div class="field authform-item">
+          <div class="control">
+            <input
+              class="input"
+              type="password"
+              placeholder="Повторите новый пароль"
+              id="authInputReset"
+              required
+            />
+          </div>
+          <p class="authInput1 is-danger">Поле не заполнено</p>
+        </div>
+        <button
+          type="submit"
+          id="btnSubmitReset"
+          class="auth-form-submitbtn auth-form-submitbtn-sm"
+        >
+          Сохранить и войти
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
